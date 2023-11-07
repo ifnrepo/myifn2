@@ -1,0 +1,339 @@
+@font-face {
+    font-family: 'Quicksand';
+    src: url('../fonts/Quicksand/Quicksand-Medium.ttf');
+}
+
+body {
+    font-family: "Quicksand", Arial, sans-serif;
+}
+
+hr.small {
+    margin: 5px;
+}
+
+.font-tebal {
+    font-weight: bold !important;
+}
+
+.font-kecil {
+    font-size: 12px !important;
+}
+
+.flat {
+    border-radius: 0 !important;
+}
+
+.text-black {
+    color: black !important;
+}
+
+.text-merah {
+    color: rgb(208, 45, 45) !important;
+}
+
+.gambarlogo {
+    width: 100%;
+    height: auto;
+}
+
+.gambarlogo img {
+    width: 100%;
+    height: 100%;
+}
+
+.gambarlogo2 img {
+    width: 50%;
+    height: auto;
+}
+
+
+.nav-item .nav-link:hover {
+    color: black !important;
+}
+
+.nav-item .nav-link:hover i {
+    color: black !important;
+}
+
+
+.sidebar-light {
+    box-shadow: 60px 0 30px -2px green !important;
+}
+
+.sidebar .sidebar-card p {
+    color: black !important;
+}
+
+.sidebar .sidebar-card {
+    color: rgba(255, 255, 255, 1) !important;
+}
+
+.item-menu {
+    cursor: pointer;
+}
+
+.item-menu a {
+    text-decoration: none;
+}
+
+.item-menu i {
+    transition: all ease-in-out 0.3s;
+}
+
+.item-menu:hover i {
+    transform: scale(1.9);
+}
+
+.card-opname {
+    min-height: 150px !important;
+    /* background-color: rgba(49, 177, 255, 0.2); */
+    border: none !important;
+    padding: 10px;
+    font-size: 10px !important;
+}
+
+.card-opname .dept-name {
+    font-size: 20px !important;
+    font-weight: bold;
+}
+
+.card-opname-bottom {
+    text-align: center;
+    vertical-align: middle !important;
+    min-height: 30px;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    border-radius: 0 0 5px 5px !important;
+    border: 1px solid black;
+    font-size: 12px;
+}
+
+.form-control,
+.input-form {
+    /* border-color: black !important; */
+    border-color: #d5d5d5 !important;
+    border-radius: 0px;
+    height: 30px !important;
+    font-size: 12px;
+}
+
+.form-control:focus {
+    /* border-color: rgba(126, 239, 104, 0.8); */
+    border-color: rgba(28, 200, 128, 0.6);
+    /* box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(126, 239, 104, 0.6); */
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(28, 200, 128, 0.6);
+    outline: 0 none;
+}
+
+textarea:focus,
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="datetime"]:focus,
+input[type="datetime-local"]:focus,
+input[type="date"]:focus,
+input[type="month"]:focus,
+input[type="time"]:focus,
+input[type="week"]:focus,
+input[type="number"]:focus,
+input[type="email"]:focus,
+input[type="url"]:focus,
+input[type="search"]:focus,
+input[type="tel"]:focus,
+input[type="color"]:focus,
+.uneditable-input:focus {
+    /* border-color: rgba(126, 239, 104, 0.8); */
+    border-color: rgba(28, 200, 128, 0.8);
+    /* box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(126, 239, 104, 0.6); */
+    box-shadow: 0 1px 1px rgba(28, 200, 128, 0.075) inset, 0 0 5px rgba(28, 200, 128, .6);
+    outline: 0 none;
+}
+
+.text-kanan {
+    text-align: right !important;
+}
+
+.tombol {
+    text-align: right;
+}
+
+.tombol .btn {
+    border-radius: 3px !important;
+    font-size: 11px !important;
+}
+
+.infoopname {
+    background-color: #f7f7f7;
+    font-size: 10px !important;
+}
+
+.isiopname {
+    min-height: 275px;
+}
+
+.isiopname a {
+    width: 20px auto !important;
+}
+
+.isiopname span {
+    background-color: blue;
+    height: 100px !important;
+}
+
+.tombolformstok a {
+    text-decoration: none;
+}
+
+.tabler {
+    font-size: 12px !important;
+}
+
+.tabler .table thead {
+    color: black !important;
+    padding: 4px 7px !important;
+}
+
+.table tbody tr td {
+    font-size: 12px;
+    font-weight: 500;
+    padding: 4px 7px;
+    color: black;
+}
+
+.table .headerdata {
+    color: gray;
+    font-size: 9px;
+}
+
+.table td.headerdatabawah {
+    font-size: 11px !important;
+}
+
+.table-stripede>tbody>tr:nth-child(2n+1)>td,
+.table-striped>tbody>tr:nth-child(2n+1)>th {
+    background-color: #D8EFE2;
+}
+
+.page-item.active .page-link {
+    background-color: lightgrey !important;
+    border: 1px solid black;
+}
+
+.page-link {
+    color: black !important;
+}
+
+
+.dataTables_paginate {
+    display: flex;
+    align-items: center;
+    float: right;
+}
+
+.ketselesaiopname {
+    background-color: beige !important;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.kanan {
+    text-align: right !important;
+}
+
+.hilang {
+    display: none !important;
+}
+
+.tombol-di-grid {
+    color: black;
+    border-radius: 3px !important;
+    min-width: 50px;
+    font-size: 11px;
+    padding: 3px 5px;
+}
+
+.tombol-di-grid-bulat {
+    /* color: black; */
+    width: 25px !important;
+    height: 25px !important;
+    font-size: 10px;
+    border-radius: 50% !important;
+    padding: 3px 5px;
+    text-align: center;
+}
+
+.card-stok {
+    min-height: 50px !important;
+    border: 1px dashed gray;
+}
+
+.card-stok .card-stok-dept {
+    font-size: 22px;
+}
+
+.card-stok .kiri,
+.card-stok .kanan {
+    text-align: center;
+    line-height: 15px;
+    width: 25% !important;
+}
+
+.card-stok .kiri {
+    width: 20% !important;
+}
+
+.card-stok .kanan {
+    border-left: 1px dashed gray;
+    position: relative;
+    text-align: center !important;
+}
+
+.card-stok .kanan::after,
+.card-stok .kanan::before {
+    content: '';
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    background: #F8F9FC;
+    border-radius: 100%;
+}
+
+.card-stok .kanan::after {
+    bottom: -15px;
+    left: -7.5px;
+}
+
+.card-stok .kanan::before {
+    top: -15px;
+    left: -7.5px;
+}
+
+.card-stok .tengah {
+    /* border-left: 1px dashed gray; */
+    line-height: 15px;
+    font-size: 13px;
+    ;
+}
+
+.card-stok .kiri span,
+.card-stok .kanan span,
+.card-stok .tengah .info {
+    font-size: 9px;
+}
+
+.ketrekopname {
+    line-height: 11px;
+}
+
+.ketrekopname span {
+    color: grey;
+}
+
+/* .dataTables_paginate a {
+    padding: 0 10px;
+} */
+
+/* .form-control {
+    border-color: red !important;
+    border-radius: 0px;
+} */
