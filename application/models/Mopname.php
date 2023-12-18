@@ -161,10 +161,10 @@ class Mopname extends CI_Model
         $query = $this->db->query("select *,'' as po,'' as item,'' as dis,kode as brgid,namabarang as spek,'' as color,'tb-brg' as jntb from referensi_barang where kode = '" . $id . "' ");
         return $query;
     }
-    public function isidata($id, $po, $item, $dis, $brg, $spe, $pcs, $stn, $kgs, $ket, $pc2, $hlm, $dok,$ins,$ble,$br,$xnt,$norut)
+    public function isidata($id, $po, $item, $dis, $brg, $spe, $pcs, $stn, $kgs, $ket, $pc2, $hlm, $dok,$ins,$ble,$br,$xnt,$norut,$per)
     {
-        $query = $this->db->query("insert into tb_detail_stokopname(id_stokopname,po,item,dis,kode_brg,spek,jumlah,id_satuan,kgs,ket,pcs,hlm,dok,insno,nobale,br,exnet,norut) values 
-        ('" . $id . "', '" . $po . "', '" . $item . "', '" . $dis . "', '" . $brg . "', '" . $spe . "', '" . $pcs . "', '" . $stn . "', '" . $kgs . "', '" . $ket . "', '" . $pc2 . "', '" . $hlm . "', '" . $dok . "', '" . $ins . "', '" . $ble . "', '" . $br . "', '" . $xnt . "', '" . $norut . "')");
+        $query = $this->db->query("insert into tb_detail_stokopname(id_stokopname,po,item,dis,kode_brg,spek,jumlah,id_satuan,kgs,ket,pcs,hlm,dok,insno,nobale,br,exnet,norut,person_id) values 
+        ('" . $id . "', '" . $po . "', '" . $item . "', '" . $dis . "', '" . $brg . "', '" . $spe . "', '" . $pcs . "', '" . $stn . "', '" . $kgs . "', '" . $ket . "', '" . $pc2 . "', '" . $hlm . "', '" . $dok . "', '" . $ins . "', '" . $ble . "', '" . $br . "', '" . $xnt . "', '" . $norut . "',".$per.")");
         return $query;
     }
     public function caribarangset($po,$item){
@@ -219,7 +219,7 @@ class Mopname extends CI_Model
         $query = $this->db->query("select *,a.id as xid from tb_detail_stokopname a 
         left join referensi_satuan b on b.id = a.id_satuan 
         LEFT JOIN user_manajemen c ON a.verifperson = c.person_id
-        where a.id_stokopname = " . $id . " order by a.id DESC");
+        where a.id_stokopname = " . $id . " order by a.id");
         return $query;
     }
     public function getdatastokopnameverif($id)

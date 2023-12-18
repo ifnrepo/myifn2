@@ -146,9 +146,10 @@ class Opname extends CI_Controller
         $ble = cekinput($_POST['xble']);
         $br = cekinput($_POST['xbr']);
         $xnt = cekinput($_POST['xnt']);
+        $xus = $this->session->userdata('iduser');
         $carkod = $this->mopname->carinorut($this->session->userdata('depopn'),$id)->row_array();
         $norut = (int) $carkod['kode'] + 1;
-        $query = $this->mopname->isidata($id, $po, $item, $dis, $brg, $spe, $pcs, $stn, $kgs, $ket, $pc2, $hlm, $dok, $ins,$ble,$br,$xnt,$norut);
+        $query = $this->mopname->isidata($id, $po, $item, $dis, $brg, $spe, $pcs, $stn, $kgs, $ket, $pc2, $hlm, $dok, $ins,$ble,$br,$xnt,$norut,$xus);
         if ($query) {
             $arr = ['1'];
             echo json_encode($arr);
