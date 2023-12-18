@@ -87,7 +87,6 @@
                             <input type="text" id="kgsg" class="hilang">
                             <input type="text" id="pcsg" class="hilang">
                             <input type="text" id="kodeupd" class="hilang">
-                            
                             <input type="text" id="xid" class="hilang">
                             <input type="text" class="form-control input-sm input-form text-gray-800 text-black" name="sku" id="sku" disabled>
                         </div>
