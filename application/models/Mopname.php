@@ -216,10 +216,10 @@ class Mopname extends CI_Model
     }
     public function getdatastokopname($id)
     {
-        $query = $this->db->query("select *,a.id as xid from tb_detail_stokopname a 
+        $query = $this->db->query("select *,a.id as xid,a.person_id AS personid from tb_detail_stokopname a 
         left join referensi_satuan b on b.id = a.id_satuan 
         LEFT JOIN user_manajemen c ON a.verifperson = c.person_id
-        where a.id_stokopname = " . $id . " order by a.id");
+        where a.id_stokopname = " . $id . " order by a.norut");
         return $query;
     }
     public function getdatastokopnameverif($id)

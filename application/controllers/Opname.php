@@ -13,6 +13,7 @@ class Opname extends CI_Controller
 
         $this->load->model('mopname');
         $this->load->model('mprofile');
+        $this->load->model('muser');
     }
     function index()
     {

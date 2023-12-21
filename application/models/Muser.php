@@ -11,4 +11,8 @@ class Muser extends CI_Model
         $query = $this->db->query("delete from user_manajemen where id = " . $id);
         return $query;
     }
+    public function getdatauser($id){
+        $query = $this->db->query("Select * from user_manajemen where person_id = '" . $id."' ");
+        return $query;
+    }
 }

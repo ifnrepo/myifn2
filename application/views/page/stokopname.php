@@ -195,7 +195,7 @@
                     <div class="row font-kecil text-black">
                         <label class="col-md-4" style="text-align: left;margin-top:5px;" for="inputDefault">No Urut Input</label>
                         <div class="col-md-8">
-                            <input type="text" class="form-control input-sm input-form text-gray-800" name="norut" id="norut" value="<?= $norut; ?>" readonly>
+                            <input type="number" class="form-control input-sm input-form text-gray-800" name="norut" id="norut" value="<?= $norut; ?>" >
                         </div>
                     </div>
                 </div>
@@ -232,6 +232,7 @@
                         <th>Sat</th>
                         <th>Kgs</th>
                         <th>Ket</th>
+                        <th>Input</th>
                         <th class="<?= $hilang ?>">Aksi</th>
                         <th class="<?= $fieldverif ?>">Cek</th>
                     </thead>
@@ -255,6 +256,7 @@
                                 <td><?= $brgstok['kode'] ?></td>
                                 <td class="kanan" style="font-size: 16px;"><?= angka($brgstok['kgs'], 2) ?></td>
                                 <td><?php echo $kete; ?></td>
+                                <td><?php echo getnamapersonil($brgstok['personid']); ?></td>
                                 <td style="text-align: center;" class="<?= $hilang ?>">
                                     <a href="#" class="btn-circle btn-sm btn-info tombol-di-grid-bulat text-gray-900 shadow-sm" title="Edit" id="editdataopname" rel="<?= $brgstok['xid'] ?>"><i class="fa fa-edit"></i></a>
                                     <a href="#" class="btn-circle btn-sm btn-danger tombol-di-grid-bulat text-gray-900 shadow-sm" data-href="<?= base_url() . 'opname/hapusdataopname/' . $brgstok['xid'] . '/' . $brgstok['id_stokopname'] ?>" data-news="Yakin anda akan menghapus data ini ?" data-target="#confirm-task" data-remote="false" data-toggle="modal" data-title="Hapus"><i class="fa fa-times"></i></a>

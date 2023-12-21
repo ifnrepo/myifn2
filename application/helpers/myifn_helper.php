@@ -336,3 +336,13 @@ function ponodis($po, $no, $dis, $brg)
 	}
 	return $hsl;
 }
+function getnamapersonil($dep){
+	if(is_null($dep)){
+		$nama = '';
+	}else{
+		$CI = &get_instance();
+		$kode = $CI->muser->getdatauser($dep)->row_array();	
+		$nama = $kode['nama_user'];
+	}
+	return $nama;
+}
