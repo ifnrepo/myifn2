@@ -22,7 +22,7 @@
         $kolom = $namastok['selesai'] == '1' ? 'col-sm-12' : 'col-sm-7';
         ?>
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <div>Departemen : <b><?= $namastok['departemen'] . ' (' . $this->session->userdata('depopn') . ')' ?></b></div>
                 <div>Keterangan : <?= $namastok['sublok'] ?></div>
                 <div class="row" style="font-size: 14px;">
@@ -42,7 +42,20 @@
             </div>
             <?= $this->session->flashdata('cekquery'); ?>
             <?= $this->session->flashdata('jmarray'); ?>
-            <div class="col-md-6 py-2" style="text-align:right;">
+            <div class="col-md-4" style="border-color: #dddbdb !important; border-left-style: solid; border-width: 1px;">
+                <div class="row font-kecil text-black">
+                    <label class="col-md-4" style="text-align: left;margin-top:5px;" for="inputDefault">User Input</label>
+                    <div class="col-md-6">
+                        <select class="form-control input-sm input-form text-gray-900" name="userinput" id="userinput">
+                            <option value="">-- Semua--</option>
+                            <?php foreach ($userstok->result_array() as $sat) { $selek = $this->session->userdata('userinput')==$sat['person_id'] ? 'selected' : ''; ?>
+                                <option value="<?= $sat['person_id'] ?>" <?= $selek; ?>><?= $sat['nama_user'] ?></option>
+                            <?php  } ?>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 py-2" style="text-align:right;">
                 <a href="#" class="btn btn-sm btn-danger shadow-sm font-kecil text-gray-900 <?= $tombolselesai ?> " data-href="<?= base_url() . 'opname/selesaiopname/' . $namastok['id'] ?>" data-news="Data ini telah selesai ?, anda tidak akan bisa edit kembali data ini." data-target="#confirm-task" data-remote="false" data-toggle="modal" data-title="Konfirmasi"><i class="fa fa-check"></i> Selesai</a>
                 <a href="#" class="btn btn-sm btn-success shadow-sm font-kecil text-gray-900 <?= $tomboledit ?>" data-href="<?= base_url() . 'opname/editopname/' . $namastok['id'] ?>" data-news="Edit data ini ?," data-target="#confirm-task" data-remote="false" data-toggle="modal" data-title="Konfirmasi"><i class="fa fa-edit"></i> Edit</a>
                 <a href="#" class="btn btn-sm btn-info shadow-sm font-kecil text-gray-900 <?= $tombolverif ?> " data-href="<?= base_url() . 'opname/verifopname/' . $namastok['id'] ?>" data-news="Verifikasi data ?" data-target="#confirm-task" data-remote="false" data-toggle="modal" data-title="Konfirmasi"><i class="fa fa-check"></i> Verifikasi</a>
@@ -261,12 +274,12 @@
                                     <a href="#" class="btn-circle btn-sm btn-info tombol-di-grid-bulat text-gray-900 shadow-sm" title="Edit" id="editdataopname" rel="<?= $brgstok['xid'] ?>"><i class="fa fa-edit"></i></a>
                                     <a href="#" class="btn-circle btn-sm btn-danger tombol-di-grid-bulat text-gray-900 shadow-sm" data-href="<?= base_url() . 'opname/hapusdataopname/' . $brgstok['xid'] . '/' . $brgstok['id_stokopname'] ?>" data-news="Yakin anda akan menghapus data ini ?" data-target="#confirm-task" data-remote="false" data-toggle="modal" data-title="Hapus"><i class="fa fa-times"></i></a>
                                 </td>
-                                <td class="py-2 <?= $fieldverif ?>" style="text-align:center;">
+                                <td class="py-2 <?= $fieldverif ?>" style="text-align:center;" id="kolomverif<?= $brgstok['xid']; ?>">
                                     <?php if($brgstok['sesuai'] != '1'){ ?>
-                                        <a href="#" id="tombol<?= $brgstok['xid'] ?>" class="text-danger <?= $cekverif; ?>" style="font-size: 14px;" data-href="<?= base_url() . 'opname/cekverif/' . $brgstok['xid'].'/'. $brgstok['id_stokopname'] ?>" data-news="Data Sesuai ?" data-target="#confirm-task" data-remote="false" data-toggle="modal" data-title="Konfirmasi"><i class="fa fa-times"></i></a>
+                                        <a data-href="#" id="tombol<?= $brgstok['xid'] ?>" class="text-danger <?= $cekverif; ?>" style="font-size: 14px;" href="<?= base_url() . 'opname/cekverif/' . $brgstok['xid'].'/kolomverif'. $brgstok['xid'] ?>" data-news="Data Sesuai ?" data-target="#modalBox-sm" data-remote="false" data-toggle="modal" data-title="Konfirmasi"><i class="fa fa-times"></i></a>
                                     <?php }else{ ?>
                                         <div style="line-height: 11px;">
-                                            <a href="#" id="tombol<?= $brgstok['xid'] ?>" class="text-success <?= $cekverif; ?>" data-href="<?= base_url() . 'opname/editcekverif/' . $brgstok['xid'].'/'. $brgstok['id_stokopname'] ?>" data-news="Batalkan Data Sesuai ?" data-target="#confirm-task" data-remote="false" data-toggle="modal" data-title="Konfirmasi"><i class="fa fa-check"></i></a><br>
+                                            <a data-href="#" id="tombol<?= $brgstok['xid'] ?>" class="text-success <?= $cekverif; ?>" href="<?= base_url() . 'opname/editcekverif/' . $brgstok['xid'].'/kolomverif'. $brgstok['xid'] ?>" data-news="Batalkan Data Sesuai ?" data-target="#modalBox-sm" data-remote="false" data-toggle="modal" data-title="Konfirmasi"><i class="fa fa-check"></i></a><br>
                                             <span style="font-size: 8px;">Oleh : <?= $brgstok['nama_user']; ?>,</span><br>
                                             <span style="font-size: 8px;"> Tgl : <?= $brgstok['verifdate']; ?></span>
                                         </div>

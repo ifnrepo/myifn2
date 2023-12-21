@@ -139,6 +139,20 @@ $("#tambahdata").click(function () {
 	}
 });
 
+$("#userinput").change(function () {
+	$.ajax({
+		dataType: "json",
+		type: "POST",
+		url: base_url + "opname/ubahuserinput",
+		data: {
+			pers: $(this).val(),
+		},
+		success: function (data) {
+			window.location.reload();
+		},
+	});
+});
+
 $(document).on("click", "#editdataopname", function () {
 	var rel = $(this).attr("rel");
 	$.ajax({

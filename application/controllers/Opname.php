@@ -55,6 +55,7 @@ class Opname extends CI_Controller
         $data['namastok'] = $this->mopname->datastokopname($id)->row_array();
         $data['satuan'] = $this->mopname->getsatuan()->result_array();
         $data['barangstok'] = $this->mopname->getdatastokopname($id);
+        $data['userstok'] = $this->mopname->getuserstokopname($id);
         $data['barangverif'] = $this->mopname->getdatastokopnameverif($id)->row_array();
         $header['submodul'] = 4;
         $header['personil'] = $this->mprofile->getprofile($this->session->userdata('iduser'))->row_array();
@@ -148,8 +149,9 @@ class Opname extends CI_Controller
         $br = cekinput($_POST['xbr']);
         $xnt = cekinput($_POST['xnt']);
         $xus = $this->session->userdata('iduser');
-        $carkod = $this->mopname->carinorut($this->session->userdata('depopn'),$id)->row_array();
-        $norut = (int) $carkod['kode'] + 1;
+        // $carkod = $this->mopname->carinorut($this->session->userdata('depopn'),$id)->row_array();
+        // $norut = (int) $carkod['kode'] + 1;
+        $norut = cekinput($_POST['xru']);
         $query = $this->mopname->isidata($id, $po, $item, $dis, $brg, $spe, $pcs, $stn, $kgs, $ket, $pc2, $hlm, $dok, $ins,$ble,$br,$xnt,$norut,$xus);
         if ($query) {
             $arr = ['1'];
@@ -228,18 +230,38 @@ class Opname extends CI_Controller
         echo $this->session->userdata('filterstok');
     }
     function cekverif($id,$ide){
+        $data = [
+            'id' => $id,
+            'kolom' => $ide
+        ];
+        $this->load->view('page/okeverif',$data);
+    }
+    function simpanverif(){
+        $id = $_POST['xid'];
         $query = $this->mopname->cekverif($id);
+        $html = '';
         if($query){
-            $url = base_url() . 'opname/stokopname/' . $ide;
-            redirect($url);
-        }
+            $html .= '<a data-href="#" id="tombol"'.$id.' class="text-success" href="'.base_url() . 'opname/editcekverif/' . $id.'/kolomverif'.$id.'" data-news="Batalkan Data Sesuai ?" data-target="#modalBox-sm" data-remote="false" data-toggle="modal" data-title="Konfirmasi"><i class="fa fa-check"></i></a>';
+            // $html .= '<i class="fa fa-check"></i>';
+        } 
+        echo json_encode($html);
     }
     function editcekverif($id,$ide){
+        $data = [
+            'id' => $id,
+            'kolom' => $ide
+        ];
+        $this->load->view('page/editverif',$data);
+    }
+    function batalverif(){
+        $id = $_POST['xid'];
         $query = $this->mopname->editcekverif($id);
+        $html = '';
         if($query){
-            $url = base_url() . 'opname/stokopname/' . $ide;
-            redirect($url);
-        }
+            $html .= '<a data-href="#" id="tombol"'.$id.' class="text-danger" style="font-size: 14px;" href="'.base_url() . 'opname/cekverif/' . $id.'/kolomverif'. $id.'" data-news="Data Sesuai ?" data-target="#modalBox-sm" data-remote="false" data-toggle="modal" data-title="Konfirmasi"><i class="fa fa-times"></i></a>';
+            // $html .= '<i class="fa fa-check"></i>';
+        } 
+        echo json_encode($html);
     }
     function carisublok(){
         $dat = $_POST['dta'];
@@ -250,5 +272,10 @@ class Opname extends CI_Controller
         $dat = $_POST['dta'];
         $this->session->unset_userdata('filtersublok');
         echo $this->session->userdata('filtersublok');
+    }
+    public function ubahuserinput(){
+        $pers = $_POST['pers'];
+        $this->session->set_userdata('userinput',$pers);        
+        echo 1;
     }
 }
