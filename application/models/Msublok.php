@@ -3,7 +3,7 @@ class Msublok extends CI_Model
 {
     public function carikode($dept)
     {
-        $query = $this->db->query("select * from tb_sublok where dept_id = '" . $dept . "' order by id desc ");
+        $query = $this->db->query("select * from tb_sublok where dept_id = '" . $dept . "' order by kode desc ");
         return $query;
     }
     public function getsublok()
@@ -59,7 +59,7 @@ class Msublok extends CI_Model
     }
     public function ceksubloksama($dept,$nama)
     {
-        $query = $this->db->query("select * from tb_sublok where dept_id = '" . $dept."' and sublok = '".$nama."' ");
+        $query = $this->db->query("select * from tb_sublok where sublok = '".$nama."' ");
         return $query;
     }
 }
