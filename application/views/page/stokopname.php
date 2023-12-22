@@ -26,16 +26,16 @@
                 <div>Departemen : <b><?= $namastok['departemen'] . ' (' . $this->session->userdata('depopn') . ')' ?></b></div>
                 <div>Keterangan : <?= $namastok['sublok'] ?></div>
                 <div class="row" style="font-size: 14px;">
-                    <div class="col-md-3 text-danger">
+                    <div class="col-md-6 col-6 text-danger">
                         Kgs : <?= rupiah($namastok['jmlkgs'], 2) ?>
                     </div>
-                    <div class="col-md-3 text-success">
+                    <div class="col-md-6 col-6 text-success">
                         Pcs : <?= rupiah($namastok['jmlpcs'], 0) ?>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-6 col-6">
                         Item : <?= rupiah($namastok['jmlitem'], 0) ?>
                     </div>
-                    <div class="col-md-3 <?= $tombolverif ?>">
+                    <div class="col-md-6 col-6 <?= $tombolverif ?>">
                         Verifikasi : <?= rupiah($barangverif['c'], 0) ?>
                     </div>
                 </div>
@@ -237,9 +237,9 @@
         </div>
         <div class="<?= $kolom ?> col-12 font-kecil mt-1">
             <div class="table-responsive tabler">
-                <table class="table table-bordered table-striped table-hover responsive nowrap datatableasli">
+                <table class="table table-bordered table-striped table-hover datatableasli">
                     <thead class="bg-info">
-                        <th>Nama Barang</th>
+                        <th data-priority="1">Nama Barang</th>
                         <th>No</th>
                         <th>Qty</th>
                         <th>Sat</th>
@@ -247,7 +247,7 @@
                         <th>Ket</th>
                         <th>Input</th>
                         <th class="<?= $hilang ?>">Aksi</th>
-                        <th class="<?= $fieldverif ?>">Cek</th>
+                        <th class="<?= $fieldverif ?>" data-priority="2">Cek</th>
                     </thead>
                     <tbody>
                         <?php foreach ($barangstok->result_array() as $brgstok) { 
@@ -276,10 +276,10 @@
                                 </td>
                                 <td class="py-2 <?= $fieldverif ?>" style="text-align:center;" id="kolomverif<?= $brgstok['xid']; ?>">
                                     <?php if($brgstok['sesuai'] != '1'){ ?>
-                                        <a data-href="#" id="tombol<?= $brgstok['xid'] ?>" class="text-danger <?= $cekverif; ?>" style="font-size: 14px;" href="<?= base_url() . 'opname/cekverif/' . $brgstok['xid'].'/kolomverif'. $brgstok['xid'] ?>" data-news="Data Sesuai ?" data-target="#modalBox-sm" data-remote="false" data-toggle="modal" data-title="Konfirmasi"><i class="fa fa-times"></i></a>
+                                        <a id="tombol<?= $brgstok['xid'] ?>" class="text-danger <?= $cekverif; ?>" style="font-size: 14px;" href="<?= base_url() . 'opname/cekverif/' . $brgstok['xid'].'/kolomverif'. $brgstok['xid'] ?>" data-news="Data Sesuai ?" data-target="#modalBox-sm" data-remote="false" data-toggle="modal" data-title="Konfirmasi"><i class="fa fa-times"></i></a>
                                     <?php }else{ ?>
                                         <div style="line-height: 11px;">
-                                            <a data-href="#" id="tombol<?= $brgstok['xid'] ?>" class="text-success <?= $cekverif; ?>" href="<?= base_url() . 'opname/editcekverif/' . $brgstok['xid'].'/kolomverif'. $brgstok['xid'] ?>" data-news="Batalkan Data Sesuai ?" data-target="#modalBox-sm" data-remote="false" data-toggle="modal" data-title="Konfirmasi"><i class="fa fa-check"></i></a><br>
+                                            <a id="tombol<?= $brgstok['xid'] ?>" class="text-success <?= $cekverif; ?>" href="<?= base_url() . 'opname/editcekverif/' . $brgstok['xid'].'/kolomverif'. $brgstok['xid'] ?>" data-news="Batalkan Data Sesuai ?" data-target="#modalBox-sm" data-remote="false" data-toggle="modal" data-title="Konfirmasi"><i class="fa fa-check"></i></a><br>
                                             <span style="font-size: 8px;">Oleh : <?= $brgstok['nama_user']; ?>,</span><br>
                                             <span style="font-size: 8px;"> Tgl : <?= $brgstok['verifdate']; ?></span>
                                         </div>

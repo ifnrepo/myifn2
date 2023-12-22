@@ -7,7 +7,7 @@
     </div>
     <hr class="small">
     <div class="tombol mb-2">
-        <a href="#" class="btn btn-sm btn-success" id="okeverif"><i class="fas fa-check"></i> Ya</a>
+        <a class="btn btn-sm btn-success" id="okeverif"><i class="fas fa-check"></i> Ya</a>
         <a href="#" class="btn btn-sm btn-danger" data-dismiss="modal" id="keluarx"><i class="fas fa-times"></i> Tidak</a>
     </div>
 </div>
@@ -22,7 +22,8 @@
                 xid: $("#kode").val(),
             },
             success: function (data) {
-                // alert(data);
+                // alert(kolom);
+                // $("#x"+kolom).removeClass('bg-danger');
                 $("#"+kolom).html(data).show();
                 $("#keluarx").click();
             },

@@ -30,7 +30,7 @@
             </div>
             <div class="mt-1 ketrekopname">
                 Jumlah Rekord : <?= $jumlahrec; ?><br>
-                <span style="font-size: 10px;">On Progress : <?= $jumlahonprogress ?>; Selesai : <?= $jumlahselesai ?>; Verifikasi: <?= $jumlahverif ?>;</span>
+                <span style="font-size: 10px;">On Progress : <?= $jumlahonprogress ?>; Selesai : <?= $jumlahselesai-$jumlahverif ?>; Verifikasi: <?= $jumlahverif ?>;</span>
             </div>
         </div>
     </div>

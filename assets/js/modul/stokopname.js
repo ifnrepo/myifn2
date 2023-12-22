@@ -273,7 +273,6 @@ $("#scanbarang").click(function () {
 
 $(document).on("click", "#chk2", function () {
 	var cek = $(this).val();
-	alert(cek);
 	$("#tombol" + cek).click();
 });
 
@@ -348,6 +347,7 @@ function caribarang(dex) {
 			sku: dex,
 		},
 		success: function (data) {
+			// alert(data);
 			if (data.length == "1") {
 				if (data[0]["tb"] == "tb_ref") {
 					var edata = data[0]["kode_brg"];

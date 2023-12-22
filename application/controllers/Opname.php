@@ -241,7 +241,7 @@ class Opname extends CI_Controller
         $query = $this->mopname->cekverif($id);
         $html = '';
         if($query){
-            $html .= '<a data-href="#" id="tombol"'.$id.' class="text-success" href="'.base_url() . 'opname/editcekverif/' . $id.'/kolomverif'.$id.'" data-news="Batalkan Data Sesuai ?" data-target="#modalBox-sm" data-remote="false" data-toggle="modal" data-title="Konfirmasi"><i class="fa fa-check"></i></a>';
+            $html .= '<a id="tombol"'.$id.' class="text-success" href="'.base_url() . 'opname/editcekverif/' . $id.'/kolomverif'.$id.'" data-news="Batalkan Data Sesuai ?" data-target="#modalBox-sm" data-remote="false" data-toggle="modal" data-title="Konfirmasi"><i class="fa fa-check"></i></a>';
             // $html .= '<i class="fa fa-check"></i>';
         } 
         echo json_encode($html);
@@ -258,7 +258,7 @@ class Opname extends CI_Controller
         $query = $this->mopname->editcekverif($id);
         $html = '';
         if($query){
-            $html .= '<a data-href="#" id="tombol"'.$id.' class="text-danger" style="font-size: 14px;" href="'.base_url() . 'opname/cekverif/' . $id.'/kolomverif'. $id.'" data-news="Data Sesuai ?" data-target="#modalBox-sm" data-remote="false" data-toggle="modal" data-title="Konfirmasi"><i class="fa fa-times"></i></a>';
+            $html .= '<a id="tombol"'.$id.' class="text-danger" style="font-size: 14px;" href="'.base_url() . 'opname/cekverif/' . $id.'/kolomverif'. $id.'" data-news="Data Sesuai ?" data-target="#modalBox-sm" data-remote="false" data-toggle="modal" data-title="Konfirmasi"><i class="fa fa-times"></i></a>';
             // $html .= '<i class="fa fa-check"></i>';
         } 
         echo json_encode($html);

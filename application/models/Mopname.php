@@ -138,11 +138,12 @@ class Mopname extends CI_Model
             $this->session->set_flashdata('jmarray',count($arrpisah));
         }
         for($z=0;$z < count($arrpisah);$z++){
+            $isi = $arrpisah[$z];
             if($z==0){
-                $xkata = "concat(spek,sku) like '%".$arrpisah[$z]."%' ";
+                $xkata = "concat_ws('',spek,po) like '%".$isi."%' ";
             }
             else{
-                $xkata .= " and concat(spek,sku) like '%".$arrpisah[$z]."%' ";
+                $xkata .= " and concat_ws('',spek,po) like '%".$isi."%' ";
             }
         }
         $this->session->set_flashdata('cekquery',$xkata);
