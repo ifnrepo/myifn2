@@ -49,7 +49,7 @@
                     <label class="col-md-4" style="text-align: left;margin-top:5px;" for="inputDefault">Level user</label>
                     <div class="col-md-8">
                         <!-- <input type="text" class="form-control input-sm input-form text-gray-800" name="level" id="level"> -->
-                        <select class="form-control input-sm input-form" name="levelid" id="levelid" >
+                        <select class="form-control input-sm input-form" name="levelid" id="levelid" <?php if($this->session->userdata('leveluser')<4){ echo "disabled"; } ?>  >
                             <option value="0" <?php if ($person['level'] == 0) {
                                                     echo "selected";
                                                 } ?>>No Level</option>
@@ -108,9 +108,9 @@
                             foreach ($dep->result_array() as $dept) {
                                 $ke = 'cek' . $no++; ?>
                                 <?php if ($mode == 'ubah') { ?>
-                                    <input type="checkbox" class="input-sm mt-1" rel="<?= $dept['dept_id'] ?>" id="<?= $ke ?>" <?= cekceked($dept['dept_id'] . ',', $person['person_id']) ?>> <?= $dept['departemen'] ?> <br>
+                                    <input type="checkbox" class="input-sm mt-1" rel="<?= $dept['dept_id'] ?>" id="<?= $ke ?>" <?= cekceked($dept['dept_id'] . ',', $person['person_id']) ?> <?php if($this->session->userdata('leveluser')<4){ echo "disabled"; } ?>> <?= $dept['departemen'] ?> <br>
                                 <?php } else { ?>
-                                    <input type="checkbox" class="input-sm mt-1" rel="<?= $dept['dept_id'] ?>" id="<?= $ke ?>"> <?= $dept['departemen'] ?><br>
+                                    <input type="checkbox" class="input-sm mt-1" rel="<?= $dept['dept_id'] ?>" id="<?= $ke ?>" <?php if($this->session->userdata('leveluser')<4){ echo "disabled"; } ?>> <?= $dept['departemen'] ?><br>
                                 <?php } ?>
                             <?php } ?>
                         </div>

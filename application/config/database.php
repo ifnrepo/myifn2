@@ -75,9 +75,9 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => '10.10.6.101',
-	'username' => 'indonept_xfactor',
-	'password' => 'ifnit$123#',
+	'hostname' => 'localhost',
+	'username' => 'root',
+	'password' => '',
 	'database' => 'ifndb',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',

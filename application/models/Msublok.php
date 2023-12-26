@@ -8,7 +8,13 @@ class Msublok extends CI_Model
     }
     public function getsublok()
     {
-        $query = $this->db->query("Select a.*,b.departemen from tb_sublok a left join referensi_departemen b on b.dept_id = a.dept_id ");
+        $hak = $this->session->userdata('aksesuser');
+        $hak2 = '';
+        for ($i = 0; $i < strlen($hak) / 3; $i++) {
+            $hak2 .=  "'" . substr($hak, $i * 3, 2) . "',";
+        }
+        $query = $this->db->query("Select a.*,b.departemen from tb_sublok a left join referensi_departemen b on b.dept_id = a.dept_id
+        where a.dept_id in (" . substr($hak2, 0, strlen($hak2) - 1) . ") ");
         return $query;
     }
     public function addsublok()

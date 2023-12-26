@@ -46,8 +46,24 @@ class Mopname extends CI_Model
         }else{
             $xsublok = "";
         }
+        if(!empty($this->session->userdata('filterverifikasi'))){
+            $nil = $this->session->userdata('filterverifikasi');
+            switch ($nil) {
+                case 1:
+                    $xverif = ' and a.selesai=0 and a.verifikasi=0';
+                    break;
+                case 2:
+                    $xverif = ' and a.selesai=1 and a.verifikasi=0';
+                    break;
+                default:
+                    $xverif = ' and a.selesai=1 and a.verifikasi=1';
+                    break;
+            }
+        }else{
+            $xverif = "";
+        }
         $levelsuper = $this->session->userdata('leveluser')==3 ? ' and a.selesai = 1 ' : '';
-        $query = $this->db->query("select a.*,b.sublok,c.nama_user from tb_stokopname a left join tb_sublok b on b.kode = a.ket left join user_manajemen c on a.verifperson = c.person_id where a.dept_id in (" . substr($hak2, 0, strlen($hak2) - 1) . ")".$levelsuper.$xsublok." order by a.dept_id,b.sublok");
+        $query = $this->db->query("select a.*,b.sublok,c.nama_user from tb_stokopname a left join tb_sublok b on b.kode = a.ket left join user_manajemen c on a.verifperson = c.person_id where a.dept_id in (" . substr($hak2, 0, strlen($hak2) - 1) . ")".$levelsuper.$xsublok.$xverif." order by a.dept_id,b.sublok");
         return $query;
     }
     public function dataprogress()

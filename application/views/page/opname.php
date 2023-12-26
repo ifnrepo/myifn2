@@ -16,6 +16,21 @@
     <hr class="small">
     <div class="form-horizontal">
         <div class="row font-kecil text-black">
+            <label class="col-md-2" style="text-align: left;margin-top:5px;" for="inputDefault">Status SO</label>
+            <div class="col-md-6">
+                <select class="form-control input-sm input-form text-gray-800" name="progresinput" id="progresinput">
+                    <option value="">Semua</option>
+                    <option value="1" <?php if($this->session->userdata('filterverifikasi') == 1){ echo 'selected'; } ?>>On Progress</option>
+                    <option value="2" <?php if($this->session->userdata('filterverifikasi') == 2){ echo 'selected'; } ?>>Selesai</option>
+                    <option value="3" <?php if($this->session->userdata('filterverifikasi') == 3){ echo 'selected'; } ?>>Verifikasi</option> 
+                </select>
+            </div>
+            <div class="mt-1 ketrekopname">
+            </div>
+        </div>
+    </div>
+    <div class="form-horizontal">
+        <div class="row font-kecil text-black">
             <label class="col-md-2" style="text-align: left;margin-top:5px;" for="inputDefault">Departemen Opname</label>
             <div class="col-md-6">
                 <select class="form-control input-sm input-form text-gray-800" name="deptopname" id="deptopname">

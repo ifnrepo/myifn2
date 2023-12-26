@@ -226,7 +226,9 @@ class Opname extends CI_Controller
     function filterstokopname()
     {
         $dat = $_POST['dta'];
+        $det = $_POST['dte'];
         $this->session->set_userdata('filterstok', $dat);
+        $this->session->set_userdata('filterverifikasi', $det);
         echo $this->session->userdata('filterstok');
     }
     function cekverif($id,$ide){
