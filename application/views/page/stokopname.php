@@ -9,7 +9,7 @@
     <div class="infoopname text-black py-2 px-2 shadow-sm">
         <?php
         $tombolselesai = $this->session->userdata('leveluser') >= 2 && $namastok['selesai'] == '0' && $namastok['verifikasi'] == '0' ? '' : 'hilang'; 
-        $tombolverif = $this->session->userdata('leveluser') >= 3 && $namastok['selesai'] == '1' && $namastok['verifikasi'] == '0' ? '' : 'hilang'; 
+        $tombolverif = $this->session->userdata('leveluser') >= 3 && ($namastok['selesai'] == '1' || $namastok['verifikasi'] == '1') ? '' : 'hilang'; 
         $tomboledit = ($this->session->userdata('leveluser') == 2 || $this->session->userdata('leveluser') > 3)  && $namastok['selesai'] == '1' && $namastok['verifikasi'] == '0' ? '' : 'hilang'; 
         $tomboleditverif = $this->session->userdata('leveluser') > 3 && $namastok['selesai'] == '1' && $namastok['verifikasi'] == '1' ? '' : 'hilang'; 
 
@@ -36,7 +36,8 @@
                         Item : <?= rupiah($namastok['jmlitem'], 0) ?>
                     </div>
                     <div class="col-md-6 col-6 <?= $tombolverif ?>">
-                        Verifikasi : <?= rupiah($barangverif['c'], 0) ?>
+                        <?php $persen = (int)$namastok['jmlitem']==0 ? rupiah(((int)$barangverif['c']/1)*100,2) :rupiah(((int)$barangverif['c']/(int)$namastok['jmlitem'])*100,2); ?>
+                        Verifikasi : <?= rupiah($barangverif['c'], 0).' ('.$persen.'%)' ?>
                     </div>
                 </div>
             </div>
@@ -245,6 +246,7 @@
                         <th>Sat</th>
                         <th>Kgs</th>
                         <th>Ket</th>
+                        <th>No <br> Bale</th>
                         <th>Input</th>
                         <th class="<?= $hilang ?>">Aksi</th>
                         <th class="<?= $fieldverif ?>" data-priority="2">Cek</th>
@@ -254,9 +256,9 @@
                             $intr = '';
                             $kete = '';
                             $kete .= $brgstok['ket'] == '' ? '' : $brgstok['ket'];
-                            $kete .= $brgstok['dok'] == '' ? '' : ' IB '.$brgstok['dok'];
-                            $kete .= $brgstok['nobale'] == '' ? '' : ' Bale '.$brgstok['nobale'];
-                            $intr .= $brgstok['insno'] == '' ? '' : ' Insno : '.$brgstok['insno'];
+                            $kete .= trim($brgstok['dok']) == '' ? '' : ' IB '.$brgstok['dok'];
+                            // $kete .= trim($brgstok['nobale']) == '' ? '' : ' Bale '.$brgstok['nobale'];
+                            $intr .= trim($brgstok['insno']) == '' ? '' : ' Insno : '.$brgstok['insno'];
                             $breakd = $brgstok['br'] == '0' ? '' : 'text-merah';
                         ?>
                             <tr class="tabel-bodi">
@@ -269,6 +271,7 @@
                                 <td><?= $brgstok['kode'] ?></td>
                                 <td class="kanan" style="font-size: 16px;"><?= angka($brgstok['kgs'], 2) ?></td>
                                 <td><?php echo $kete; ?></td>
+                                <td><?= $brgstok['nobale']; ?></td>
                                 <td><?php echo getnamapersonil($brgstok['personid']); ?></td>
                                 <td style="text-align: center;" class="<?= $hilang ?>">
                                     <a href="#" class="btn-circle btn-sm btn-info tombol-di-grid-bulat text-gray-900 shadow-sm" title="Edit" id="editdataopname" rel="<?= $brgstok['xid'] ?>"><i class="fa fa-edit"></i></a>

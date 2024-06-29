@@ -54,7 +54,8 @@
             $("#skubale").val($(this).attr('rel5'));
             $("#jmlpcs").val($(this).attr('rel7'));
             $("#satuan").val($(this).attr('rel8'));
-            $("#jmlkgs").val(parseFloat($(this).attr('rel6'))*parseFloat($(this).attr('rel7')));
+            // $("#jmlkgs").val(parseFloat($(this).attr('rel6'))*parseFloat($(this).attr('rel7')));
+            $("#jmlkgs").val($(this).attr('rel6'));
         }
         isidata(x, y);
         $("#tutup").click();

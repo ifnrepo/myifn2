@@ -156,10 +156,10 @@ class Mopname extends CI_Model
         for($z=0;$z < count($arrpisah);$z++){
             $isi = $arrpisah[$z];
             if($z==0){
-                $xkata = "concat_ws('',spek,po) like '%".$isi."%' ";
+                $xkata = "concat_ws('',spek,po,insno,sku) like '%".$isi."%' ";
             }
             else{
-                $xkata .= " and concat_ws('',spek,po) like '%".$isi."%' ";
+                $xkata .= " and concat_ws('',spek,po,insno,sku) like '%".$isi."%' ";
             }
         }
         $this->session->set_flashdata('cekquery',$xkata);
@@ -178,12 +178,18 @@ class Mopname extends CI_Model
         $query = $this->db->query("select *,'' as po,'' as item,'' as dis,kode as brgid,namabarang as spek,'' as color,'tb-brg' as jntb from referensi_barang where kode = '" . $id . "' ");
         return $query;
     }
-    public function isidata($id, $po, $item, $dis, $brg, $spe, $pcs, $stn, $kgs, $ket, $pc2, $hlm, $dok,$ins,$ble,$br,$xnt,$norut,$per)
+    public function isidata($id, $po, $item, $dis, $brg, $spe, $pcs, $stn, $kgs, $ket, $pc2, $hlm, $dok,$ins,$ble,$xnt,$norut,$br,$xus)
     {
-        $query = $this->db->query("insert into tb_detail_stokopname(id_stokopname,po,item,dis,kode_brg,spek,jumlah,id_satuan,kgs,ket,pcs,hlm,dok,insno,nobale,br,exnet,norut,person_id) values 
-        ('" . $id . "', '" . $po . "', '" . $item . "', '" . $dis . "', '" . $brg . "', '" . $spe . "', '" . $pcs . "', '" . $stn . "', '" . $kgs . "', '" . $ket . "', '" . $pc2 . "', '" . $hlm . "', '" . $dok . "', '" . $ins . "', '" . $ble . "', '" . $br . "', '" . $xnt . "', '" . $norut . "',".$per.")");
+        $query = $this->db->query("insert into tb_detail_stokopname(id_stokopname,po,item,dis,kode_brg,spek,jumlah,id_satuan,kgs,ket,pcs,hlm,dok,insno,nobale,exnet,norut,br,person_id) values 
+        ('" . $id . "', '" . $po . "', '" . $item . "', '" . $dis . "', '" . $brg . "', '" . $spe . "', '" . $pcs . "', '" . $stn . "', '" . $kgs . "', '" . $ket . "', '" . $pc2 . "', '" . $hlm . "', '" . $dok . "', '" . $ins . "', '" . $ble . "', '" . $xnt . "', '" . $norut . "', '" . $br . "', '" . $xus . "')");
         return $query;
     }
+    // public function isidata($id, $po, $item, $dis, $brg, $spe, $pcs, $stn, $kgs, $ket, $pc2, $hlm, $dok,$ins,$ble,$br,$xnt,$norut,$xus)
+    // {
+    //     $query = $this->db->query("insert into tb_detail_stokopname(id_stokopname,po,item,dis,kode_brg,spek,jumlah,id_satuan,kgs,ket,pcs,hlm,dok,insno,nobale,br,exnet,norut,person_id) values 
+    //     ('" . $id . "', '" . $po . "', '" . $item . "', '" . $dis . "', '" . $brg . "', '" . $spe . "', '" . $pcs . "', '" . $stn . "', '" . $kgs . "', '" . $ket . "', '" . $pc2 . "', '" . $hlm . "', '" . $dok . "', '" . $ins . "', '" . $ble . "', '" . $br . "', '" . $xnt . "', '" . $norut . "',".$per.")");
+    //     return $query;
+    // }
     public function caribarangset($po,$item){
         $item1 = str_replace('-1','-2',trim($item));
         $item2 = str_replace('-1','-3',trim($item));
@@ -315,6 +321,14 @@ class Mopname extends CI_Model
         $query = $this->db->query("SELECT MAX(a.norut) AS kode FROM tb_detail_stokopname a
         LEFT JOIN tb_stokopname b ON a.id_stokopname = b.id
         WHERE b.dept_id = '".$dep."' AND a.id_stokopname = ".$blok);
+        return $query;
+    }
+    public function cekdataurut($norut,$id){
+        $query = $this->db->query("SELECT COUNT(*) as jml FROM tb_detail_stokopname where id_stokopname=".$id." and norut = ".$norut);
+        return $query;
+    }
+    public function cekdataopname($dept,$ket){
+        $query = $this->db->query("SELECT COUNT(*) as jml FROM tb_stokopname where dept_id='".$dept."' and ket = '".$ket."' ");
         return $query;
     }
 }

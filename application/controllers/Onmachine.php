@@ -30,6 +30,7 @@ class Onmachine extends CI_Controller
             $this->session->set_userdata('lokmachine','');
         }
         $data['datamesin'] = $this->monmachine->getdata();
+        $data['selesai'] = $this->monmachine->getdata()->row_array();
         $this->session->set_userdata('depopn', $this->session->userdata('filterstok'));
         $footer['footer'] = 'onmachine';
         $this->load->view('header', $header);
@@ -175,5 +176,53 @@ class Onmachine extends CI_Controller
         $idx = $_POST['id'];
         $query = $this->monmachine->getdataonmachine($idx);
         echo json_encode($query->result_array());
+    }
+    function selesai(){
+        $hasil = $this->monmachine->selesai();
+        if($hasil){
+            $url = base_url().'onmachine';
+            redirect($url);
+        }
+    }
+    function bukaselesai(){
+        $hasil = $this->monmachine->bukaselesai();
+        if($hasil){
+            $url = base_url().'onmachine';
+            redirect($url);
+        }
+    }
+    function simpanverif(){
+        $id = $_POST['xid'];
+        $query = $this->monmachine->cekverif($id);
+        $html = '';
+        if($query){
+            $html .= '<a id="tombol"'.$id.' class="text-success" href="'.base_url() . 'onmachine/editcekverif/' . $id.'/kolomverif'.$id.'" data-news="Batalkan Data Sesuai ?" data-target="#modalBox-sm" data-remote="false" data-toggle="modal" data-title="Konfirmasi"><i class="fa fa-check"></i></a>';
+            // $html .= '<i class="fa fa-check"></i>';
+        } 
+        echo json_encode($html);
+    }
+    function batalverif(){
+        $id = $_POST['xid'];
+        $query = $this->monmachine->editcekverif($id);
+        $html = '';
+        if($query){
+            $html .= '<a id="tombol"'.$id.' class="text-danger" style="font-size: 14px;" href="'.base_url() . 'onmachine/cekverif/' . $id.'/kolomverif'. $id.'" data-news="Data Sesuai ?" data-target="#modalBox-sm" data-remote="false" data-toggle="modal" data-title="Konfirmasi"><i class="fa fa-times"></i></a>';
+            // $html .= '<i class="fa fa-check"></i>';
+        } 
+        echo json_encode($html);
+    }
+    function cekverif($id,$ide){
+        $data = [
+            'id' => $id,
+            'kolom' => $ide
+        ];
+        $this->load->view('page/okeverifmc',$data);
+    }
+    function editcekverif($id,$ide){
+        $data = [
+            'id' => $id,
+            'kolom' => $ide
+        ];
+        $this->load->view('page/editverifmc',$data);
     }
 }

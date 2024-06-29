@@ -43,14 +43,22 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-6 col-sm-6 col-12"></div>
+            <div class="col-md-6 col-sm-6 col-12 text-right">
+                <?php if( isset($selesai['selesai'])): ?>
+                    <?php if($selesai['selesai']==1){ ?>
+                        <a href="<?= base_url() . 'onmachine/bukaselesai'; ?>" class="d-sm-inline-block btn btn-sm btn-info shadow-sm font-kecil text-gray-900"><i class="fas fa-edit fa-sm"></i> Edit</a>
+                    <?php }else{ ?>
+                        <a href="<?= base_url() . 'onmachine/selesai'; ?>" class="d-sm-inline-block btn btn-sm btn-success shadow-sm font-kecil text-gray-900"><i class="fas fa-check fa-sm"></i> Selesai</a>
+                    <?php } ?>
+                <?php endif; ?>
+            </div>
             <div class="col-md-12">
                 <hr class="small">
                 <div class="table-responsive tabler">
                     <table class="table table-bordered table-striped table-hover responsive nowrap datatableasli">
                         <thead class="bg-info">
                             <tr>
-                                <th>Mesin</th>
+                                <th data-priority="1">Mesin</th>
                                 <th>SKU</th>
                                 <th>Ins No</th>
                                 <th>Brt Bunsen Ksg</th>
@@ -65,7 +73,12 @@
                                 <th>Lot di Rol (Dari)</th>
                                 <th>Lot di Rol (Sampai)</th>
                                 <th>Jml Rpm di Mesin</th>
+                                <?php if(isset($selesai['selesai'])): ?>
+                                <?php if($selesai['selesai']==0 || $selesai['selesai']==''){ ?>
                                 <th>Aksi</th>
+                                <?php }else{ ?>
+                                <th data-priority="2">Verifikasi</th>
+                                <?php } endif; ?>
                             </tr>
                         </thead>
                         <tbody>
@@ -86,9 +99,20 @@
                                     <td class="kanan"><?= $sublok['lot_dari']; ?></td>
                                     <td class="kanan"><?= $sublok['lot_sampai']; ?></td>
                                     <td class="kanan"><?= $sublok['rpm']; ?></td>
-                                    <td class="kanan" style="text-align: center;">
-                                        <a href="#" class="btn-circle btn-sm btn-info tombol-di-grid-bulat text-gray-900 shadow-sm" title="Edit" id="editdataonmachine" rel="<?= $sublok['id'] ?>"><i class="fa fa-edit"></i></a>
-                                        <a href="#" class="btn-circle btn-sm btn-danger tombol-di-grid-bulat text-gray-900 shadow-sm" data-href="<?= base_url() . 'onmachine/hapusdataonmachine/' . $sublok['id']  ?>" data-news="Yakin anda akan menghapus data ini ?" data-target="#confirm-task" data-remote="false" data-toggle="modal" data-title="Hapus"><i class="fa fa-times"></i></a>
+                                    <td class="text-center" id="kolomverif<?= $sublok['id']; ?>">
+                                    <?php if($sublok['selesai']==0 || $sublok['selesai']==''){ ?>
+                                            <a href="#" class="btn-circle btn-sm btn-info tombol-di-grid-bulat text-gray-900 shadow-sm" title="Edit" id="editdataonmachine" rel="<?= $sublok['id'] ?>"><i class="fa fa-edit"></i></a>
+                                            <a href="#" class="btn-circle btn-sm btn-danger tombol-di-grid-bulat text-gray-900 shadow-sm" data-href="<?= base_url() . 'onmachine/hapusdataonmachine/' . $sublok['id']  ?>" data-news="Yakin anda akan menghapus data ini ?" data-target="#confirm-task" data-remote="false" data-toggle="modal" data-title="Hapus"><i class="fa fa-times"></i></a>
+                                    <?php }else{ if($sublok['sesuai']!=1){ ?>
+                                            <a id="tombol<?= $sublok['id'] ?>" class="text-danger" style="font-size: 14px;" href="<?= base_url().'onmachine/cekverif/'.$sublok['id'].'/kolomverif'.$sublok['id'] ?>" data-news="Data Sesuai ?" data-target="#modalBox-sm" data-remote="false" data-toggle="modal" data-title="Konfirmasi"><i class="fa fa-times"></i></a>
+                                    <?php }else{ ?>
+                                        <div style="line-height: 11px;">
+                                        <a id="tombol<?= $sublok['id']; ?>" class="text-success" href="<?= base_url().'onmachine/editcekverif/' . $sublok['id'].'/kolomverif'.$sublok['id'] ?>" data-news="Batalkan Data Sesuai ?" data-target="#modalBox-sm" data-remote="false" data-toggle="modal" data-title="Konfirmasi"><i class="fa fa-check"></i></a><br>
+                                            <span style="font-size: 8px;">Oleh : <?= $sublok['nama_user']; ?>,</span><br>
+                                            <span style="font-size: 8px;"> Tgl : <?= $sublok['verifdate']; ?></span>
+                                        </div>
+                                    <?php } ?>
+                                    <?php } ?>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>

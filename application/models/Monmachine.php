@@ -11,7 +11,10 @@ class Monmachine extends CI_Model
         $bln = $this->session->userdata('blnmachine');
         $thn = $this->session->userdata('thnmachine');
         $lok = $this->session->userdata('lokmachine');
-        $query = $this->db->query("Select * from tb_onmachine where tahbul = '".$thn.$bln."' ");
+        $query = $this->db->query("Select tb_onmachine.*,user_manajemen.nama_user 
+        from tb_onmachine 
+        left join user_manajemen on user_manajemen.person_id = tb_onmachine.verifperson
+        where tahbul = '".$thn.$bln."' order by machno ");
         return $query;
     }
     public function getdatabobbin(){
@@ -101,6 +104,18 @@ class Monmachine extends CI_Model
         $query = $this->db->update('tb_onmachine',$data);
         return $query;
     }
+    public function selesai(){
+        $bl = $this->session->userdata('blnmachine');
+        $th = $this->session->userdata('thnmachine');
+        $query = $this->db->query("Update tb_onmachine set selesai = 1 where tahbul = '".$th.$bl."' ");
+        return $query;
+    }
+    public function bukaselesai(){
+        $bl = $this->session->userdata('blnmachine');
+        $th = $this->session->userdata('thnmachine');
+        $query = $this->db->query("Update tb_onmachine set selesai = 0 where tahbul = '".$th.$bl."' ");
+        return $query;
+    }
     public function cariberatbobbin($id){
         $query = $this->db->get_where('referensi_jenis_bobbin',array('kodebob'=> $id));
         return $query;
@@ -117,6 +132,14 @@ class Monmachine extends CI_Model
     }
     public function caridataonmachine($id){
         $query = $this->db->get_where('tb_onmachine',array('id'=> $id));
+        return $query;
+    }
+    function cekverif($id){
+        $query = $this->db->query("update tb_onmachine set sesuai='1',verifperson='".$this->session->userdata('iduser')."',verifdate=now() where id = '" . $id . "' ");
+        return $query;
+    }
+    function editcekverif($id){
+        $query = $this->db->query("update tb_onmachine set sesuai='0' where id = '" . $id . "' ");
         return $query;
     }
 }

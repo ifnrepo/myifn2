@@ -90,12 +90,14 @@ class Opname extends CI_Controller
         $tgl = cekinput($_POST['tgl']);
         $person = cekinput($_POST['person']);
         $ket = cekinput(strtoupper($_POST['ket']));
+        $query = $this->mopname->cekdataopname($dept,$ket)->row_array();
+        if($query['jml']==0){
         $query = $this->mopname->adddataopname($dept, $nama, $ket, $tgl, $person);
-        // if ($query) {
-        echo json_encode($query->result_array());
-        //     $arr = ['1'];
-        //     echo json_encode($arr);
-        // }
+            echo json_encode($query->result_array());
+        }else{
+            $arr = ['1','2'];
+            echo json_encode($arr);
+        }
     }
     function hapusdataopname($id, $ide)
     {
@@ -152,9 +154,18 @@ class Opname extends CI_Controller
         // $carkod = $this->mopname->carinorut($this->session->userdata('depopn'),$id)->row_array();
         // $norut = (int) $carkod['kode'] + 1;
         $norut = cekinput($_POST['xru']);
-        $query = $this->mopname->isidata($id, $po, $item, $dis, $brg, $spe, $pcs, $stn, $kgs, $ket, $pc2, $hlm, $dok, $ins,$ble,$br,$xnt,$norut,$xus);
-        if ($query) {
-            $arr = ['1'];
+        $query2 = $this->mopname->cekdataurut($norut,$id)->row_array();
+        if($query2['jml']==0){
+            // $query = $this->mopname->isidatacontoh($id);
+            $query = $this->mopname->isidata($id, $po, $item, $dis, $brg, $spe, $pcs, $stn, $kgs, $ket, $pc2, $hlm, $dok, $ins,$ble,$xnt,$norut,$br,$xus);
+            // $query = $this->mopname->isidata($id, $po, $item, $dis, $brg, $spe, $pcs, $stn, $kgs, $ket, $pc2, $hlm, $dok, $ins,$ble,$br,$xnt,$norut,$xus);
+            // $query = $this->mopname->isidatacontoh($id, $po, $item, $dis, $brg, $spe, $pcs, $stn, $kgs, $ket, $pc2);
+            if ($query) {
+                $arr = ['1'];
+                echo json_encode($arr);
+            }
+        }else{
+            $arr = ['1','2'];
             echo json_encode($arr);
         }
     }
@@ -179,9 +190,16 @@ class Opname extends CI_Controller
         $br = cekinput($_POST['xbr']);
         $xnt = cekinput($_POST['xnt']);
         $norut = cekinput($_POST['xru']);
-        $query = $this->mopname->editdata($id, $po, $item, $dis, $brg, $spe, $pcs, $stn, $kgs, $ket, $pc2, $id2, $hlm, $dok,$ins,$ble,$br,$xnt,$norut);
-        if ($query) {
-            $arr = ['1'];
+        $query2 = $this->mopname->cekdataurut($norut,$id)->row_array();
+        if($query2['jml']==1){
+            $query = $this->mopname->editdata($id, $po, $item, $dis, $brg, $spe, $pcs, $stn, $kgs, $ket, $pc2, $id2, $hlm, $dok,$ins,$ble,$br,$xnt,$norut);
+            // $query = $this->mopname->isidata($id, $po, $item, $dis, $brg, $spe, $pcs, $stn, $kgs, $ket, $pc2, $hlm, $dok, $ins,$ble,$xnt,$norut,$br,$xus);
+            if ($query) {
+                $arr = ['1'];
+                echo json_encode($arr);
+            }
+        }else{
+            $arr = ['1','2'];
             echo json_encode($arr);
         }
     }

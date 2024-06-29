@@ -337,7 +337,7 @@ function ponodis($po, $no, $dis, $brg)
 	return $hsl;
 }
 function getnamapersonil($dep){
-	if(is_null($dep)){
+	if(is_null($dep) || $dep == ''){
 		$nama = '';
 	}else{
 		$CI = &get_instance();
