@@ -101,6 +101,19 @@
                     </div>
                 </div>
                 <div class="row font-kecil text-black">
+                    <label class="col-md-4" style="text-align: left;margin-top:5px;" for="inputDefault">Aktif</label>
+                    <div class="col-md-8">
+                        <select class="form-control input-sm input-form" name="aktif" id="aktif">
+                            <option value="1" <?php if ($person['aktif'] == 1) {
+                                                    echo "selected";
+                                                } ?>>Aktif</option>
+                            <option value="0" <?php if ($person['aktif'] == 0) {
+                                                    echo "selected";
+                                                } ?>>Tidak Aktif</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row font-kecil text-black">
                     <label class="col-md-4" style="text-align: left;margin-top:5px;" for="inputDefault">Akses Dept</label>
                     <div class="col-md-8">
                         <div style="border-color: 1px solid green;min-height: 120px;" class="mt-1">

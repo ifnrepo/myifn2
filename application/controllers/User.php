@@ -38,7 +38,8 @@ class User extends CI_Controller
         $dept = cekinput($_POST['dept']);
         $aidi = cekinput($_POST['aidi']);
         $kel = cekinput($_POST['kel']);
-        $query = $this->mprofile->updateprofil($induk, $nama, $bagi, $jaba, $leve, $logi, $pass, $dept, $aidi, $kel);
+        $tif = cekinput($_POST['tif']);
+        $query = $this->mprofile->updateprofil($induk, $nama, $bagi, $jaba, $leve, $logi, $pass, $dept, $aidi, $kel,$tif);
         if ($query) {
             $arr = ['1'];
             echo json_encode($arr);
@@ -53,6 +54,7 @@ class User extends CI_Controller
         $data['person']['bagian'] = null;
         $data['person']['jabatan'] = null;
         $data['person']['level'] = 0;
+        $data['person']['aktif'] = 0;
         $data['person']['jenkel'] = null;
         $data['person']['login'] = null;
         $data['person']['password'] = null;
@@ -104,7 +106,8 @@ class User extends CI_Controller
         $dept = cekinput($_POST['dept']);
         $aidi = cekinput($_POST['aidi']);
         $kel = cekinput($_POST['kel']);
-        $query = $this->mprofile->simpanprofile($induk, $nama, $bagi, $jaba, $leve, $logi, $pass, $dept, $aidi, $kel);
+        $tif = cekinput($_POST['tif']);
+        $query = $this->mprofile->simpanprofile($induk, $nama, $bagi, $jaba, $leve, $logi, $pass, $dept, $aidi, $kel,$tif);
         if ($query) {
             $arr = ['1'];
             echo json_encode($arr);

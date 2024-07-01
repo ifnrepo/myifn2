@@ -10,6 +10,7 @@ $("#simpanprofile").click(function () {
 	var log = $("#login").val();
 	var pas = $("#password").val();
 	var klm = $("#jenkel").val();
+	var tif = $("#aktif").val();
 	var isi = "";
 	for (let x = 1; x < 22; x++) {
 		if ($("#cek" + x).prop("checked")) {
@@ -32,6 +33,7 @@ $("#simpanprofile").click(function () {
 			dept: isi,
 			aidi: idx,
 			kel: klm,
+			tif: tif,
 		},
 		success: function (data) {
 			// alert(data);
@@ -53,6 +55,7 @@ $("#updateprofile").click(function () {
 	var log = $("#login").val();
 	var pas = $("#password").val();
 	var klm = $("#jenkel").val();
+	var tif = $("#aktif").val();
 	var isi = "";
 	for (let x = 1; x < 22; x++) {
 		if ($("#cek" + x).prop("checked")) {
@@ -75,6 +78,7 @@ $("#updateprofile").click(function () {
 			dept: isi,
 			aidi: idx,
 			kel: klm,
+			tif: tif,
 		},
 		success: function (data) {
 			// alert(data);

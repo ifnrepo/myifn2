@@ -15,7 +15,7 @@
                     <th>Bagian</th>
                     <th>Jabatan</th>
                     <th>Level</th>
-                    <th>Ket</th>
+                    <th>Aktif</th>
                     <th>Aksi</th>
                 </thead>
                 <tbody>
@@ -46,7 +46,10 @@
                             <td><?= $user['bagian']; ?></td>
                             <td><?= $user['jabatan']; ?></td>
                             <td><?= $lvl; ?></td>
-                            <td></td>
+                            <td class="text-center">
+                                <?php $cek = $user['aktif']==1 ? 'text-success' : 'text-danger'; $cek2 = $user['aktif']==1 ? 'fa-check' : 'fa-times'; ?>
+                                <span class="<?= $cek; ?>"><i class="fa <?= $cek2; ?>"></i></span>
+                            </td>
                             <td style="text-align: center;">
                                 <a href="<?= base_url() . 'User/viewuser/' . $user['person_id'] ?>" class="btn-circle btn-sm btn-success tombol-di-grid-bulat text-gray-900 shadow-sm" title="View" id="viewuser" data-target="#modalBox-lg" data-remote="false" data-toggle="modal" data-title="View Data"><i class="fa fa-eye"></i></a>
                                 <a href="<?= base_url() . 'User/Edituser/' . $user['id'] ?>" class="btn-circle btn-sm btn-info tombol-di-grid-bulat text-gray-900 shadow-sm" title="Edit" id="edituser" rel="<?= $user['id'] ?>"><i class="fa fa-edit"></i></a>
