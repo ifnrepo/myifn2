@@ -56,8 +56,8 @@ class Monmachine extends CI_Model
                 $xkata .= " and concat(spek,sku) like '%".$arrpisah[$z]."%' ";
             }
         }
-        $this->session->set_flashdata('cekquery',$xkata);
-        $data = $this->db->query("select *,if(po='' or po is null,'tb_ref','tb_poe') AS tb from tb_barang_stok where ".$xkata." ANd id_dept = '" . $dept . "' order by po,item,dis,insno ");
+        $this->session->set_flashdata('cekquery',"select *,if(po='' or po is null,'tb_ref','tb_poe') AS tb from tb_barang_stok where ".$xkata." and id_dept = '" . $dept . "' order by po,item,dis,insno ");
+        $data = $this->db->query("select *,if(po='' or po is null,'tb_ref','tb_poe') AS tb from tb_barang_stok where ".$xkata." and id_dept = '" . $dept . "' order by po,item,dis,insno ");
         return $data;
     }
     public function getdatapo($id)
@@ -127,8 +127,13 @@ class Monmachine extends CI_Model
     }
     public function getdataonmachine($id)
     {
-        $query = $this->db->query("select a.* from tb_onmachine a  where a.id = " . $id);
+        $query = $this->db->query("select a.*,b.bunsen from tb_onmachine a left join referensi_msn_netting b on b.mach_no = a.machno where a.id = " . $id);
         return $query;
+    }
+    public function getberatbunsen($y){
+        $this->db->where('mach_no',$y);
+        $query = $this->db->get('referensi_msn_netting')->row_array();
+        return $query['bunsen'];
     }
     public function caridataonmachine($id){
         $query = $this->db->get_where('tb_onmachine',array('id'=> $id));

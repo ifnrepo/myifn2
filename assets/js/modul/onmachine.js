@@ -96,13 +96,13 @@ $("#jmbobspl").change(function () {
 	} else {
 		let jmlspl = parseFloat($(this).val());
 		let jmlbob = parseFloat($("#bobjmlmsn").val());
-		let persen = Math.ceil(jmlbob * 0.1);
+		let persen = Math.ceil(jmlbob * 0.2);
 		if (persen != jmlspl) {
 			pesan("Jumlah sampling tidak SESUAI", "info");
 			$(this).removeClass("text-black");
 			$(this).addClass("text-danger");
 			$(
-				"<span class='text-danger mb-2' style='font-size: 10px;' id='peringatan'>Jumlah Sampling kurang dari 10% !</span>"
+				"<span class='text-danger mb-2' style='font-size: 10px;' id='peringatan'>Jumlah Sampling kurang dari 20% !</span>"
 			).insertAfter($(this));
 		}
 	}

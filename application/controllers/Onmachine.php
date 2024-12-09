@@ -20,6 +20,7 @@ class Onmachine extends CI_Controller
         $header['submodul'] = 4;
         $header['modul'] = 'main';
         $this->session->set_userdata('nomesin','');
+        $this->session->unset_userdata('brtbunsen');
         if($this->session->userdata('blnmachine')==''){
             $this->session->set_userdata('blnmachine',date('m'));
         }
@@ -48,6 +49,7 @@ class Onmachine extends CI_Controller
             $data['action'] = base_url().'Onmachine/editbhn';
             $hasil = $this->monmachine->getdataonmachine($id)->row_array();
             $this->session->set_userdata('nomesin',$hasil['machno']);
+            $this->session->set_userdata('brtbunsen',$hasil['bunsen']);
             $data['xid'] = $id;
             $data['machno'] = $hasil['machno'];
             $data['po'] = $hasil['po'];
@@ -103,7 +105,9 @@ class Onmachine extends CI_Controller
     }
     function simpanmesin(){
         $x = $_POST['msn'];
+        $y = $this->monmachine->getberatbunsen($x);
         $this->session->set_userdata('nomesin',$x);
+        $this->session->set_userdata('brtbunsen',$y);
         // $url = base_url().'onmachine/addonmachine';
         // redirect($url);
         echo $x;

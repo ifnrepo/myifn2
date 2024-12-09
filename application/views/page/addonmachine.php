@@ -92,31 +92,31 @@
                     <div class="tab-content" id="nav-tabContent" style="min-height: 230px !important;">
                         <div class="tab-pane fade show p-1 active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
                             <div class="row font-kecil text-black mb-0">
-                                <label class="col-md-4 col-6 col-sm-6" style="text-align: left;margin-top:5px;line-height: 10px;" for="inputDefault">Berat Kosong <br><span style="font-size: 9px !important;color: #706f6f;">1 Pcs Bunsen</span> </label>
+                                <label class="col-md-4 col-6 col-sm-6" style="text-align: left;margin-top:5px;line-height: 10px;" for="inputDefault">Berat Kosong (1)<br><span style="font-size: 9px !important;color: #706f6f;">1 Pcs Bunsen</span> </label>
                                 <div class="col-md-8">
-                                    <input type="number" class="form-control input-sm input-form text-gray-800 text-black " name="bunko" id="bunko" value="<?= $bunko ?>" onkeypress="return checkNumber(event)" required>
+                                    <input type="number" class="form-control input-sm input-form text-gray-800 text-black " name="bunko" id="bunko" value="<?= $this->session->userdata('brtbunsen') ?>" onkeypress="return checkNumber(event)" required>
                                 </div>
                             </div>
                             <div class="row font-kecil text-black mb-0">
-                                <label class="col-md-4 col-6 col-sm-6" style="text-align: left;margin-top:5px;line-height: 10px;" for="inputDefault">Jumlah di Box <br><span style="font-size: 9px !important;color: #706f6f;">Jml Bunsen isi pada Box Cadangan</span></label>
+                                <label class="col-md-4 col-6 col-sm-6" style="text-align: left;margin-top:5px;line-height: 10px;" for="inputDefault">Jumlah di Box (2)<br><span style="font-size: 9px !important;color: #706f6f;">Jml Bunsen isi pada Box Cadangan</span></label>
                                 <div class="col-md-8">
                                     <input type="number" class="form-control input-sm input-form text-gray-800 text-black " name="bunjmlbox" id="bunjmlbox" value="<?= $bunjmlbox ?>" onkeypress="return checkNumber(event)">
                                 </div>
                             </div>
                             <div class="row font-kecil text-black mb-0">
-                                <label class="col-md-4 col-6 col-sm-6" style="text-align: left;margin-top:5px;line-height: 10px;" for="inputDefault">Berat di Box <br><span style="font-size: 9px !important;color: #706f6f;">Berat rata-rata 1 Pcs Bunsen di Box</span></label>
+                                <label class="col-md-4 col-6 col-sm-6" style="text-align: left;margin-top:5px;line-height: 10px;" for="inputDefault">Berat di Box (3)<br><span style="font-size: 9px !important;color: #706f6f;">Berat rata-rata 1 Pcs Bunsen di Box</span></label>
                                 <div class="col-md-8">
                                     <input type="number" class="form-control input-sm input-form text-gray-800 text-black " name="bunbrtbox" id="bunbrtbox" value="<?= $bunbrtbox ?>" onkeypress="return checkNumber(event)">
                                 </div>
                             </div>
                             <div class="row font-kecil text-black mb-0">
-                                <label class="col-md-4 col-6 col-sm-6" style="text-align: left;margin-top:5px;line-height: 10px;" for="inputDefault">Jumlah di Mesin <br><span style="font-size: 9px !important;color: #706f6f;">Jml Bunsen isi pada Mesin</span></label>
+                                <label class="col-md-4 col-6 col-sm-6" style="text-align: left;margin-top:5px;line-height: 10px;" for="inputDefault">Jumlah di Mesin (4)<br><span style="font-size: 9px !important;color: #706f6f;">Jml Bunsen isi pada Mesin</span></label>
                                 <div class="col-md-8">
                                     <input type="number" class="form-control input-sm input-form text-gray-800 text-black " name="bunjmlmsn" id="bunjmlmsn" value="<?= $bunjmlmsn ?>" onkeypress="return checkNumber(event)">
                                 </div>
                             </div>
                             <div class="row font-kecil text-black mb-0">
-                                <label class="col-md-4 col-6 col-sm-6" style="text-align: left;margin-top:5px;line-height: 10px;" for="inputDefault">Berat di Mesin <br><span style="font-size: 9px !important;color: #706f6f;">Berat rata-rata 1 Pcs Bunsen di Mesin</span></label>
+                                <label class="col-md-4 col-6 col-sm-6" style="text-align: left;margin-top:5px;line-height: 10px;" for="inputDefault">Berat di Mesin (5)<br><span style="font-size: 9px !important;color: #706f6f;">Berat rata-rata 1 Pcs Bunsen di Mesin</span></label>
                                 <div class="col-md-8">
                                     <input type="number" class="form-control input-sm input-form text-gray-800 text-black " name="bunbrtmsn" id="bunbrtmsn" value="<?= $bunbrtmsn ?>" onkeypress="return checkNumber(event)">
                                 </div>
@@ -124,19 +124,19 @@
                         </div>
                         <div class="tab-pane fade p-1" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
                             <div class="row font-kecil text-black mb-0">
-                                <label class="col-md-4 col-6 col-sm-6" style="text-align: left;margin-top:5px;line-height: 10px;" for="inputDefault">Jumlah di Mesin <br><span style="font-size: 9px !important;color: #706f6f;">-</span></label>
+                                <label class="col-md-4 col-6 col-sm-6" style="text-align: left;margin-top:5px;line-height: 10px;" for="inputDefault">Jumlah di Mesin (6)<br><span style="font-size: 9px !important;color: #706f6f;">-</span></label>
                                 <div class="col-md-8">
                                     <input type="number" class="form-control input-sm input-form text-gray-800 text-black " name="bobjmlmsn" id="bobjmlmsn" value="<?= $bobjmlmsn ?>" onkeypress="return checkNumber(event)">
                                 </div>
                             </div>
                             <div class="row font-kecil text-black mb-0">
-                                <label class="col-md-4 col-6 col-sm-6" style="text-align: left;margin-top:5px;line-height: 10px;" for="inputDefault">Jumlah Sampling <br><span style="font-size: 9px !important;color: #706f6f;">Jml 10% Sampling Bobin di Mesin</span></label>
+                                <label class="col-md-4 col-6 col-sm-6" style="text-align: left;margin-top:5px;line-height: 10px;" for="inputDefault">Jumlah Sampling (7)<br><span style="font-size: 9px !important;color: #706f6f;">Jml 20% Sampling Bobin di Mesin</span></label>
                                 <div class="col-md-8" style="line-height: 10px;">
                                     <input type="number" class="form-control input-sm input-form text-black " name="jmbobspl" id="jmbobspl" value="<?= $jmbobspl ?>" onkeypress="return checkNumber(event)">
                                 </div>
                             </div>
                             <div class="row font-kecil text-black mb-1">
-                                <label class="col-md-4 col-6 col-sm-6" style="text-align: left;margin-top:5px;" for="inputDefault">Jenis Bobin </label>
+                                <label class="col-md-4 col-6 col-sm-6" style="text-align: left;margin-top:5px;" for="inputDefault">Jenis Bobin (8)</label>
                                 <div class="col-md-8">
                                     <!-- <input type="number" class="form-control input-sm input-form text-gray-800 text-black " name="jnsbob" id="jnsbob" onkeypress="return checkNumber(event)"> -->
                                     <select class="form-control input-sm input-form text-gray-800 text-black " name="jnsbob" id="jnsbob">
@@ -148,13 +148,13 @@
                                 </div>
                             </div>
                             <div class="row font-kecil text-black mb-0">
-                                <label class="col-md-4 col-6 col-sm-6" style="text-align: left;margin-top:5px;line-height: 10px;" for="inputDefault">Berat Kosong <br><span style="font-size: 9px !important;color: #706f6f;">1 Pcs Bobin</span></label>
+                                <label class="col-md-4 col-6 col-sm-6" style="text-align: left;margin-top:5px;line-height: 10px;" for="inputDefault">Berat Kosong (9)<br><span style="font-size: 9px !important;color: #706f6f;">1 Pcs Bobin</span></label>
                                 <div class="col-md-8">
                                     <input type="number" class="form-control input-sm input-form text-gray-800 text-black " name="bobko" id="bobko" value="<?= $bobko ?>" onkeypress="return checkNumber(event)">
                                 </div>
                             </div>
                             <div class="row font-kecil text-black mb-0">
-                                <label class="col-md-4 col-6 col-sm-6" style="text-align: left;margin-top:5px;line-height: 10px;" for="inputDefault">Berat Isi <br><span style="font-size: 9px !important;color: #706f6f;">Berat 10% Sampling Bobin di Mesin</span></label>
+                                <label class="col-md-4 col-6 col-sm-6" style="text-align: left;margin-top:5px;line-height: 10px;" for="inputDefault">Berat Isi (10)<br><span style="font-size: 9px !important;color: #706f6f;">Berat 20% Sampling Bobin di Mesin</span></label>
                                 <div class="col-md-8">
                                     <input type="number" class="form-control input-sm input-form text-gray-800 text-black " name="bobisi" id="bobisi" value="<?= $bobisi ?>" onkeypress="return checkNumber(event)">
                                 </div>
@@ -163,19 +163,19 @@
                         <!-- <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">.....</div> -->
                     </div>
                     <div class="row font-kecil text-black mb-2">
-                        <label class="col-md-4 col-6 col-sm-6" style="text-align: left;margin-top:5px;" for="inputDefault">Lot di Mesin (dari)</label>
+                        <label class="col-md-4 col-6 col-sm-6" style="text-align: left;margin-top:5px;" for="inputDefault">Lot di Mesin (dari) (11)</label>
                         <div class="col-md-8">
                             <input type="number" class="form-control input-sm input-form text-gray-800 text-black " name="lot_dari" id="lot_dari" value="<?= $lot_dari ?>" onkeypress="return checkNumber(event)">
                         </div>
                     </div>
                     <div class="row font-kecil text-black mb-2">
-                        <label class="col-md-4 col-6 col-sm-6" style="text-align: left;margin-top:5px;" for="inputDefault">Lot di Mesin (sampai)</label>
+                        <label class="col-md-4 col-6 col-sm-6" style="text-align: left;margin-top:5px;" for="inputDefault">Lot di Mesin (sampai) (11)</label>
                         <div class="col-md-8">
                             <input type="number" class="form-control input-sm input-form text-gray-800 text-black " name="lot_sampai" id="lot_sampai" value="<?= $lot_sampai ?>" onkeypress="return checkNumber(event)">
                         </div>
                     </div>
                     <div class="row font-kecil text-black mb-2">
-                        <label class="col-md-4 col-6 col-sm-6" style="text-align: left;margin-top:5px;" for="inputDefault">RPM Mesin</label>
+                        <label class="col-md-4 col-6 col-sm-6" style="text-align: left;margin-top:5px;" for="inputDefault">RPM Mesin (12)</label>
                         <div class="col-md-8">
                             <input type="number" class="form-control input-sm input-form text-gray-800 text-black " name="rpm" id="rpm" value="<?= $rpm ?>" onkeypress="return checkNumber(event)">
                         </div>
