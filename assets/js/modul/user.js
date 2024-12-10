@@ -39,7 +39,9 @@ $("#simpanprofile").click(function () {
 			// alert(data);
 			if (data.length == "1") {
 				pesan("Data berhasil disimpan !", "success");
-				$("#kembaliprofil").click();
+				setTimeout(() => {
+					window.location.reload();
+				}, 2000);
 			} else {
 				pesan("Data tidak ada, cek data dan pastikan koneksi baik", "info");
 			}

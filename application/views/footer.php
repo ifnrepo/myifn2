@@ -60,27 +60,27 @@
 <!-- Custom scripts for all pages-->
 <script src="<?= base_url() . 'assets/js/sb-admin-2.js' ?>"></script>
 <script src="<?= base_url() . 'assets/js/refresh.js' ?>"></script>
-
+<?php $timeunik = '1733796189'; ?>
 <!-- Page level custom scripts -->
-<script src="<?= base_url() . 'assets/js/myscript.js' ?>"></script>
+<script src="<?= base_url() . 'assets/js/myscript.js?'.$timeunik ?>"></script>
 <?php if (isset($footer) && $footer == 'stokopname') { ?>
-    <script src="<?= base_url() . 'assets/js/modul/stokopname.js' ?>"></script>
-    <script src="<?= base_url() . 'assets/js/modul/opname.js' ?>"></script>
+    <script src="<?= base_url() . 'assets/js/modul/stokopname.js?'.$timeunik ?>"></script>
+    <script src="<?= base_url() . 'assets/js/modul/opname.js?'.$timeunik ?>"></script>
 <?php } ?>
 <?php if (isset($footer) && $footer == 'profile') { ?>
-    <script src="<?= base_url() . 'assets/js/modul/profile.js' ?>"></script>
+    <script src="<?= base_url() . 'assets/js/modul/profile.js?'.$timeunik ?>"></script>
 <?php } ?>
 <?php if (isset($footer) && $footer == 'user') { ?>
-    <script src="<?= base_url() . 'assets/js/modul/user.js' ?>"></script>
+    <script src="<?= base_url() . 'assets/js/modul/user.js?'.$timeunik ?>"></script>
 <?php } ?>
 <?php if (isset($footer) && $footer == 'sublok') { ?>
-    <script src="<?= base_url() . 'assets/js/modul/sublok.js' ?>"></script>
+    <script src="<?= base_url() . 'assets/js/modul/sublok.js?'.$timeunik ?>"></script>
 <?php } ?>
 <?php if (isset($footer) && $footer == 'onmachine') { ?>
-    <script src="<?= base_url() . 'assets/js/modul/onmachine.js' ?>"></script>
+    <script src="<?= base_url() . 'assets/js/modul/onmachine.js?'.$timeunik ?>"></script>
 <?php } ?>
 <?php if (isset($footer) && $footer == 'cari') { ?>
-    <script src="<?= base_url() . 'assets/js/modul/cari.js' ?>"></script>
+    <script src="<?= base_url() . 'assets/js/modul/cari.js?'.$timeunik ?>"></script>
 <?php } ?>
 
 </body>

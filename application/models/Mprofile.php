@@ -25,8 +25,8 @@ class Mprofile extends CI_Model
     public function simpanprofile($induk, $nama, $bagi, $jaba, $leve, $logi, $pass, $dept, $aidi, $jenkel,$aktif)
     {
         $unik = (new DateTime())->getTimestamp();
-        $query = $this->db->query("insert into user_manajemen (person_id,noinduk, nama_user,bagian,jabatan,level,login,password,dep_akses,jenkel)values('" . $unik . "' ,'" . $induk . "' , 
-        '" . $nama . "', '" . $bagi . "', '" . $jaba . "', " . $leve . ",'" . $logi . "' , '" . encrypto($pass) . "', '" . $dept . "','" . $jenkel . "',".$aktif."') ");
+        $query = $this->db->query("insert into user_manajemen (person_id,noinduk, nama_user,bagian,jabatan,level,login,password,dep_akses,jenkel,aktif)values('" . $unik . "' ,'" . $induk . "' , 
+        '" . $nama . "', '" . $bagi . "', '" . $jaba . "', " . $leve . ",'" . $logi . "' , '" . encrypto($pass) . "', '" . $dept . "','" . $jenkel . "',".$aktif.") ");
         return $query;
     }
 }
