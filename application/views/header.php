@@ -136,6 +136,7 @@
             $sub3 = $submodul == '3' ? 'active' : '';
             $sub4 = $submodul == '4' ? 'active' : '';
             $sub5 = $submodul == '5' ? 'active' : '';
+            $sub6 = $submodul == '6' ? 'active' : '';
             $hilang = $this->session->userdata('leveluser') == 4 ? '' : 'hilang';
             ?>
 
@@ -171,6 +172,11 @@
                 <a class="nav-link text-gray-900 pt-1 pb-1" href="<?= base_url() . 'profile' ?>">
                     <i class="fas fa-fw fa-user-alt"></i>
                     <span>Profile</span></a>
+            </li>
+            <li class="nav-item <?= $sub6 ?>">
+                <a class="nav-link text-gray-900 pt-1 pb-1" href="<?= base_url() . 'departemen' ?>">
+                    <i class="fas fa-fw fa-building"></i>
+                    <span>Departemen</span></a>
             </li>
             <li class="nav-item <?= $sub3 ?>">
                 <a class="nav-link text-gray-900 <?= $hilang ?> pt-1 pb-1" href="<?= base_url() . 'user'  ?>">

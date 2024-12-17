@@ -10,8 +10,12 @@ class Msublok extends CI_Model
     {
         $hak = $this->session->userdata('aksesuser');
         $hak2 = '';
-        for ($i = 0; $i < strlen($hak) / 3; $i++) {
-            $hak2 .=  "'" . substr($hak, $i * 3, 2) . "',";
+        if($this->session->userdata('depsublok')==''){
+            for ($i = 0; $i < strlen($hak) / 3; $i++) {
+                $hak2 .=  "'" . substr($hak, $i * 3, 2) . "',";
+            }
+        }else{
+            $hak2 .= "'".$this->session->userdata('depsublok'). "',";
         }
         $query = $this->db->query("Select a.*,b.departemen from tb_sublok a left join referensi_departemen b on b.dept_id = a.dept_id
         where a.dept_id in (" . substr($hak2, 0, strlen($hak2) - 1) . ") ");

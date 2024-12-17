@@ -11,10 +11,12 @@ class Main extends CI_Controller
             redirect($url);
         }
         $this->load->model('mprofile');
+        $this->load->model('mopname');
     }
     function index()
     {
         $header['personil'] = $this->mprofile->getprofile($this->session->userdata('iduser'))->row_array();
+        $header['datacekso'] = $this->mopname->getceklisso();
         $header['submodul'] = 1;
         $header['modul'] = 'main';
         $this->load->view('header', $header);

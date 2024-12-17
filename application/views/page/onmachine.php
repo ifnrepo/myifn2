@@ -44,9 +44,14 @@
                 </div>
             </div>
             <div class="col-md-6 col-sm-6 col-12 text-right">
-                <?php if( isset($selesai['selesai'])): ?>
+                <?php if(isset($selesai['selesai'])): ?>
                     <?php if($selesai['selesai']==1){ ?>
-                        <a href="<?= base_url() . 'onmachine/bukaselesai'; ?>" class="d-sm-inline-block btn btn-sm btn-info shadow-sm font-kecil text-gray-900"><i class="fas fa-edit fa-sm"></i> Edit</a>
+                         <?php if($selesai['selesai']==1 && $selesai['verifikasi']==0){ ?>
+                            <a href="<?= base_url() . 'onmachine/bukaselesai'; ?>" class="d-sm-inline-block btn btn-sm btn-success shadow-sm font-kecil text-gray-900"><i class="fas fa-edit fa-sm"></i> Edit</a>
+                            <a href="<?= base_url() . 'onmachine/verifikasi'; ?>" class="d-sm-inline-block btn btn-sm btn-info shadow-sm font-kecil text-gray-900"><i class="fas fa-check fa-sm"></i> Verifikasi</a>
+                        <?php }else{ ?>
+                            <a href="<?= base_url() . 'onmachine/bukaverifikasi'; ?>" class="d-sm-inline-block btn btn-sm btn-warning shadow-sm font-kecil text-gray-900"><i class="fas fa-edit fa-sm"></i> Edit Verifikasi</a>
+                        <?php } ?>
                     <?php }else{ ?>
                         <a href="<?= base_url() . 'onmachine/selesai'; ?>" class="d-sm-inline-block btn btn-sm btn-success shadow-sm font-kecil text-gray-900"><i class="fas fa-check fa-sm"></i> Selesai</a>
                     <?php } ?>

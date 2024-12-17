@@ -14,6 +14,7 @@ class Opname extends CI_Controller
         $this->load->model('mopname');
         $this->load->model('mprofile');
         $this->load->model('muser');
+        $this->load->model('mdepartemen');
     }
     function index()
     {
@@ -63,6 +64,8 @@ class Opname extends CI_Controller
         $carkod = $this->mopname->carinorut($this->session->userdata('depopn'),$id)->row_array();
         $data['norut'] = (int) $carkod['kode'] + 1;
         $this->session->set_userdata('depopn', $data['namastok']['dept_id']);
+        $depart = $this->mdepartemen->getdatabykode($data['namastok']['dept_id'])->row_array();
+        $data['persendept'] = $depart['persen_so'];
         $this->load->view('header', $header);
         $this->load->view('page/stokopname', $data);
         $this->load->view('footer', $footer);

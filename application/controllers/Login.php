@@ -28,6 +28,7 @@ class Login extends CI_Controller
             $this->session->set_userdata('fullakses', $data['ful_akses']);
             $this->session->set_userdata('leveluser', $data['level']);
             $this->session->set_userdata('getinifn', 1);
+            $this->session->set_userdata('periodeso', $this->mlogin->getperiodeso());
             $this->loginberhasil();
         } else {
             $this->session->set_flashdata('info', 'logingagal');

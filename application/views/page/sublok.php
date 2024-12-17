@@ -13,10 +13,10 @@
                         <div class="row font-kecil text-black">
                             <label class="col-md-4 col-6 col-sm-6" style="text-align: left;margin-top:5px;" for="inputDefault">Nama Sublok </label>
                             <div class="col-md-8">
-                                <select class="form-control input-sm input-form text-gray-800 text-black" id="deptsublok" name="deptsublok" disabled>
+                                <select class="form-control input-sm input-form text-gray-800 text-black" id="deptsublok" name="deptsublok">
                                     <option value="">--Pilih Departemen--</option>
-                                    <?php foreach ($departemen as $dept) : ?>
-                                        <option value="<?= $dept['dept_id'] ?>"><?= $dept['departemen']; ?></option>
+                                    <?php foreach ($departemen as $dept) : $selek = $this->session->userdata('depsublok')==$dept['dept_id'] ? 'selected' : ''; ?>
+                                        <option value="<?= $dept['dept_id'] ?>" <?= $selek; ?>><?= $dept['departemen']; ?></option>
                                     <?php endforeach; ?>
                                 </select>
                                 <input type="text" class="hilang" id="deptt" name="deptt">

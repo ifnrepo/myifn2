@@ -116,6 +116,18 @@ class Monmachine extends CI_Model
         $query = $this->db->query("Update tb_onmachine set selesai = 0 where tahbul = '".$th.$bl."' ");
         return $query;
     }
+    public function verifikasi(){
+        $bl = $this->session->userdata('blnmachine');
+        $th = $this->session->userdata('thnmachine');
+        $query = $this->db->query("Update tb_onmachine set verifikasi = 1 where tahbul = '".$th.$bl."' ");
+        return $query;
+    }
+    public function bukaverifikasi(){
+        $bl = $this->session->userdata('blnmachine');
+        $th = $this->session->userdata('thnmachine');
+        $query = $this->db->query("Update tb_onmachine set verifikasi = '0' where tahbul = '".$th.$bl."' ");
+        return $query;
+    }
     public function cariberatbobbin($id){
         $query = $this->db->get_where('referensi_jenis_bobbin',array('kodebob'=> $id));
         return $query;

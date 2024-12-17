@@ -331,4 +331,16 @@ class Mopname extends CI_Model
         $query = $this->db->query("SELECT COUNT(*) as jml FROM tb_stokopname where dept_id='".$dept."' and ket = '".$ket."' ");
         return $query;
     }
+    public function getceklisso(){
+        $periode = $this->session->userdata('periodeso');
+        $query = $this->db->query("SELECT tb_sublok.dept_id,referensi_departemen.departemen,COUNT(tb_sublok.dept_id)+if(tb_sublok.dept_id='NT',1,0) AS jmlsublok,
+        (SELECT COUNT(a.verifikasi) FROM tb_stokopname a WHERE a.dept_id = tb_sublok.dept_id AND a.selesai = 1)+if(tb_sublok.dept_id = 'NT',IFNULL((SELECT COUNT(*) FROM tb_onmachine WHERE tahbul = '".$periode."' AND verifikasi = 1 AND tb_sublok.dept_id = 'NT' GROUP BY tahbul),0),0) AS jmlsublokverifikasi,
+        (SELECT COUNT(*) FROM tb_detail_stokopname LEFT JOIN tb_stokopname b ON b.id = tb_detail_stokopname.id_stokopname WHERE b.dept_id = tb_sublok.dept_id) AS jmrekord,
+        (SELECT COUNT(*) FROM tb_detail_stokopname LEFT JOIN tb_stokopname b ON b.id = tb_detail_stokopname.id_stokopname WHERE b.dept_id = tb_sublok.dept_id AND tb_detail_stokopname.sesuai = 1) AS jmrekordverifikasi
+        FROM tb_sublok
+        LEFT JOIN referensi_departemen ON referensi_departemen.dept_id = tb_sublok.dept_id
+        GROUP BY dept_id
+        ORDER BY referensi_departemen.departemen");
+        return $query;
+    }
 }

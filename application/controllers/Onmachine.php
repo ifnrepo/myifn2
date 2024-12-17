@@ -188,8 +188,22 @@ class Onmachine extends CI_Controller
             redirect($url);
         }
     }
+    function verifikasi(){
+        $hasil = $this->monmachine->verifikasi();
+        if($hasil){
+            $url = base_url().'onmachine';
+            redirect($url);
+        }
+    }
     function bukaselesai(){
         $hasil = $this->monmachine->bukaselesai();
+        if($hasil){
+            $url = base_url().'onmachine';
+            redirect($url);
+        }
+    }
+    function bukaverifikasi(){
+        $hasil = $this->monmachine->bukaverifikasi();
         if($hasil){
             $url = base_url().'onmachine';
             redirect($url);

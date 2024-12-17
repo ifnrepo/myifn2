@@ -4,9 +4,14 @@ $(document).ready(function () {
 $("#tambahdatasublok").click(function () {
 	var mode = $(this).text();
 	if (mode.trim() == "Tambah") {
+		if ($("#deptsublok").val() == "") {
+			pesan("Pilih dahulu Departemen!", "info");
+			return false;
+		}
 		$(this).text("Simpan");
 		$("#deptsublok").attr("disabled", false);
 		$("#formsublok").attr("action", base_url + "Sublok/addsublok");
+		isikode($("#deptsublok").val());
 	} else {
 		if (mode.trim() != "Tambah") {
 			if ($("#deptsublok").val() == "") {
@@ -31,9 +36,18 @@ $("#resetdatasublok").click(function () {
 	kosongkan();
 });
 $("#deptsublok").change(function () {
-	if ($(this).attr("disabled", false)) {
-		isikode($(this).val());
-	}
+	var dept = $(this).val();
+	$.ajax({
+		dataType: "json",
+		type: "POST",
+		url: base_url + "sublok/getdept",
+		data: {
+			dta: dept,
+		},
+		success: function (data) {
+			window.location.reload();
+		},
+	});
 });
 function kodesama() {
 	var dept = $("#deptsublok").val();
@@ -77,11 +91,11 @@ $(document).on("click", "#editdatasublok", function () {
 function kosongkan() {
 	$("#tambahdatasublok").text("Tambah");
 	$("#formsublok").attr("action", "");
-	$("#deptsublok").val("");
+	// $("#deptsublok").val("");
 	$("#kdsublok").val("");
 	$("#nmsublok").val("");
 	$("#idsublok").val("");
-	$("#deptsublok").attr("disabled", true);
+	// $("#deptsublok").attr("disabled", true);
 	$("#deptsublok").focus();
 }
 function isikode(dept) {

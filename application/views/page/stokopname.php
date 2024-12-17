@@ -35,9 +35,16 @@
                     <div class="col-md-6 col-6">
                         Item : <?= rupiah($namastok['jmlitem'], 0) ?>
                     </div>
-                    <div class="col-md-6 col-6 <?= $tombolverif ?>">
-                        <?php $persen = (int)$namastok['jmlitem']==0 ? rupiah(((int)$barangverif['c']/1)*100,2) :rupiah(((int)$barangverif['c']/(int)$namastok['jmlitem'])*100,2); ?>
-                        Verifikasi : <?= rupiah($barangverif['c'], 0).' ('.$persen.'%)' ?>
+                    <div class="col-md-6 col-6 <?= $tombolverif ?> mt-1" style="line-height: 12px;">
+                        <?php $persen = (int)$namastok['jmlitem']==0 ? rupiah(((int)$barangverif['c']/1)*100,2) : rupiah(((int)$barangverif['c']/(int)$namastok['jmlitem'])*100,2); ?>
+                        Item Diverifikasi : <?= rupiah($barangverif['c'], 0) ?><br>
+                        <?php $katatarget = $persendept > 0 ? 'dari target '.rupiah($persendept,2).' %' : ''; ?>
+                        <span class="text-gray-700" style="font-size: 10px;"><?= rupiah($persen,2).' % '.$katatarget ?></span>
+                        <input type="text" id="jmlpersen" class="hilang" value="<?= $persen; ?>">
+                        <input type="text" id="jmlpersendept" class="hilang" value="<?= $persendept; ?>">
+                        <?php 
+                            $disabletombolverif = (float) $persen < (float) $persendept ? 'disabled' : '';
+                        ?>
                     </div>
                 </div>
             </div>
@@ -59,7 +66,7 @@
             <div class="col-md-4 py-2" style="text-align:right;">
                 <a href="#" class="btn btn-sm btn-danger shadow-sm font-kecil text-gray-900 <?= $tombolselesai ?> " data-href="<?= base_url() . 'opname/selesaiopname/' . $namastok['id'] ?>" data-news="Data ini telah selesai ?, anda tidak akan bisa edit kembali data ini." data-target="#confirm-task" data-remote="false" data-toggle="modal" data-title="Konfirmasi"><i class="fa fa-check"></i> Selesai</a>
                 <a href="#" class="btn btn-sm btn-success shadow-sm font-kecil text-gray-900 <?= $tomboledit ?>" data-href="<?= base_url() . 'opname/editopname/' . $namastok['id'] ?>" data-news="Edit data ini ?," data-target="#confirm-task" data-remote="false" data-toggle="modal" data-title="Konfirmasi"><i class="fa fa-edit"></i> Edit</a>
-                <a href="#" class="btn btn-sm btn-info shadow-sm font-kecil text-gray-900 <?= $tombolverif ?> " data-href="<?= base_url() . 'opname/verifopname/' . $namastok['id'] ?>" data-news="Verifikasi data ?" data-target="#confirm-task" data-remote="false" data-toggle="modal" data-title="Konfirmasi"><i class="fa fa-check"></i> Verifikasi</a>
+                <a href="#" class="btn btn-sm btn-info shadow-sm font-kecil text-gray-900 <?= $disabletombolverif.' '.$tombolverif ?> " data-href="<?= base_url() . 'opname/verifopname/' . $namastok['id'] ?>" data-news="Verifikasi data ?" data-target="#confirm-task" data-remote="false" data-toggle="modal" data-title="Konfirmasi"><i class="fa fa-check"></i> Verifikasi</a>
                 <a href="#" class="btn btn-sm btn-warning shadow-sm font-kecil text-gray-900 <?= $tomboleditverif ?> " data-href="<?= base_url() . 'opname/editverifopname/' . $namastok['id'] ?>" data-news="Edit data ini (Verifikasi) ?" data-target="#confirm-task" data-remote="false" data-toggle="modal" data-title="Konfirmasi"><i class="fa fa-edit"></i> Edit Verifikasi</a>
             </div>
         </div>

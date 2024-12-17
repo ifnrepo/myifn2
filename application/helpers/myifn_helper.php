@@ -341,8 +341,13 @@ function getnamapersonil($dep){
 		$nama = '';
 	}else{
 		$CI = &get_instance();
-		$kode = $CI->muser->getdatauser($dep)->row_array();	
-		$nama = $kode['nama_user'];
+		$kod = $CI->muser->getdatauser($dep);
+		if($kod->num_rows() > 0){
+			$kode = $kod->row_array();
+			$nama = $kode['nama_user'];
+		}else{
+			$nama = 'Not FOUND';
+		}
 	}
 	return $nama;
 }

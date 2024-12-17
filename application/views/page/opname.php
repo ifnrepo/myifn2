@@ -6,7 +6,7 @@
         <h1 class="h6 mb-0 text-gray-900">Stok Taking<span style="font-size: 10px !important; margin-left:5px; color: grey;">Data Stok</span></h1>
         <div>
             <?php $hilang = $this->session->userdata('leveluser') < 2 ? 'hilang' : ''; ?>
-            <a href="<?= base_url() . 'sublok'; ?>" id="addsublok" class="d-sm-inline-block btn btn-sm btn-success shadow-sm font-kecil text-gray-900 <?= $hilang ?> "><i class="fas fa-file-alt fa-sm"></i> Add Sublok</a>
+            <a href="<?= base_url() . 'sublok/clear'; ?>" id="addsublok" class="d-sm-inline-block btn btn-sm btn-success shadow-sm font-kecil text-gray-900 <?= $hilang ?> "><i class="fas fa-file-alt fa-sm"></i> Add Sublok</a>
             <?php if ($this->session->userdata('filterstok') != '') : ?>
                 <a href="<?= base_url() . 'opname/addopname'; ?>" data-remote="false" data-toggle="modal" data-title="Add Data Stok" data-target="#modalBox-lg" title="Add Data Stok" id="addstok" class="d-sm-inline-block btn btn-sm btn-warning shadow-sm font-kecil text-gray-900 <?= $hilang; ?>"><i class="fas fa-file-alt fa-sm"></i> Add Data Stok</a>
                 <a href="<?= base_url() . 'onmachine'; ?>" id="addonmachine" class="d-sm-inline-block btn btn-sm btn-info shadow-sm font-kecil <?php $arron = array('NT','AR'); if(!in_array($this->session->userdata('filterstok'),$arron)){ echo "hilang"; } ?>" ><i class="fas fa-file-alt fa-sm"></i> On Machine</a>

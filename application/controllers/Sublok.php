@@ -26,6 +26,11 @@ class Sublok extends CI_Controller
         $this->load->view('page/sublok', $data);
         $this->load->view('footer', $footer);
     }
+    function clear(){
+        $this->session->unset_userdata('depsublok');
+        $url = base_url().'sublok';
+        redirect($url);
+    }
     function carikode()
     {
         $dept = $_POST['dta'];
@@ -67,5 +72,10 @@ class Sublok extends CI_Controller
         $nama = $_POST['nm'];
         $query = $this->msublok->ceksubloksama($dept,$nama)->result();
         echo json_encode($query);
+    }
+    function getdept(){
+        $kode = $_POST['dta'];
+        $this->session->set_userdata('depsublok',$kode);
+        echo 1;
     }
 }
