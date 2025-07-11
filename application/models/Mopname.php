@@ -342,7 +342,7 @@ class Mopname extends CI_Model
         FROM tb_sublok
         LEFT JOIN referensi_departemen ON referensi_departemen.dept_id = tb_sublok.dept_id
         GROUP BY dept_id
-        ORDER BY persenx desc,referensi_departemen.departemen");
+        ORDER BY referensi_departemen.departemen");
         return $query;
     }
 }
