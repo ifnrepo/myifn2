@@ -99,6 +99,7 @@ $("#tambahdata").click(function () {
 			var ins = $("#insno").val();
 			var ble = $("#nobale").val();
 			var rut = $("#norut").val();
+			var stk = $("#stok").val();
 			var exnt = $("#exnet").prop("checked") ? "1" : "0";
 			$.ajax({
 				dataType: "json",
@@ -124,6 +125,7 @@ $("#tambahdata").click(function () {
 					xbr: br,
 					xnt: exnt,
 					xru: rut,
+					xstk: stk,
 				},
 				success: function (data) {
 					if (data.length == "1") {
@@ -194,6 +196,7 @@ $(document).on("click", "#editdataopname", function () {
 			$("#color").val(data[0]["color"]);
 			$("#insno").val(data[0]["insno"]);
 			$("#norut").val(data[0]["norut"]);
+			$("#stok").val(data[0]["stok"]);
 			if (data[0]["pcs"] == "0") {
 				$("#jmlpcs").val(data[0]["kgs"]);
 			} else {

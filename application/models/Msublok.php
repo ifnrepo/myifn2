@@ -27,6 +27,7 @@ class Msublok extends CI_Model
         $data['dept_id'] = $data['deptsublok'];
         $data['kode'] = $data['kdsublok'];
         $data['sublok'] = strtoupper($data['nmsublok']);
+        $data['periode'] = $this->session->userdata('periodeso');
 
         unset($data['deptsublok']);
         unset($data['kdsublok']);

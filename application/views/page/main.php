@@ -46,7 +46,8 @@
                     </thead>
                     <tbody>
                         <?php 
-                            $no=1; foreach ($datacekso->result_array() as $data) { 
+                            $totjmlsublok=0;$totjmlsublokverifikasi=0;$totjmrekord=0;$totjmrekordverifikasi=0;
+                            $no=1; $jmlpersenso=0; foreach ($datacekso->result_array() as $data) { 
                             $jmlsublok = $data['jmlsublok']==0 ? 1 : $data['jmlsublok'];
                             $persensublok = rupiah(($data['jmlsublokverifikasi']/$jmlsublok)*100,2);
                             $jmlrekord = $data['jmrekord']==0 ? 1 : $data['jmrekord'];
@@ -60,17 +61,21 @@
                                 $warnapersen = 'bg-success';
                                 $ix+=1;
                             }
-                            if($persenrekord <= 10){
+                            if($persenrekord <= $data['persen_so']/2){
                                 $warna = 'bg-danger';
-                            }else if($persenrekord > 10 && $persenrekord < 30){
+                            }else if($persenrekord > $data['persen_so']/2 && $persenrekord < $data['persen_so']){
                                 $warna = 'bg-warning';
-                                $iy += 1;
                             }else{
                                 $warna = 'bg-success';
                                 $iy += 1;
                             }
                             $pesan = (($ix+$iy) >= 2) ? 'DONE' : 'In Progress';
                             $warnapesan = (($ix+$iy) >= 2) ? 'text-success' : 'text-black';
+                            $totjmlsublok += $data['jmlsublok'];
+                            $totjmlsublokverifikasi += $data['jmlsublokverifikasi'];
+                            $totjmrekord += $data['jmrekord'];
+                            $totjmrekordverifikasi += $data['jmrekordverifikasi'];
+                            $jmlpersenso += $data['persen_so'];
                         ?>
                             <tr>
                                 <td class="text-center"><?= $no++; ?></td>
@@ -94,6 +99,59 @@
                                 <td class="text-center <?= $warnapesan; ?>"><?= $pesan; ?></td>
                             </tr>
                         <?php } ?>
+                        <div>
+                        <!-- Total Data  -->
+                        <tr>
+                            <td colspan="2" class="text-center font-tebal align-middle">TOTAL</td>
+                            <td class="text-right"><?= rupiah($totjmlsublok,0); ?></td>
+                            <td class="text-right"><?= rupiah($totjmlsublokverifikasi,0); ?></td>
+                            <?php 
+                                $ix=0;$iy=0;
+                                $xtotjmlsublok = $totjmlsublok==0 ? 1 : $totjmlsublok;
+                                $xmm = rupiah(($totjmlsublokverifikasi/$xtotjmlsublok)*100,2);
+                                $xwarnapersen = '';
+                                if($xmm < 25){
+                                    $xwarnapersen = 'bg-danger';
+                                }else if($xmm > 25 && $xmm < 100){
+                                    $xwarnapersen = 'bg-warning';
+                                }else{
+                                    $xwarnapersen = 'bg-success';
+                                    $ix+=1;
+                                }
+                            ?>
+                            <td class="text-center" style="line-height:10px;">
+                                <div class="progress">
+                                    <div class="progress-bar <?= $xwarnapersen; ?>" role="progressbar" style="width: <?= rupiah(($totjmlsublokverifikasi/$xtotjmlsublok)*100,2); ?>%" aria-valuenow="<?= rupiah(($totjmlsublokverifikasi/$xtotjmlsublok)*100,2); ?>" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                                <span style="font-size: 10px;"><?= rupiah(($totjmlsublokverifikasi/$xtotjmlsublok)*100,2); ?>%</span>
+                            </td>
+                            <td class="text-right"><?= rupiah($totjmrekord,0); ?></td>
+                            <td class="text-right"><?= rupiah($totjmrekordverifikasi,0); ?></td>
+                            <?php 
+                                $totalpersen = $jmlpersenso/$no;
+                                $xtotjmlrek = $totjmrekord==0 ? 1 : $totjmrekord;
+                                $xrr = rupiah(($totjmrekordverifikasi/$xtotjmlrek)*100,2);
+                                $xwarnapersena = '';
+                                if($xrr < $totalpersen/2){
+                                    $xwarnapersena = 'bg-danger';
+                                }else if($xrr > $totalpersen/2 && $xrr < $totalpersen){
+                                    $xwarnapersena = 'bg-warning';
+                                }else{
+                                    $xwarnapersena = 'bg-success';
+                                    $iy+=1;
+                                }
+                                $pesan = (($ix+$iy) >= 2) ? 'DONE' : 'In Progress';
+                                $warnapesan = (($ix+$iy) >= 2) ? 'text-success' : 'text-black';
+                            ?>
+                            <td class="text-center" style="line-height:10px;">
+                                <div class="progress">
+                                    <div class="progress-bar <?= $xwarnapersena; ?>" role="progressbar" style="width: <?= $xrr ?>%" aria-valuenow="<?= $xrr ?>" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                                <span style="font-size: 10px;"><?= $xrr ?>%</span>
+                            </td>
+                            <td class="text-center font-tebal <?= $warnapesan; ?>"><?= $pesan; ?></td>
+                        </tr>
+                        </div>
                     </tbody>
                 </table>
             </div>

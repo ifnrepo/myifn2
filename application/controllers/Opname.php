@@ -15,6 +15,7 @@ class Opname extends CI_Controller
         $this->load->model('mprofile');
         $this->load->model('muser');
         $this->load->model('mdepartemen');
+        $this->load->model('mhelper');
     }
     function index()
     {
@@ -153,6 +154,7 @@ class Opname extends CI_Controller
         $ble = cekinput($_POST['xble']);
         $br = cekinput($_POST['xbr']);
         $xnt = cekinput($_POST['xnt']);
+        $xstok = cekinput($_POST['xstk']);
         $xus = $this->session->userdata('iduser');
         // $carkod = $this->mopname->carinorut($this->session->userdata('depopn'),$id)->row_array();
         // $norut = (int) $carkod['kode'] + 1;
@@ -160,7 +162,7 @@ class Opname extends CI_Controller
         $query2 = $this->mopname->cekdataurut($norut,$id)->row_array();
         if($query2['jml']==0){
             // $query = $this->mopname->isidatacontoh($id);
-            $query = $this->mopname->isidata($id, $po, $item, $dis, $brg, $spe, $pcs, $stn, $kgs, $ket, $pc2, $hlm, $dok, $ins,$ble,$xnt,$norut,$br,$xus);
+            $query = $this->mopname->isidata($id, $po, $item, $dis, $brg, $spe, $pcs, $stn, $kgs, $ket, $pc2, $hlm, $dok, $ins,$ble,$xnt,$norut,$br,$xus,$xstok);
             // $query = $this->mopname->isidata($id, $po, $item, $dis, $brg, $spe, $pcs, $stn, $kgs, $ket, $pc2, $hlm, $dok, $ins,$ble,$br,$xnt,$norut,$xus);
             // $query = $this->mopname->isidatacontoh($id, $po, $item, $dis, $brg, $spe, $pcs, $stn, $kgs, $ket, $pc2);
             if ($query) {
@@ -193,9 +195,10 @@ class Opname extends CI_Controller
         $br = cekinput($_POST['xbr']);
         $xnt = cekinput($_POST['xnt']);
         $norut = cekinput($_POST['xru']);
+        $xstok = cekinput($_POST['xstk']);
         $query2 = $this->mopname->cekdataurut($norut,$id)->row_array();
         if($query2['jml']==1){
-            $query = $this->mopname->editdata($id, $po, $item, $dis, $brg, $spe, $pcs, $stn, $kgs, $ket, $pc2, $id2, $hlm, $dok,$ins,$ble,$br,$xnt,$norut);
+            $query = $this->mopname->editdata($id, $po, $item, $dis, $brg, $spe, $pcs, $stn, $kgs, $ket, $pc2, $id2, $hlm, $dok,$ins,$ble,$br,$xnt,$norut,$xstok);
             // $query = $this->mopname->isidata($id, $po, $item, $dis, $brg, $spe, $pcs, $stn, $kgs, $ket, $pc2, $hlm, $dok, $ins,$ble,$xnt,$norut,$br,$xus);
             if ($query) {
                 $arr = ['1'];

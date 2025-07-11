@@ -44,18 +44,16 @@
                 </div>
             </div>
             <div class="col-md-6 col-sm-6 col-12 text-right">
-                <?php if(isset($selesai['selesai'])): ?>
-                    <?php if($selesai['selesai']==1){ ?>
-                         <?php if($selesai['selesai']==1 && $selesai['verifikasi']==0){ ?>
-                            <a href="<?= base_url() . 'onmachine/bukaselesai'; ?>" class="d-sm-inline-block btn btn-sm btn-success shadow-sm font-kecil text-gray-900"><i class="fas fa-edit fa-sm"></i> Edit</a>
-                            <a href="<?= base_url() . 'onmachine/verifikasi'; ?>" class="d-sm-inline-block btn btn-sm btn-info shadow-sm font-kecil text-gray-900"><i class="fas fa-check fa-sm"></i> Verifikasi</a>
-                        <?php }else{ ?>
-                            <a href="<?= base_url() . 'onmachine/bukaverifikasi'; ?>" class="d-sm-inline-block btn btn-sm btn-warning shadow-sm font-kecil text-gray-900"><i class="fas fa-edit fa-sm"></i> Edit Verifikasi</a>
-                        <?php } ?>
-                    <?php }else{ ?>
-                        <a href="<?= base_url() . 'onmachine/selesai'; ?>" class="d-sm-inline-block btn btn-sm btn-success shadow-sm font-kecil text-gray-900"><i class="fas fa-check fa-sm"></i> Selesai</a>
-                    <?php } ?>
-                <?php endif; ?>
+                <?php 
+                    $tombolselesai = $this->session->userdata('leveluser') >= 2 && $selesai['selesai'] == '0' && $selesai['verifikasi'] == '0' ? '' : 'hilang'; 
+                    $tombolverif = $this->session->userdata('leveluser') >= 3 && ($selesai['selesai'] == '1' || $selesai['verifikasi'] == '1') ? '' : 'hilang'; 
+                    $tomboledit = ($this->session->userdata('leveluser') == 2 || $this->session->userdata('leveluser') > 3)  && $selesai['selesai'] == '1' && $selesai['verifikasi'] == '0' ? '' : 'hilang'; 
+                    $tomboleditverif = $this->session->userdata('leveluser') > 3 && $selesai['selesai'] == '1' && $selesai['verifikasi'] == '1' ? '' : 'hilang'; 
+                 ?>
+                <a href="<?= base_url() . 'onmachine/selesai'; ?>" class="d-sm-inline-block btn btn-sm btn-success shadow-sm font-kecil text-gray-900 <?= $tombolselesai; ?>"><i class="fas fa-check fa-sm"></i> Selesai</a>
+                <a href="<?= base_url() . 'onmachine/verifikasi'; ?>" class="d-sm-inline-block btn btn-sm btn-info shadow-sm font-kecil text-gray-900 <?= $tombolverif; ?>"><i class="fas fa-check fa-sm"></i> Verifikasi</a>
+                <a href="<?= base_url() . 'onmachine/bukaselesai'; ?>" class="d-sm-inline-block btn btn-sm btn-success shadow-sm font-kecil text-gray-900 <?= $tomboledit; ?>"><i class="fas fa-edit fa-sm"></i> Edit</a>
+                <a href="<?= base_url() . 'onmachine/bukaverifikasi'; ?>" class="d-sm-inline-block btn btn-sm btn-warning shadow-sm font-kecil text-gray-900 <?= $tomboleditverif; ?>"><i class="fas fa-edit fa-sm"></i> Edit Verifikasi</a>
             </div>
             <div class="col-md-12">
                 <hr class="small">
@@ -89,8 +87,8 @@
                         <tbody>
                             <?php foreach ($datamesin->result_array() as $sublok) : ?>
                                 <tr>
-                                    <td class="<?php if($sublok['futoito']=='1'){ echo "text-merah"; } ?>"><?= $sublok['machnoe']; ?></td>
-                                    <td class="<?php if($sublok['futoito']=='1'){ echo "text-merah"; } ?>"><?= ponodis($sublok['po'],$sublok['item'],$sublok['dis'],$sublok['brg_id']); ?></td>
+                                    <td><?= $sublok['machnoe']; ?></td>
+                                    <td><?= ponodis($sublok['po'],$sublok['item'],$sublok['dis'],$sublok['brg_id']); ?></td>
                                     <td><?= $sublok['insno']; ?></td>
                                     <td class="kanan"><?= $sublok['bunko']; ?></td>
                                     <td class="kanan"><?= $sublok['bunjmlbox']; ?></td>

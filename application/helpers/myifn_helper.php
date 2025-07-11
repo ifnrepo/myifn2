@@ -1,9 +1,11 @@
 <?php
+$CI = &get_instance();
 define('LOK_PAGE', base_url() . 'assets/page/');
 define('LOK_UPLOAD_USER', "./assets/page/images/user/");
 define('LOK_FOTO_USER', base_url() . 'assets/page/images/user/');
 define('LOK_FOTO', base_url() . 'assets/page/images/');
 define('LOK_UPLOAD_MESIN', "./assets/page/images/user/FOTO/");
+// define('PERIODE_SO', periodeso());
 
 function querydep($data)
 {
@@ -350,4 +352,9 @@ function getnamapersonil($dep){
 		}
 	}
 	return $nama;
+}
+function periodeso(){
+	$CI = &get_instance();
+	$periode = $CI->mhelper->periodeso();
+	return $periode;
 }

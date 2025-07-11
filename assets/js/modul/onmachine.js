@@ -85,6 +85,69 @@ $("#addpomachine").click(function () {
 $("#resetonmachine").click(function () {
 	kosongkan();
 });
+$("#bobisi").change(function () {
+	$(this).removeClass("text-danger");
+	$(this).addClass("text-black");
+	$("#peringatan").remove();
+	if ($("#bobko").val() == "" || $("#bobko").val() == 0) {
+		pesan("Jumlah bobin di mesin Harus di isi dahulu", "info");
+		$(this).val("");
+		$("#bobko").focus();
+	} else {
+		let jmlbrt = parseFloat($(this).val());
+		let bobko = parseFloat($("#bobko").val());
+		if (bobko > jmlbrt) {
+			pesan("Data aneh", "info");
+			$(this).removeClass("text-black");
+			$(this).addClass("text-danger");
+			$(
+				"<span class='text-danger mb-2' style='font-size: 10px;' id='peringatan'>Bobbin ini lebih ringan dari Bobbin kosong, cek data !</span>"
+			).insertAfter($(this));
+		}
+	}
+});
+// $("#bunbrtbox").change(function () {
+// 	$(this).removeClass("text-danger");
+// 	$(this).addClass("text-black");
+// 	$("#peringatan").remove();
+// 	if ($("#bunko").val() == "" || $("#bunko").val() == 0) {
+// 		pesan("Jumlah bobin di mesin Harus di isi dahulu", "info");
+// 		$(this).val("");
+// 		$("#bunko").focus();
+// 	} else {
+// 		let jmlbrt = parseFloat($(this).val());
+// 		let bunko = parseFloat($("#bunko").val());
+// 		if (bunko > jmlbrt) {
+// 			pesan("Data aneh", "info");
+// 			$(this).removeClass("text-black");
+// 			$(this).addClass("text-danger");
+// 			$(
+// 				"<span class='text-danger mb-2' style='font-size: 10px;' id='peringatan'>Bunsen ini lebih ringan dari bunsen kosong, cek data !</span>"
+// 			).insertAfter($(this));
+// 		}
+// 	}
+// });
+// $("#bunbrtmsn").change(function () {
+// 	$(this).removeClass("text-danger");
+// 	$(this).addClass("text-black");
+// 	$("#peringatan").remove();
+// 	if ($("#bunko").val() == "" || $("#bunko").val() == 0) {
+// 		pesan("Jumlah bobin di mesin Harus di isi dahulu", "info");
+// 		$(this).val("");
+// 		$("#bunko").focus();
+// 	} else {
+// 		let jmlbrt = parseFloat($(this).val());
+// 		let bunko = parseFloat($("#bunko").val());
+// 		if (bunko > jmlbrt) {
+// 			pesan("Data aneh", "info");
+// 			$(this).removeClass("text-black");
+// 			$(this).addClass("text-danger");
+// 			$(
+// 				"<span class='text-danger mb-2' style='font-size: 10px;' id='peringatan'>Bunsen ini lebih ringan dari bunsen kosong, cek data !</span>"
+// 			).insertAfter($(this));
+// 		}
+// 	}
+// });
 $("#jmbobspl").change(function () {
 	$(this).removeClass("text-danger");
 	$(this).addClass("text-black");

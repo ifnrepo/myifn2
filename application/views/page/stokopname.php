@@ -152,25 +152,26 @@
                             </select>
                         </div>
                     </div>
-                    <!-- <div class="row font-kecil text-black">
-                        <label class="col-md-4" style="text-align: left;margin-top:5px;" for="inputDefault">Satuan</label>
-                        <div class="col-md-4">
-                            <select class="form-control input-sm input-form text-gray-900" name="satuan" id="satuan">
-                                <option value="">--Pilih Satuan--</option>
-                            </select>
-                        </div>
-                        <label class="col-md-4" style="text-align: left;margin-top:5px;" id="namasatuan" for="inputDefault">--</label>
-                    </div> -->
                     <div class="row font-kecil text-black">
                         <label class="col-md-4" style="text-align: left;margin-top:5px;" for="inputDefault">Kgs</label>
                         <div class="col-md-8">
                             <input type="number" class="form-control input-sm input-form text-gray-900 text-kanan" name="jmlkgs" id="jmlkgs">
                         </div>
                     </div>
-                    <div class="row font-kecil text-black <?php $arrbol = array('GF','DL'); if(!in_array($this->session->userdata('depopn'),$arrbol)){ echo 'hilang';} ?>">
+                    <div class="row font-kecil text-black <?php $arrbol = array('GF','DL','FN'); if(!in_array($this->session->userdata('depopn'),$arrbol)){ echo 'hilang';} ?>">
                         <label class="col-md-4" style="text-align: left;margin-top:5px;" for="inputDefault">Nomor Bale</label>
                         <div class="col-md-8">
                             <input type="text" class="form-control input-sm input-form text-gray-800" name="nobale" id="nobale">
+                        </div>
+                    </div>
+                    <div class="row font-kecil text-black">
+                        <label class="col-md-4" style="text-align: left;margin-top:5px;" for="inputDefault">Stok/Grade</label>
+                        <div class="col-md-8">
+                            <select class="form-control input-sm input-form text-gray-900" name="stok" id="stok">
+                                <option value="0">Non Grade</option>
+                                <option value="1">Grade A</option>
+                                <option value="2">Grade B</option>
+                            </select>
                         </div>
                     </div>
                     <div class="row font-kecil text-black <?php if($this->session->userdata('depopn')!='GM'){ echo 'hilang';} ?>">
@@ -266,6 +267,8 @@
                             $kete .= trim($brgstok['dok']) == '' ? '' : ' IB '.$brgstok['dok'];
                             // $kete .= trim($brgstok['nobale']) == '' ? '' : ' Bale '.$brgstok['nobale'];
                             $intr .= trim($brgstok['insno']) == '' ? '' : ' Insno : '.$brgstok['insno'];
+                            $grade = $brgstok['stok']==0 ? ' Non Grade' : ($brgstok['stok']==1 ? ' Grade A' : ' Grade B');
+                            $intr .= '<span class="text-info"> -'.$grade.'</span>';
                             $breakd = $brgstok['br'] == '0' ? '' : 'text-merah';
                         ?>
                             <tr class="tabel-bodi">

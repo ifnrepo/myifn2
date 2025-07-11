@@ -174,7 +174,7 @@
                     <span>Profile</span></a>
             </li>
             <li class="nav-item <?= $sub6 ?>">
-                <a class="nav-link text-gray-900 pt-1 pb-1" href="<?= base_url() . 'departemen' ?>">
+                <a class="nav-link text-gray-900 pt-1 pb-1 <?= $hilang ?>" href="<?= base_url() . 'departemen' ?>">
                     <i class="fas fa-fw fa-building"></i>
                     <span>Departemen</span></a>
             </li>

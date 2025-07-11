@@ -11,6 +11,23 @@ $("#simpanprofile").click(function () {
 	var pas = $("#password").val();
 	var klm = $("#jenkel").val();
 	var tif = $("#aktif").val();
+
+	if (nam == "") {
+		pesan("Nama harus di isi", "info");
+		return false;
+	}
+	if (lev == "0") {
+		pesan("Pilih Level", "info");
+		return false;
+	}
+	if (log == "") {
+		pesan("Nama Login harus di isi", "info");
+		return false;
+	}
+	if (pas == "") {
+		pesan("Password harus di isi", "info");
+		return false;
+	}
 	var isi = "";
 	for (let x = 1; x < 22; x++) {
 		if ($("#cek" + x).prop("checked")) {
@@ -58,6 +75,22 @@ $("#updateprofile").click(function () {
 	var pas = $("#password").val();
 	var klm = $("#jenkel").val();
 	var tif = $("#aktif").val();
+	if (nam == "") {
+		pesan("Nama harus di isi", "info");
+		return false;
+	}
+	if (lev == "0") {
+		pesan("Pilih Level", "info");
+		return false;
+	}
+	if (log == "") {
+		pesan("Nama Login harus di isi", "info");
+		return false;
+	}
+	if (pas == "") {
+		pesan("Password harus di isi", "info");
+		return false;
+	}
 	var isi = "";
 	for (let x = 1; x < 22; x++) {
 		if ($("#cek" + x).prop("checked")) {

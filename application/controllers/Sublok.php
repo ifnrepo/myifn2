@@ -13,6 +13,7 @@ class Sublok extends CI_Controller
         $this->load->model('mopname');
         $this->load->model('mprofile');
         $this->load->model('msublok');
+        // $this->load->model('mhelper');
     }
     function index()
     {

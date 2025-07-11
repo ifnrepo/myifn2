@@ -28,7 +28,7 @@
                     </div>
                 </div>
                 <div class="row font-kecil text-black">
-                    <label class="col-md-4" style="text-align: left;margin-top:5px;" for="inputDefault">Nama</label>
+                    <label class="col-md-4" style="text-align: left;margin-top:5px;" for="inputDefault">Nama<span class="text-danger">*</span></label>
                     <div class="col-md-8">
                         <input type="text" class="form-control input-sm input-form text-gray-800" name="nama" id="nama" value="<?= $person['nama_user'] ?>">
                     </div>
@@ -46,7 +46,7 @@
                     </div>
                 </div>
                 <div class="row font-kecil text-black">
-                    <label class="col-md-4" style="text-align: left;margin-top:5px;" for="inputDefault">Level user</label>
+                    <label class="col-md-4" style="text-align: left;margin-top:5px;" for="inputDefault">Level user<span class="text-danger">*</span></label>
                     <div class="col-md-8">
                         <!-- <input type="text" class="form-control input-sm input-form text-gray-800" name="level" id="level"> -->
                         <select class="form-control input-sm input-form" name="levelid" id="levelid" <?php if($this->session->userdata('leveluser')<4){ echo "disabled"; } ?>  >
@@ -86,13 +86,13 @@
                     </div>
                 </div>
                 <div class="row font-kecil text-black">
-                    <label class="col-md-4" style="text-align: left;margin-top:5px;" for="inputDefault">Login</label>
+                    <label class="col-md-4" style="text-align: left;margin-top:5px;" for="inputDefault">Login<span class="text-danger">*</span></label>
                     <div class="col-md-8">
                         <input type="text" class="form-control input-sm input-form text-gray-800" name="login" id="login" value="<?= $person['login'] ?>">
                     </div>
                 </div>
                 <div class="row font-kecil text-black">
-                    <label class="col-md-4" style="text-align: left;margin-top:5px;" for="inputDefault">Password</label>
+                    <label class="col-md-4" style="text-align: left;margin-top:5px;" for="inputDefault">Password<span class="text-danger">*</span></label>
                     <div class="col-md-8 input-group">
                         <input type="password" class="form-control input-sm input-form text-gray-800" name="password" id="password" value="<?= decrypto($person['password']) ?>">
                         <div class="input-group-append">

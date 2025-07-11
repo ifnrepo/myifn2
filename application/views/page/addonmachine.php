@@ -69,17 +69,17 @@
                             <input type="text" class="form-control input-sm input-form text-gray-800 text-black " name="insno" id="insno" value="<?= $insno ?>" readonly>
                         </div>
                     </div>
-                    <div class="form-group row mt-1 mb-4">
+                    <!-- <div class="form-group row mt-1 mb-4">
                         <div class="col-md-4">Futoito</div>
                         <div class="col-md-8">
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="futoito" name="futoito" <?= $futoito; ?>>
+                                <input class="form-check-input" type="checkbox" id="futoito" name="futoito"> -->
                                 <!-- <label class="form-check-label" for="gridCheck1">
                                 Example checkbox
                                 </label> -->
-                            </div>
+                            <!-- </div>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
                 <div class="col-md-6">
                     <nav>

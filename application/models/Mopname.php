@@ -178,10 +178,10 @@ class Mopname extends CI_Model
         $query = $this->db->query("select *,'' as po,'' as item,'' as dis,kode as brgid,namabarang as spek,'' as color,'tb-brg' as jntb from referensi_barang where kode = '" . $id . "' ");
         return $query;
     }
-    public function isidata($id, $po, $item, $dis, $brg, $spe, $pcs, $stn, $kgs, $ket, $pc2, $hlm, $dok,$ins,$ble,$xnt,$norut,$br,$xus)
+    public function isidata($id, $po, $item, $dis, $brg, $spe, $pcs, $stn, $kgs, $ket, $pc2, $hlm, $dok,$ins,$ble,$xnt,$norut,$br,$xus,$xstok)
     {
-        $query = $this->db->query("insert into tb_detail_stokopname(id_stokopname,po,item,dis,kode_brg,spek,jumlah,id_satuan,kgs,ket,pcs,hlm,dok,insno,nobale,exnet,norut,br,person_id) values 
-        ('" . $id . "', '" . $po . "', '" . $item . "', '" . $dis . "', '" . $brg . "', '" . $spe . "', '" . $pcs . "', '" . $stn . "', '" . $kgs . "', '" . $ket . "', '" . $pc2 . "', '" . $hlm . "', '" . $dok . "', '" . $ins . "', '" . $ble . "', '" . $xnt . "', '" . $norut . "', '" . $br . "', '" . $xus . "')");
+        $query = $this->db->query("insert into tb_detail_stokopname(id_stokopname,po,item,dis,kode_brg,spek,jumlah,id_satuan,kgs,ket,pcs,hlm,dok,insno,nobale,exnet,norut,br,person_id,stok) values 
+        ('" . $id . "', '" . $po . "', '" . $item . "', '" . $dis . "', '" . $brg . "', '" . $spe . "', '" . $pcs . "', '" . $stn . "', '" . $kgs . "', '" . $ket . "', '" . $pc2 . "', '" . $hlm . "', '" . $dok . "', '" . $ins . "', '" . $ble . "', '" . $xnt . "', '" . $norut . "', '" . $br . "', '" . $xus . "', '" . $xstok . "')");
         return $query;
     }
     // public function isidata($id, $po, $item, $dis, $brg, $spe, $pcs, $stn, $kgs, $ket, $pc2, $hlm, $dok,$ins,$ble,$br,$xnt,$norut,$xus)
@@ -230,11 +230,11 @@ class Mopname extends CI_Model
         $data = $this->db->query("select *,if(po='' or po is null,'tb_ref','tb_poe') AS tb from tb_barang_stok where ".$xkata." ANd (id_dept = '" . $dept . "' OR id_dept = 'DL') order by po,item,dis,insno ");
         return $data;
     }
-    public function editdata($id, $po, $item, $dis, $brg, $spe, $pcs, $stn, $kgs, $ket, $pc2, $id2, $hlm, $dok,$ins,$ble,$br,$xnt,$norut)
+    public function editdata($id, $po, $item, $dis, $brg, $spe, $pcs, $stn, $kgs, $ket, $pc2, $id2, $hlm, $dok,$ins,$ble,$br,$xnt,$norut,$xstok)
     {
         $query = $this->db->query("update tb_detail_stokopname set po = '" . $po . "', item='" . $item . "', dis='" . $dis . "', 
         kode_brg='" . $brg . "', spek='" . $spe . "', jumlah='" . $pcs . "', id_satuan='" . $stn . "', kgs='" . $kgs . "', 
-        ket='" . $ket . "', pcs='" . $pc2 . "',hlm='" . $hlm . "', dok='" . $dok . "', insno='" . $ins . "', nobale='" . $ble . "', br='" . $br . "', exnet='" . $xnt . "', norut='" . $norut . "' where id = " . $id2);
+        ket='" . $ket . "', pcs='" . $pc2 . "',hlm='" . $hlm . "', dok='" . $dok . "', insno='" . $ins . "', nobale='" . $ble . "', br='" . $br . "', exnet='" . $xnt . "', norut='" . $norut . "',stok ='".$xstok."' where id = " . $id2);
         return $query;
     }
     public function getdatastokopname($id)
@@ -334,13 +334,15 @@ class Mopname extends CI_Model
     public function getceklisso(){
         $periode = $this->session->userdata('periodeso');
         $query = $this->db->query("SELECT tb_sublok.dept_id,referensi_departemen.departemen,COUNT(tb_sublok.dept_id)+if(tb_sublok.dept_id='NT',1,0) AS jmlsublok,
-        (SELECT COUNT(a.verifikasi) FROM tb_stokopname a WHERE a.dept_id = tb_sublok.dept_id AND a.selesai = 1)+if(tb_sublok.dept_id = 'NT',IFNULL((SELECT COUNT(*) FROM tb_onmachine WHERE tahbul = '".$periode."' AND verifikasi = 1 AND tb_sublok.dept_id = 'NT' GROUP BY tahbul),0),0) AS jmlsublokverifikasi,
+        (SELECT COUNT(a.verifikasi) FROM tb_stokopname a WHERE a.dept_id = tb_sublok.dept_id AND a.verifikasi = 1)+if(tb_sublok.dept_id = 'NT',IFNULL((SELECT COUNT(*) FROM tb_onmachine WHERE tahbul = '".$periode."' AND verifikasi = 1 AND tb_sublok.dept_id = 'NT' GROUP BY tahbul),0),0) AS jmlsublokverifikasi,
         (SELECT COUNT(*) FROM tb_detail_stokopname LEFT JOIN tb_stokopname b ON b.id = tb_detail_stokopname.id_stokopname WHERE b.dept_id = tb_sublok.dept_id) AS jmrekord,
-        (SELECT COUNT(*) FROM tb_detail_stokopname LEFT JOIN tb_stokopname b ON b.id = tb_detail_stokopname.id_stokopname WHERE b.dept_id = tb_sublok.dept_id AND tb_detail_stokopname.sesuai = 1) AS jmrekordverifikasi
+        (SELECT COUNT(*) FROM tb_detail_stokopname LEFT JOIN tb_stokopname b ON b.id = tb_detail_stokopname.id_stokopname WHERE b.dept_id = tb_sublok.dept_id AND tb_detail_stokopname.sesuai = 1) AS jmrekordverifikasi,
+        referensi_departemen.persen_so,
+        (SELECT COUNT(*) FROM tb_detail_stokopname LEFT JOIN tb_stokopname b ON b.id = tb_detail_stokopname.id_stokopname WHERE b.dept_id = tb_sublok.dept_id AND tb_detail_stokopname.sesuai = 1)/(SELECT COUNT(*) FROM tb_detail_stokopname LEFT JOIN tb_stokopname b ON b.id = tb_detail_stokopname.id_stokopname WHERE b.dept_id = tb_sublok.dept_id) as persenx 
         FROM tb_sublok
         LEFT JOIN referensi_departemen ON referensi_departemen.dept_id = tb_sublok.dept_id
         GROUP BY dept_id
-        ORDER BY referensi_departemen.departemen");
+        ORDER BY persenx desc,referensi_departemen.departemen");
         return $query;
     }
 }

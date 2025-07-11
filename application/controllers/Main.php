@@ -12,6 +12,7 @@ class Main extends CI_Controller
         }
         $this->load->model('mprofile');
         $this->load->model('mopname');
+        // $this->load->model('mhelper');
     }
     function index()
     {
