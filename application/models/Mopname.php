@@ -50,19 +50,31 @@ class Mopname extends CI_Model
             $nil = $this->session->userdata('filterverifikasi');
             switch ($nil) {
                 case 1:
-                    $xverif = ' and a.selesai=0 and a.verifikasi=0';
+                    $xverif = ' and a.selesai=0 and a.verifikasi=0 and a.verifikasi2=0';
                     break;
                 case 2:
-                    $xverif = ' and a.selesai=1 and a.verifikasi=0';
+                    $xverif = ' and a.selesai=1 and a.verifikasi=0 and a.verifikasi2=0';
+                    break;
+                case 3:
+                    $xverif = ' and a.selesai=1 and a.verifikasi=1 and a.verifikasi2=0';
                     break;
                 default:
-                    $xverif = ' and a.selesai=1 and a.verifikasi=1';
+                    $xverif = ' and a.selesai=1 and a.verifikasi=1 and a.verifikasi2=1';
                     break;
             }
         }else{
             $xverif = "";
         }
-        $levelsuper = $this->session->userdata('leveluser')==3 ? ' and a.selesai = 1 ' : '';
+        if($this->session->userdata('leveluser')==3){
+            $levelsuper = ' and a.selesai = 1';
+        }else{
+            if($this->session->userdata('leveluser')==4){
+                $levelsuper = ' and a.selesai = 1 and a.verifikasi = 1';
+            }else{
+                $levelsuper = '';
+            }
+        }
+        // $levelsuper = $this->session->userdata('leveluser')==3 ? ' and a.selesai = 1 ' : '';
         $query = $this->db->query("select a.*,b.sublok,c.nama_user from tb_stokopname a left join tb_sublok b on b.kode = a.ket left join user_manajemen c on a.verifperson = c.person_id where a.dept_id in (" . substr($hak2, 0, strlen($hak2) - 1) . ")".$levelsuper.$xsublok.$xverif." order by a.dept_id,b.sublok");
         return $query;
     }
@@ -155,15 +167,28 @@ class Mopname extends CI_Model
         }
         for($z=0;$z < count($arrpisah);$z++){
             $isi = $arrpisah[$z];
-            if($z==0){
-                $xkata = "concat_ws('',spek,po,insno,sku) like '%".$isi."%' ";
-            }
-            else{
-                $xkata .= " and concat_ws('',spek,po,insno,sku) like '%".$isi."%' ";
+            if($dept=='RR'){
+                if($z==0){
+                    $xkata = "concat_ws('',kode,namabarang) like '%".$isi."%' ";
+                }
+                else{
+                    $xkata .= " and concat_ws('',kode,namabarang) like '%".$isi."%' ";
+                }
+            }else{
+                if($z==0){
+                    $xkata = "concat_ws('',spek,po,insno,sku) like '%".$isi."%' ";
+                }
+                else{
+                    $xkata .= " and concat_ws('',spek,po,insno,sku) like '%".$isi."%' ";
+                }
             }
         }
         $this->session->set_flashdata('cekquery',$xkata);
-        $data = $this->db->query("select *,if(po='' or po is null,'tb_ref','tb_poe') AS tb from tb_barang_stok where ".$xkata." ANd (id_dept = '" . $dept . "' OR id_dept = 'DL') order by po,item,dis,insno ");
+        if($dept=='RR'){
+            $data = $this->db->query("select *,'' as po,'' as item,0 as dis,kode as kode_brg,'' as nobale,namabarang as spek,kode as sku,'' as nobontr,'' as insno,0 as stok,0 as stokpc,'RR' as id_dept,'tb_ref' AS tb from referensi_barang where ".$xkata." order by kode,namabarang ");
+        }else{
+            $data = $this->db->query("select *,if(po='' or po is null,'tb_ref','tb_poe') AS tb from tb_barang_stok where ".$xkata." ANd (id_dept = '" . $dept . "' OR id_dept = 'DL') order by po,item,dis,insno ");
+        }
         return $data;
     }
     public function getdatapo($id)
@@ -240,9 +265,11 @@ class Mopname extends CI_Model
     public function getdatastokopname($id)
     {
         $user = $this->session->userdata('userinput')=='' ? '' : ' AND a.person_id = "'.$this->session->userdata('userinput').'" ';
-        $query = $this->db->query("select *,a.id as xid,a.person_id AS personid from tb_detail_stokopname a 
+        $query = $this->db->query("select *,a.id as xid,a.person_id AS personid,d.nama_user as nama_user2,c.nama_user as nama_user 
+        from tb_detail_stokopname a 
         left join referensi_satuan b on b.id = a.id_satuan 
         LEFT JOIN user_manajemen c ON a.verifperson = c.person_id
+        LEFT JOIN user_manajemen d ON a.verifperson2 = d.person_id
         where a.id_stokopname = " . $id .$user. " order by a.norut");
         return $query;
     }
@@ -257,6 +284,11 @@ class Mopname extends CI_Model
     public function getdatastokopnameverif($id)
     {
         $query = $this->db->query("SELECT COUNT(*) AS c FROM tb_detail_stokopname WHERE id_stokopname = " . $id . " AND sesuai = '1'");
+        return $query;
+    }
+    public function getdatastokopnameverif2($id)
+    {
+        $query = $this->db->query("SELECT COUNT(*) AS c FROM tb_detail_stokopname WHERE id_stokopname = " . $id . " AND sesuai2 = '1'");
         return $query;
     }
     public function hapusdataopname($id)
@@ -282,9 +314,13 @@ class Mopname extends CI_Model
         $query = $this->db->query("update tb_stokopname set selesai=1 where id = " . $id);
         return $query;
     }
-    function verifopname($id)
+    function verifopname($id,$mode=0)
     {
-        $query = $this->db->query("update tb_stokopname set verifikasi=1,verifperson='".$this->session->userdata('iduser')."',verifdate=now() where id = " . $id);
+        if($mode==0){
+            $query = $this->db->query("update tb_stokopname set verifikasi=1,verifperson='".$this->session->userdata('iduser')."',verifdate=now() where id = " . $id);
+        }else{
+            $query = $this->db->query("update tb_stokopname set verifikasi2=1,verifperson2='".$this->session->userdata('iduser')."',verifdate2=now() where id = " . $id);
+        }
         return $query;
     }
     function editopname($id)
@@ -292,9 +328,13 @@ class Mopname extends CI_Model
         $query = $this->db->query("update tb_stokopname set selesai=0 where id = " . $id);
         return $query;
     }
-    function editverifopname($id)
+    function editverifopname($id,$mode=0)
     {
-        $query = $this->db->query("update tb_stokopname set verifikasi=0 where id = " . $id);
+        if($mode==0){
+            $query = $this->db->query("update tb_stokopname set verifikasi=0 where id = " . $id);
+        }else{
+            $query = $this->db->query("update tb_stokopname set verifikasi2=0 where id = " . $id);
+        }
         return $query;
     }
     function getsublok()
@@ -313,8 +353,16 @@ class Mopname extends CI_Model
         $query = $this->db->query("update tb_detail_stokopname set sesuai='1',verifperson='".$this->session->userdata('iduser')."',verifdate=now() where id = '" . $id . "' ");
         return $query;
     }
+    function cekverif2($id){
+        $query = $this->db->query("update tb_detail_stokopname set sesuai2='1',verifperson2='".$this->session->userdata('iduser')."',verifdate2=now() where id = '" . $id . "' ");
+        return $query;
+    }
     function editcekverif($id){
         $query = $this->db->query("update tb_detail_stokopname set sesuai='0' where id = '" . $id . "' ");
+        return $query;
+    }
+        function editcekverif2($id){
+        $query = $this->db->query("update tb_detail_stokopname set sesuai2='0' where id = '" . $id . "' ");
         return $query;
     }
     public function carinorut($dep,$blok){
@@ -337,6 +385,7 @@ class Mopname extends CI_Model
         (SELECT COUNT(a.verifikasi) FROM tb_stokopname a WHERE a.dept_id = tb_sublok.dept_id AND a.verifikasi = 1)+if(tb_sublok.dept_id = 'NT',IFNULL((SELECT COUNT(*) FROM tb_onmachine WHERE tahbul = '".$periode."' AND verifikasi = 1 AND tb_sublok.dept_id = 'NT' GROUP BY tahbul),0),0) AS jmlsublokverifikasi,
         (SELECT COUNT(*) FROM tb_detail_stokopname LEFT JOIN tb_stokopname b ON b.id = tb_detail_stokopname.id_stokopname WHERE b.dept_id = tb_sublok.dept_id) AS jmrekord,
         (SELECT COUNT(*) FROM tb_detail_stokopname LEFT JOIN tb_stokopname b ON b.id = tb_detail_stokopname.id_stokopname WHERE b.dept_id = tb_sublok.dept_id AND tb_detail_stokopname.sesuai = 1) AS jmrekordverifikasi,
+        (SELECT COUNT(*) FROM tb_detail_stokopname LEFT JOIN tb_stokopname b ON b.id = tb_detail_stokopname.id_stokopname WHERE b.dept_id = tb_sublok.dept_id AND tb_detail_stokopname.sesuai2 = 1) AS jmrekordverifikasi2,
         referensi_departemen.persen_so,
         (SELECT COUNT(*) FROM tb_detail_stokopname LEFT JOIN tb_stokopname b ON b.id = tb_detail_stokopname.id_stokopname WHERE b.dept_id = tb_sublok.dept_id AND tb_detail_stokopname.sesuai = 1)/(SELECT COUNT(*) FROM tb_detail_stokopname LEFT JOIN tb_stokopname b ON b.id = tb_detail_stokopname.id_stokopname WHERE b.dept_id = tb_sublok.dept_id) as persenx 
         FROM tb_sublok

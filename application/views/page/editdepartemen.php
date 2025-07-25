@@ -13,7 +13,13 @@
         </div>
     </div>
     <div class="row font-kecil text-black">
-        <label class="col-md-4" style="text-align: left;margin-top:5px;" for="inputDefault">Persentase Verifikasi <SOurce:sizes></SOurce:sizes></label>
+        <label class="col-md-4" style="text-align: left;margin-top:5px;" for="inputDefault">Persentase Verifikasi 1<SOurce:sizes></SOurce:sizes></label>
+        <div class="col-md-8">
+            <input type="text" class="form-control input-sm input-form text-gray-800 kanan" name="persen2" id="persen2" value="<?= $data['persen_verif'] ?>">
+        </div>
+    </div>
+    <div class="row font-kecil text-black">
+        <label class="col-md-4" style="text-align: left;margin-top:5px;" for="inputDefault">Persentase Verifikasi 2<SOurce:sizes></SOurce:sizes></label>
         <div class="col-md-8">
             <input type="text" class="form-control input-sm input-form text-gray-800 kanan" name="persen" id="persen" value="<?= $data['persen_so'] ?>">
         </div>
@@ -28,15 +34,28 @@
     $("#simpandata").click(function(){
         if($("#persen").val()!=''){
             if(isNaN($("#persen").val())){
-                alert('Harus isi persentase Verifikasi dengan angka');
+                alert('Harus isi persentase Verifikasi 1 dengan angka');
                 return false;
             }
         }else{
             $("#persen").val('0.00');
         }
+        if($("#persen2").val()!=''){
+            if(isNaN($("#persen2").val())){
+                alert('Harus isi persentase Verifikasi 2 dengan angka');
+                return false;
+            }
+        }else{
+            $("#persen2").val('0.00');
+        }
         var nilai = parseFloat($("#persen").val());
+        var nilai2 = parseFloat($("#persen2").val());
         if(nilai > 100){
-            alert('Maksimal 100 Persen !');
+            alert('Maksimal Verifikasi 1 = 100 Persen !');
+            return false;
+        }
+        if(nilai2 > 100){
+            alert('Maksimal Verifikasi 2 = 100 Persen !');
             return false;
         }
         $.ajax({
@@ -45,7 +64,8 @@
             url: base_url + 'departemen/updatepersen',
             data: {
                 xid: $("#kode").val(),
-                nil: nilai
+                nil: nilai,
+                nil2: nilai2,
             },
             success: function (data) {
                 // alert(kolom);

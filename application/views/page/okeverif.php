@@ -14,19 +14,36 @@
 <script>
     $("#okeverif").click(function(){
         var kolom = $("#kolom").val();
-        $.ajax({
-            dataType: "json",
-            type: "POST",
-            url: base_url + 'opname/simpanverif',
-            data: {
-                xid: $("#kode").val(),
-            },
-            success: function (data) {
-                // alert(kolom);
-                // $("#x"+kolom).removeClass('bg-danger');
-                $("#"+kolom).html(data).show();
-                $("#keluarx").click();
-            },
-        });
+        if(kolom.substr(0,5)=='kolom'){
+            $.ajax({
+                dataType: "json",
+                type: "POST",
+                url: base_url + 'opname/simpanverif',
+                data: {
+                    xid: $("#kode").val(),
+                },
+                success: function (data) {
+                    // alert(kolom);
+                    // $("#x"+kolom).removeClass('bg-danger');
+                    $("#"+kolom).html(data).show();
+                    $("#keluarx").click();
+                },
+            });
+        }else{
+            $.ajax({
+                dataType: "json",
+                type: "POST",
+                url: base_url + 'opname/simpanverif2',
+                data: {
+                    xid: $("#kode").val(),
+                },
+                success: function (data) {
+                    // alert(kolom);
+                    // $("#x"+kolom).removeClass('bg-danger');
+                    $("#"+kolom).html(data).show();
+                    $("#keluarx").click();
+                },
+            });
+        }
     })
 </script>

@@ -39,19 +39,20 @@
                             <th>Jml Sublok <br>ter-Verifikasi</th>
                             <th>%</th>
                             <th>Jumlah Record <br> Stok Opname</th>
-                            <th>Jumlah Record <br>Stok Opname <br>ter-Verifikasi</th>
+                            <th>Jumlah Record <br>Stok Opname <br>ter-Verifikasi 1</th>
+                            <th>Jumlah Record <br>Stok Opname <br>ter-Verifikasi 2</th>
                             <th>%</th>
                             <th>-</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php 
-                            $totjmlsublok=0;$totjmlsublokverifikasi=0;$totjmrekord=0;$totjmrekordverifikasi=0;
+                            $totjmlsublok=0;$totjmlsublokverifikasi=0;$totjmrekord=0;$totjmrekordverifikasi=0;$totjmrekordverifikasi2=0;
                             $no=1; $jmlpersenso=0; foreach ($datacekso->result_array() as $data) { 
                             $jmlsublok = $data['jmlsublok']==0 ? 1 : $data['jmlsublok'];
                             $persensublok = rupiah(($data['jmlsublokverifikasi']/$jmlsublok)*100,2);
                             $jmlrekord = $data['jmrekord']==0 ? 1 : $data['jmrekord'];
-                            $persenrekord = rupiah(($data['jmrekordverifikasi']/$jmlrekord)*100,2);
+                            $persenrekord = rupiah(($data['jmrekordverifikasi2']/$jmlrekord)*100,2);
                             $ix=0;$iy=0;
                             if($persensublok <= 25){
                                 $warnapersen = 'bg-danger';
@@ -76,6 +77,7 @@
                             $totjmrekord += $data['jmrekord'];
                             $totjmrekordverifikasi += $data['jmrekordverifikasi'];
                             $jmlpersenso += $data['persen_so'];
+                            $totjmrekordverifikasi2 += $data['jmrekordverifikasi2'];
                         ?>
                             <tr>
                                 <td class="text-center"><?= $no++; ?></td>
@@ -90,6 +92,7 @@
                                 </td>
                                 <td  class="text-right"><?= rupiah($data['jmrekord'],0); ?></td>
                                 <td  class="text-right"><?= rupiah($data['jmrekordverifikasi'],0); ?></td>
+                                <td  class="text-right"><?= rupiah($data['jmrekordverifikasi2'],0); ?></td>
                                 <td class="text-center" style="line-height:10px;">
                                     <div class="progress">
                                         <div class="progress-bar <?= $warna; ?>" role="progressbar" style="width: <?= $persenrekord ?>%" aria-valuenow="<?= $persenrekord ?>" aria-valuemin="0" aria-valuemax="100"></div>
@@ -127,10 +130,11 @@
                             </td>
                             <td class="text-right"><?= rupiah($totjmrekord,0); ?></td>
                             <td class="text-right"><?= rupiah($totjmrekordverifikasi,0); ?></td>
+                            <td class="text-right"><?= rupiah($totjmrekordverifikasi2,0); ?></td>
                             <?php 
                                 $totalpersen = $jmlpersenso/$no;
                                 $xtotjmlrek = $totjmrekord==0 ? 1 : $totjmrekord;
-                                $xrr = rupiah(($totjmrekordverifikasi/$xtotjmlrek)*100,2);
+                                $xrr = rupiah(($totjmrekordverifikasi2/$xtotjmlrek)*100,2);
                                 $xwarnapersena = '';
                                 if($xrr < $totalpersen/2){
                                     $xwarnapersena = 'bg-danger';

@@ -59,6 +59,7 @@ class Opname extends CI_Controller
         $data['barangstok'] = $this->mopname->getdatastokopname($id);
         $data['userstok'] = $this->mopname->getuserstokopname($id);
         $data['barangverif'] = $this->mopname->getdatastokopnameverif($id)->row_array();
+        $data['barangverif2'] = $this->mopname->getdatastokopnameverif2($id)->row_array();
         $header['submodul'] = 4;
         $header['personil'] = $this->mprofile->getprofile($this->session->userdata('iduser'))->row_array();
         $footer['footer'] = 'stokopname';
@@ -67,6 +68,7 @@ class Opname extends CI_Controller
         $this->session->set_userdata('depopn', $data['namastok']['dept_id']);
         $depart = $this->mdepartemen->getdatabykode($data['namastok']['dept_id'])->row_array();
         $data['persendept'] = $depart['persen_so'];
+        $data['persendept2'] = $depart['persen_verif'];
         $this->load->view('header', $header);
         $this->load->view('page/stokopname', $data);
         $this->load->view('footer', $footer);
@@ -223,9 +225,9 @@ class Opname extends CI_Controller
             redirect($url);
         }
     }
-    function verifopname($id)
+    function verifopname($id,$mode=0)
     {
-        $query = $this->mopname->verifopname($id);
+        $query = $this->mopname->verifopname($id,$mode);
         if ($query) {
             $url = base_url() . 'opname/stokopname/' . $id;
             redirect($url);
@@ -239,9 +241,9 @@ class Opname extends CI_Controller
             redirect($url);
         }
     }
-    function editverifopname($id)
+    function editverifopname($id,$mode=0)
     {
-        $query = $this->mopname->editverifopname($id);
+        $query = $this->mopname->editverifopname($id,$mode);
         if ($query) {
             $url = base_url() . 'opname/stokopname/' . $id;
             redirect($url);
@@ -272,6 +274,16 @@ class Opname extends CI_Controller
         } 
         echo json_encode($html);
     }
+    function simpanverif2(){
+        $id = $_POST['xid'];
+        $query = $this->mopname->cekverif2($id);
+        $html = '';
+        if($query){
+            $html .= '<a id="tombol"'.$id.' class="text-success" href="'.base_url() . 'opname/editcekverif2/' . $id.'/xkolomverif'.$id.'" data-news="Batalkan Data Sesuai ?" data-target="#modalBox-sm" data-remote="false" data-toggle="modal" data-title="Konfirmasi"><i class="fa fa-check"></i></a>';
+            // $html .= '<i class="fa fa-check"></i>';
+        } 
+        echo json_encode($html);
+    }
     function editcekverif($id,$ide){
         $data = [
             'id' => $id,
@@ -279,12 +291,29 @@ class Opname extends CI_Controller
         ];
         $this->load->view('page/editverif',$data);
     }
+    function editcekverif2($id,$ide){
+        $data = [
+            'id' => $id,
+            'kolom' => $ide
+        ];
+        $this->load->view('page/editverif2',$data);
+    }
     function batalverif(){
         $id = $_POST['xid'];
         $query = $this->mopname->editcekverif($id);
         $html = '';
         if($query){
             $html .= '<a id="tombol"'.$id.' class="text-danger" style="font-size: 14px;" href="'.base_url() . 'opname/cekverif/' . $id.'/kolomverif'. $id.'" data-news="Data Sesuai ?" data-target="#modalBox-sm" data-remote="false" data-toggle="modal" data-title="Konfirmasi"><i class="fa fa-times"></i></a>';
+            // $html .= '<i class="fa fa-check"></i>';
+        } 
+        echo json_encode($html);
+    }
+    function batalverif2(){
+        $id = $_POST['xid'];
+        $query = $this->mopname->editcekverif2($id);
+        $html = '';
+        if($query){
+            $html .= '<a id="tombol"'.$id.' class="text-danger" style="font-size: 14px;" href="'.base_url() . 'opname/cekverif/' . $id.'/xkolomverif'. $id.'" data-news="Data Sesuai ?" data-target="#modalBox-sm" data-remote="false" data-toggle="modal" data-title="Konfirmasi"><i class="fa fa-times"></i></a>';
             // $html .= '<i class="fa fa-check"></i>';
         } 
         echo json_encode($html);

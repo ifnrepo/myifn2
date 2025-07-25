@@ -137,7 +137,7 @@
             $sub4 = $submodul == '4' ? 'active' : '';
             $sub5 = $submodul == '5' ? 'active' : '';
             $sub6 = $submodul == '6' ? 'active' : '';
-            $hilang = $this->session->userdata('leveluser') == 4 ? '' : 'hilang';
+            $hilang = $this->session->userdata('leveluser') == 5 ? '' : 'hilang';
             ?>
 
             <!-- Nav Item - Dashboard -->

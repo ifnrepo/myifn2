@@ -35,9 +35,11 @@ class Departemen extends CI_Controller
     function updatepersen(){
         $kode = $_POST['xid'];
         $nilai = $_POST['nil'];
+        $nilai2 = $_POST['nil2'];
         $data = [
             'dept_id' => $kode,
-            'persen_so' => $nilai
+            'persen_so' => $nilai,
+            'persen_verif' => $nilai2
         ];
         $hasil = $this->mdepartemen->updatepersen($data);
         if($hasil){

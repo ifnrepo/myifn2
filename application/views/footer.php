@@ -60,7 +60,7 @@
 <!-- Custom scripts for all pages-->
 <script src="<?= base_url() . 'assets/js/sb-admin-2.js' ?>"></script>
 <script src="<?= base_url() . 'assets/js/refresh.js' ?>"></script>
-<?php $timeunik = '1733796744'; ?>
+<?php $timeunik = '1753235558'; ?>
 <!-- Page level custom scripts -->
 <script src="<?= base_url() . 'assets/js/myscript.js?'.$timeunik ?>"></script>
 <?php if (isset($footer) && $footer == 'stokopname') { ?>

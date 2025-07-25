@@ -49,6 +49,9 @@
                                                 } ?>>Super User</option>
                             <option value="4" <?php if ($person['level'] == 4) {
                                                     echo "selected";
+                                                } ?>>User Verifikator</option>
+                            <option value="5" <?php if ($person['level'] == 5) {
+                                                    echo "selected";
                                                 } ?>>Administrator</option>
                         </select>
                     </div>

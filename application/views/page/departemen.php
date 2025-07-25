@@ -14,8 +14,9 @@
                     <th class="text-center align-middle">No</th>
                     <th class="text-center align-middle">Kode</th>
                     <th class="text-center align-middle">Departemen</th>
-                    <th class="text-center align-middle">Inventory</th>
-                    <th class="text-center align-middle">Persen <br> SO</th>
+                    <th class="text-center align-middle">Dept INV</th>
+                    <th class="text-center align-middle">Persen <br> Internal</th>
+                    <th class="text-center align-middle">Persen <br> Verifikator</th>
                     <th class="text-center align-middle">Aksi</th>
                 </thead>
                 <tbody>
@@ -25,6 +26,7 @@
                             <td class="text-center" style="font-weight: 600"><?= $dept['dept_id']; ?></td>
                             <td><?= $dept['departemen']; ?></td>
                             <td class="text-center"><i class="fa <?= $ceklis ?>"></i></td>
+                            <td class="text-right text-blue"><?= rupiah($dept['persen_verif'],2); ?></td>
                             <td class="text-right text-blue"><?= rupiah($dept['persen_so'],2); ?></td>
                             <td class="text-center">
                                 <a href="<?= base_url().'departemen/editdepartemen/'.$dept['dept_id'] ?>" class="btn btn-sm btn-info shadow-sm font-kecil" id="editdepartemen" data-toggle="modal" data-target="#modalBox-lg" data-title="Edit Persentase SO Departemen"><i class="fa fa-edit text-black font-kecil-xs"></i> Edit</a>

@@ -22,7 +22,8 @@
                     <option value="">Semua</option>
                     <option value="1" <?php if($this->session->userdata('filterverifikasi') == 1){ echo 'selected'; } ?>>On Progress</option>
                     <option value="2" <?php if($this->session->userdata('filterverifikasi') == 2){ echo 'selected'; } ?>>Selesai</option>
-                    <option value="3" <?php if($this->session->userdata('filterverifikasi') == 3){ echo 'selected'; } ?>>Verifikasi</option> 
+                    <option value="3" <?php if($this->session->userdata('filterverifikasi') == 3){ echo 'selected'; } ?>>Verifikasi 1</option> 
+                    <option value="4" <?php if($this->session->userdata('filterverifikasi') == 4){ echo 'selected'; } ?>>Verifikasi 2</option> 
                 </select>
             </div>
             <div class="mt-1 ketrekopname">
@@ -70,8 +71,9 @@
                     $selesai = $dataopn['selesai'] == 0 ? "Edit" : "Selesai";
                     $badge = $dataopn['selesai'] == 0 ? "badge badge-warning" : "badge badge-success";
                     $badgeverif = $dataopn['verifikasi'] == 1 ? "badge badge-info" : "hilang";
+                    $badgeverif2 = $dataopn['verifikasi2'] == 1 ? "badge badge-warning" : "hilang";
                     $sele = $dataopn['selesai'] == 0 ? "btn-outline-info" : "btn-outline-success";
-                    $caption = $dataopn['selesai'] == 0 ? "edit data" : "lihat data";
+                    $caption = $dataopn['selesai'] == 0 ? "edit data" : ($dataopn['verifikasi'] == 1 ? "Verifikasi" : "lihat data");
                     $hilang = $dataopn['selesai'] == 1 ? "hilang" : "";
                     $verifhilang = $dataopn['selesai'] == 1 && $dataopn['verifikasi'] == 1  ? "" : "hilang";
                     $mb = $dataopn['selesai'] == 1 && $this->session->userdata('fullakses') == 'Y' ? "" : "mb-4"; ?>
@@ -85,7 +87,8 @@
                             </div>
                             <div class="tengah w-100 p-1">
                                 <span class="<?= $badge ?> text-black mb-1" style="font-weight: normal"><?= $selesai ?></span>
-                                <span class="<?= $badgeverif ?> text-black mb-1" style="font-weight: normal">Verifikasi</span><br>
+                                <span class="<?= $badgeverif ?> text-black mb-1" style="font-weight: normal">Verifikasi 1</span>
+                                <span class="<?= $badgeverif2 ?> text-black mb-1" style="font-weight: normal">Verifikasi 2</span><br>
                                 <span><?= angka($dataopn['jmlkgs'],2) ?> Kgs</span><br>
                                 <span><?= angka($dataopn['jmlpcs'],0) ?> Pcs</span><br>
                                 <hr class="small">

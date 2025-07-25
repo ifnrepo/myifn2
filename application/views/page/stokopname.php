@@ -9,18 +9,23 @@
     <div class="infoopname text-black py-2 px-2 shadow-sm">
         <?php
         $tombolselesai = $this->session->userdata('leveluser') >= 2 && $namastok['selesai'] == '0' && $namastok['verifikasi'] == '0' ? '' : 'hilang'; 
-        $tombolverif = $this->session->userdata('leveluser') >= 3 && ($namastok['selesai'] == '1' || $namastok['verifikasi'] == '1') ? '' : 'hilang'; 
+        $tombolverif = $this->session->userdata('leveluser') >= 3 && ($namastok['selesai'] == '1' && $namastok['verifikasi'] == '0') ? '' : 'hilang'; 
+        $tombolverif2 = $this->session->userdata('leveluser') >= 4 && ($namastok['selesai'] == '1' && $namastok['verifikasi'] == '1' && $namastok['verifikasi2'] == '0' ) ? '' : 'hilang'; 
         $tomboledit = ($this->session->userdata('leveluser') == 2 || $this->session->userdata('leveluser') > 3)  && $namastok['selesai'] == '1' && $namastok['verifikasi'] == '0' ? '' : 'hilang'; 
-        $tomboleditverif = $this->session->userdata('leveluser') > 3 && $namastok['selesai'] == '1' && $namastok['verifikasi'] == '1' ? '' : 'hilang'; 
+        $tomboleditverif = $this->session->userdata('leveluser') > 4 && $namastok['selesai'] == '1' && $namastok['verifikasi'] == '1' && $namastok['verifikasi2'] == '0' ? '' : 'hilang'; 
+        $tomboleditverif2 = $this->session->userdata('leveluser') > 4 && $namastok['selesai'] == '1' && $namastok['verifikasi'] == '1' && $namastok['verifikasi2'] == '1' ? '' : 'hilang'; 
 
         $hilang = $namastok['selesai'] == '1' ? 'hilang' : '';
+        $hilang2 = $namastok['verifikasi'] == '1' ? 'hilang' : '';
         $takhilang = $namastok['selesai'] == '1' && $this->session->userdata('leveluser') >= 3 ? '' : 'hilang';
 
         $cekverif = $this->session->userdata('leveluser') >= 3 && $namastok['selesai'] == '1' && $namastok['verifikasi'] == '0' ? '' : 'hilang'; 
-        $fieldverif = $this->session->userdata('leveluser') >= 3 && $namastok['selesai'] == '1' ? '' : 'hilang'; 
+        $fieldverif = $this->session->userdata('leveluser') >= 3 &&  $namastok['verifikasi'] == '0' && $namastok['verifikasi2'] == '0' ? '' : 'hilang'; 
+        $fieldverif2 = $this->session->userdata('leveluser') >= 4 && $namastok['verifikasi'] == '1' && $namastok['verifikasi2'] == '0' ? '' : 'hilang'; 
     
         $kolom = $namastok['selesai'] == '1' ? 'col-sm-12' : 'col-sm-7';
         ?>
+        <input type="text" name="iddepopn" id="iddepopn" value="<?= $this->session->userdata('depopn'); ?>" class="hilang">
         <div class="row">
             <div class="col-md-4">
                 <div>Departemen : <b><?= $namastok['departemen'] . ' (' . $this->session->userdata('depopn') . ')' ?></b></div>
@@ -36,14 +41,32 @@
                         Item : <?= rupiah($namastok['jmlitem'], 0) ?>
                     </div>
                     <div class="col-md-6 col-6 <?= $tombolverif ?> mt-1" style="line-height: 12px;">
-                        <?php $persen = (int)$namastok['jmlitem']==0 ? rupiah(((int)$barangverif['c']/1)*100,2) : rupiah(((int)$barangverif['c']/(int)$namastok['jmlitem'])*100,2); ?>
+                        <?php 
+                            $persen = (int)$namastok['jmlitem']==0 ? rupiah(((int)$barangverif['c']/1)*100,2) : rupiah(((int)$barangverif['c']/(int)$namastok['jmlitem'])*100,2); 
+                             
+                        ?>
                         Item Diverifikasi : <?= rupiah($barangverif['c'], 0) ?><br>
-                        <?php $katatarget = $persendept > 0 ? 'dari target '.rupiah($persendept,2).' %' : ''; ?>
+                        <?php $katatarget = 'dari target '.rupiah($persendept2,2).' %'; ?>
                         <span class="text-gray-700" style="font-size: 10px;"><?= rupiah($persen,2).' % '.$katatarget ?></span>
                         <input type="text" id="jmlpersen" class="hilang" value="<?= $persen; ?>">
                         <input type="text" id="jmlpersendept" class="hilang" value="<?= $persendept; ?>">
                         <?php 
-                            $disabletombolverif = (float) $persen < (float) $persendept ? 'disabled' : '';
+                            $disabletombolverif = (float) $persen < (float) $persendept2 ? 'disabled' : '';
+                            // $disabletombolverif2 = (float) $persen2 < (float) $persendept ? 'disabled' : '';
+                        ?>
+                    </div>
+                    <div class="col-md-6 col-6 <?= $tombolverif2 ?> mt-1" style="line-height: 12px;">
+                       <?php 
+                            // $persen2 = rupiah(((int)$barangverif2['c']/(int)$namastok['jmlitem'])*100,2); 
+                            $persen2 = (int)$namastok['jmlitem']==0 ? rupiah(((int)$barangverif2['c']/1)*100,2) : rupiah(((int)$barangverif2['c']/(int)$namastok['jmlitem'])*100,2); 
+                        ?>
+                        Item Diverifikasi : <?= rupiah($barangverif2['c'], 0) ?><br>
+                        <?php $katatarget = 'dari target '.rupiah($persendept,2).' %'; ?>
+                        <span class="text-gray-700" style="font-size: 10px;"><?= rupiah($persen2,2).' % '.$katatarget ?></span>
+                        <input type="text" id="jmlpersen" class="hilang" value="<?= $persen2; ?>">
+                        <input type="text" id="jmlpersendept" class="hilang" value="<?= $persendept; ?>">
+                        <?php 
+                            $disabletombolverif2 = (float) $persen2 < (float) $persendept ? 'disabled' : '';
                         ?>
                     </div>
                 </div>
@@ -68,6 +91,8 @@
                 <a href="#" class="btn btn-sm btn-success shadow-sm font-kecil text-gray-900 <?= $tomboledit ?>" data-href="<?= base_url() . 'opname/editopname/' . $namastok['id'] ?>" data-news="Edit data ini ?," data-target="#confirm-task" data-remote="false" data-toggle="modal" data-title="Konfirmasi"><i class="fa fa-edit"></i> Edit</a>
                 <a href="#" class="btn btn-sm btn-info shadow-sm font-kecil text-gray-900 <?= $disabletombolverif.' '.$tombolverif ?> " data-href="<?= base_url() . 'opname/verifopname/' . $namastok['id'] ?>" data-news="Verifikasi data ?" data-target="#confirm-task" data-remote="false" data-toggle="modal" data-title="Konfirmasi"><i class="fa fa-check"></i> Verifikasi</a>
                 <a href="#" class="btn btn-sm btn-warning shadow-sm font-kecil text-gray-900 <?= $tomboleditverif ?> " data-href="<?= base_url() . 'opname/editverifopname/' . $namastok['id'] ?>" data-news="Edit data ini (Verifikasi) ?" data-target="#confirm-task" data-remote="false" data-toggle="modal" data-title="Konfirmasi"><i class="fa fa-edit"></i> Edit Verifikasi</a>
+                <a href="#" class="btn btn-sm btn-info shadow-sm font-kecil text-gray-900 <?= $disabletombolverif2.' '.$tombolverif2 ?> " data-href="<?= base_url() . 'opname/verifopname/' . $namastok['id'].'/1' ?>" data-news="Verifikasi data ?" data-target="#confirm-task" data-remote="false" data-toggle="modal" data-title="Konfirmasi"><i class="fa fa-check"></i> Verifikator Public</a>
+                <a href="#" class="btn btn-sm btn-warning shadow-sm font-kecil text-gray-900 <?= $tomboleditverif2 ?> " data-href="<?= base_url() . 'opname/editverifopname/' . $namastok['id'].'/1' ?>" data-news="Edit data ini (Verifikasi) ?" data-target="#confirm-task" data-remote="false" data-toggle="modal" data-title="Konfirmasi"><i class="fa fa-edit"></i> Edit Verifikator Public</a>
             </div>
         </div>
         <input type="text" id="idopn" class="hilang" value="<?= $namastok['id'] ?>">
@@ -258,6 +283,7 @@
                         <th>Input</th>
                         <th class="<?= $hilang ?>">Aksi</th>
                         <th class="<?= $fieldverif ?>" data-priority="2">Cek</th>
+                        <th class="<?= $fieldverif2 ?>" data-priority="2">Cek Verifikator</th>
                     </thead>
                     <tbody>
                         <?php foreach ($barangstok->result_array() as $brgstok) { 
@@ -287,7 +313,7 @@
                                     <a href="#" class="btn-circle btn-sm btn-info tombol-di-grid-bulat text-gray-900 shadow-sm" title="Edit" id="editdataopname" rel="<?= $brgstok['xid'] ?>"><i class="fa fa-edit"></i></a>
                                     <a href="#" class="btn-circle btn-sm btn-danger tombol-di-grid-bulat text-gray-900 shadow-sm" data-href="<?= base_url() . 'opname/hapusdataopname/' . $brgstok['xid'] . '/' . $brgstok['id_stokopname'] ?>" data-news="Yakin anda akan menghapus data ini ?" data-target="#confirm-task" data-remote="false" data-toggle="modal" data-title="Hapus"><i class="fa fa-times"></i></a>
                                 </td>
-                                <td class="py-2 <?= $fieldverif ?>" style="text-align:center;" id="kolomverif<?= $brgstok['xid']; ?>">
+                                <td class="py-2 <?= $fieldverif ?> <?= $hilang2; ?>" style="text-align:center;" id="kolomverif<?= $brgstok['xid']; ?>">
                                     <?php if($brgstok['sesuai'] != '1'){ ?>
                                         <a id="tombol<?= $brgstok['xid'] ?>" class="text-danger <?= $cekverif; ?>" style="font-size: 14px;" href="<?= base_url() . 'opname/cekverif/' . $brgstok['xid'].'/kolomverif'. $brgstok['xid'] ?>" data-news="Data Sesuai ?" data-target="#modalBox-sm" data-remote="false" data-toggle="modal" data-title="Konfirmasi"><i class="fa fa-times"></i></a>
                                     <?php }else{ ?>
@@ -295,6 +321,17 @@
                                             <a id="tombol<?= $brgstok['xid'] ?>" class="text-success <?= $cekverif; ?>" href="<?= base_url() . 'opname/editcekverif/' . $brgstok['xid'].'/kolomverif'. $brgstok['xid'] ?>" data-news="Batalkan Data Sesuai ?" data-target="#modalBox-sm" data-remote="false" data-toggle="modal" data-title="Konfirmasi"><i class="fa fa-check"></i></a><br>
                                             <span style="font-size: 8px;">Oleh : <?= $brgstok['nama_user']; ?>,</span><br>
                                             <span style="font-size: 8px;"> Tgl : <?= $brgstok['verifdate']; ?></span>
+                                        </div>
+                                    <?php } ?>
+                                </td>
+                                <td class="py-2 <?= $fieldverif2; ?>" style="text-align:center;" id="xkolomverif<?= $brgstok['xid']; ?>">
+                                    <?php if($brgstok['sesuai2'] != '1'){ ?>
+                                        <a id="tombol2<?= $brgstok['xid'] ?>" class="text-danger" style="font-size: 14px;" href="<?= base_url() . 'opname/cekverif/' . $brgstok['xid'].'/xkolomverif'. $brgstok['xid'] ?>" data-news="Data Sesuai ?" data-target="#modalBox-sm" data-remote="false" data-toggle="modal" data-title="Konfirmasi"><i class="fa fa-times"></i></a>
+                                    <?php }else{ ?>
+                                        <div style="line-height: 11px;">
+                                            <a id="tombol2<?= $brgstok['xid'] ?>" class="text-success" href="<?= base_url() . 'opname/editcekverif2/' . $brgstok['xid'].'/xkolomverif'. $brgstok['xid'] ?>" data-news="Batalkan Data Sesuai ?" data-target="#modalBox-sm" data-remote="false" data-toggle="modal" data-title="Konfirmasi"><i class="fa fa-check"></i></a><br>
+                                            <span style="font-size: 8px;">Oleh : <?= $brgstok['nama_user2']; ?>,</span><br>
+                                            <span style="font-size: 8px;"> Tgl : <?= $brgstok['verifdate2']; ?></span>
                                         </div>
                                     <?php } ?>
                                 </td>

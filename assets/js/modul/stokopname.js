@@ -342,6 +342,7 @@ function caribale(dex) {
 }
 
 function caribarang(dex) {
+	var depo = $("#iddepopn").val();
 	$.ajax({
 		dataType: "json",
 		type: "POST",
@@ -350,10 +351,14 @@ function caribarang(dex) {
 			sku: dex,
 		},
 		success: function (data) {
-			// alert(data);
+			// alert(data.length);
 			if (data.length == "1") {
 				if (data[0]["tb"] == "tb_ref") {
-					var edata = data[0]["kode_brg"];
+					if (depo == "RR") {
+						var edata = data[0]["kode"];
+					} else {
+						var edata = data[0]["kode_brg"];
+					}
 				} else {
 					var edata = data[0]["po"] + data[0]["item"] + data[0]["dis"];
 				}

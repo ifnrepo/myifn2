@@ -49,7 +49,7 @@
                     <label class="col-md-4" style="text-align: left;margin-top:5px;" for="inputDefault">Level user<span class="text-danger">*</span></label>
                     <div class="col-md-8">
                         <!-- <input type="text" class="form-control input-sm input-form text-gray-800" name="level" id="level"> -->
-                        <select class="form-control input-sm input-form" name="levelid" id="levelid" <?php if($this->session->userdata('leveluser')<4){ echo "disabled"; } ?>  >
+                        <select class="form-control input-sm input-form" name="levelid" id="levelid" <?php if($this->session->userdata('leveluser')<5){ echo "disabled"; } ?>  >
                             <option value="0" <?php if ($person['level'] == 0) {
                                                     echo "selected";
                                                 } ?>>No Level</option>
@@ -63,6 +63,9 @@
                                                     echo "selected";
                                                 } ?>>Super User</option>
                             <option value="4" <?php if ($person['level'] == 4) {
+                                                    echo "selected";
+                                                } ?>>User Verifikator</option>
+                            <option value="5" <?php if ($person['level'] == 5) {
                                                     echo "selected";
                                                 } ?>>Administrator</option>
                         </select>

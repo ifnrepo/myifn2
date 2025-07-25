@@ -45,10 +45,17 @@
             </div>
             <div class="col-md-6 col-sm-6 col-12 text-right">
                 <?php 
+                    if(isset($selesai)){
                     $tombolselesai = $this->session->userdata('leveluser') >= 2 && $selesai['selesai'] == '0' && $selesai['verifikasi'] == '0' ? '' : 'hilang'; 
                     $tombolverif = $this->session->userdata('leveluser') >= 3 && ($selesai['selesai'] == '1' || $selesai['verifikasi'] == '1') ? '' : 'hilang'; 
                     $tomboledit = ($this->session->userdata('leveluser') == 2 || $this->session->userdata('leveluser') > 3)  && $selesai['selesai'] == '1' && $selesai['verifikasi'] == '0' ? '' : 'hilang'; 
                     $tomboleditverif = $this->session->userdata('leveluser') > 3 && $selesai['selesai'] == '1' && $selesai['verifikasi'] == '1' ? '' : 'hilang'; 
+                    }else{
+                    $tombolselesai = 'hilang'; 
+                    $tombolverif = 'hilang'; 
+                    $tomboledit = 'hilang'; 
+                    $tomboleditverif = 'hilang';  
+                    }
                  ?>
                 <a href="<?= base_url() . 'onmachine/selesai'; ?>" class="d-sm-inline-block btn btn-sm btn-success shadow-sm font-kecil text-gray-900 <?= $tombolselesai; ?>"><i class="fas fa-check fa-sm"></i> Selesai</a>
                 <a href="<?= base_url() . 'onmachine/verifikasi'; ?>" class="d-sm-inline-block btn btn-sm btn-info shadow-sm font-kecil text-gray-900 <?= $tombolverif; ?>"><i class="fas fa-check fa-sm"></i> Verifikasi</a>

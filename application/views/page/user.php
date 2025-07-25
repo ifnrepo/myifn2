@@ -32,6 +32,9 @@
                                 $lvl = 'Super User';
                                 break;
                             case 4:
+                                $lvl = 'User Verifikator';
+                                break;
+                            case 5:
                                 $lvl = 'Administrator';
                                 break;
                             default:
