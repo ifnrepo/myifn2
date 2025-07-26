@@ -76,6 +76,7 @@
                     $caption = $dataopn['selesai'] == 0 ? "edit data" : ($dataopn['verifikasi'] == 1 ? "Verifikasi" : "lihat data");
                     $hilang = $dataopn['selesai'] == 1 ? "hilang" : "";
                     $verifhilang = $dataopn['selesai'] == 1 && $dataopn['verifikasi'] == 1  ? "" : "hilang";
+                    $verifhilang2 = $dataopn['selesai'] == 1 && $dataopn['verifikasi'] == 1 && $dataopn['verifikasi2'] == 1  ? "" : "hilang";
                     $mb = $dataopn['selesai'] == 1 && $this->session->userdata('fullakses') == 'Y' ? "" : "mb-4"; ?>
                     <div class="col-md-6 mb-1">
                         <div class="card-stok d-flex justify-content-between" style="background-color: white; padding: 5px;">
@@ -86,9 +87,18 @@
                                 </div>
                             </div>
                             <div class="tengah w-100 p-1">
+                                <?php 
+                                    if($dataopn['jmlitem'] > 0){
+                                        $persen1 = ' / '.rupiah(($dataopn['jmlverifikasi']/$dataopn['jmlitem'])*100,0).'%';
+                                        $persen2 = ' / '.rupiah(($dataopn['jmlverifikasi2']/$dataopn['jmlitem'])*100,0).'%';
+                                    }else{
+                                        $persen1 = '';
+                                        $persen2 = '';
+                                    }
+                                 ?>
                                 <span class="<?= $badge ?> text-black mb-1" style="font-weight: normal"><?= $selesai ?></span>
-                                <span class="<?= $badgeverif ?> text-black mb-1" style="font-weight: normal">Verifikasi 1</span>
-                                <span class="<?= $badgeverif2 ?> text-black mb-1" style="font-weight: normal">Verifikasi 2</span><br>
+                                <span class="<?= $badgeverif ?> text-black mb-1" style="font-weight: normal">Verifikasi 1<?= $persen1 ?></span>
+                                <span class="<?= $badgeverif2 ?> text-black mb-1" style="font-weight: normal">Verifikasi 2<?= $persen2 ?></span><br>
                                 <span><?= angka($dataopn['jmlkgs'],2) ?> Kgs</span><br>
                                 <span><?= angka($dataopn['jmlpcs'],0) ?> Pcs</span><br>
                                 <hr class="small">
@@ -96,7 +106,8 @@
                                 <div class="info d-flex justify-content-between mt-0 p-0">
                                     <div style="line-height: 10px;">
                                         <span>Last edit : <?= tglindo($dataopn['upd']) ?></span><br>
-                                        <span class="<?= $verifhilang; ?>">Verifikasi Oleh : <?= $dataopn['nama_user'].' tgl '.$dataopn['verifdate'] ?></span>
+                                        <span class="<?= $verifhilang; ?>">Verifikasi Oleh : <?= $dataopn['nama_user'].' tgl '.$dataopn['verifdate'] ?></span><br>
+                                        <span class="<?= $verifhilang2; ?>">Verifikator Publik : <?= getnamapersonil($dataopn['verifperson2']).' tgl '.$dataopn['verifdate2'] ?></span>
                                     </div>
                                     <span style="font-size:11px;"><?= $dataopn['sublok'] ?></span>
                                 </div>

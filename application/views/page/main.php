@@ -47,13 +47,34 @@
                     </thead>
                     <tbody>
                         <?php 
-                            $totjmlsublok=0;$totjmlsublokverifikasi=0;$totjmrekord=0;$totjmrekordverifikasi=0;$totjmrekordverifikasi2=0;
+                            $totalkgsso=0;$totjmlsublok=0;$totjmlsublokverifikasi=0;$totjmrekord=0;$totjmrekordverifikasi=0;$totjmrekordverifikasi2=0;
                             $no=1; $jmlpersenso=0; foreach ($datacekso->result_array() as $data) { 
-                            $jmlsublok = $data['jmlsublok']==0 ? 1 : $data['jmlsublok'];
+                            $jmlsublok = $data['jmlsublok']==0 ? 1 : $data['jmlsublokdipakai'];
                             $persensublok = rupiah(($data['jmlsublokverifikasi']/$jmlsublok)*100,2);
                             $jmlrekord = $data['jmrekord']==0 ? 1 : $data['jmrekord'];
                             $persenrekord = rupiah(($data['jmrekordverifikasi2']/$jmlrekord)*100,2);
                             $ix=0;$iy=0;
+                            
+                            $totjmlsublok += $data['jmlsublok'];
+                            $totjmlsublokverifikasi += $data['jmlsublokverifikasi'];
+                            $totjmrekord += $data['jmrekord'];
+                            $totjmrekordverifikasi += $data['jmrekordverifikasi'];
+                            $jmlpersenso += $data['persen_so'];
+                            $totjmrekordverifikasi2 += $data['jmrekordverifikasi2'];
+                            if($data['dept_id']=='NT'){
+                                $data['jmlsublok'] += $data['jmlmesinselesai'];
+                                $totjmlsublok += $data['jmlmesinselesai'];
+                                $data['jmlsublokverifikasi'] += $data['jmlmesinsesuai'];
+                                $totjmlsublokverifikasi += $data['jmlmesinsesuai'];
+
+                                $persensublok = rupiah(($data['jmlsublokverifikasi']/$data['jmlsublok'])*100,2);
+
+                                $data['jmrekord'] += $data['jmlmesinselesai'];
+                                $data['jmrekordverifikasi'] += $data['jmlmesinsesuai'];
+                                $data['jmrekordverifikasi2'] += $data['jmlmesinverifikasi'];
+
+                                $persenrekord = rupiah(($data['jmrekordverifikasi2']/$data['jmrekord'])*100,2);
+                            }
                             if($persensublok <= 25){
                                 $warnapersen = 'bg-danger';
                             }else if($persensublok > 25 && $persensublok < 100){
@@ -72,16 +93,11 @@
                             }
                             $pesan = (($ix+$iy) >= 2) ? 'DONE' : 'In Progress';
                             $warnapesan = (($ix+$iy) >= 2) ? 'text-success' : 'text-black';
-                            $totjmlsublok += $data['jmlsublok'];
-                            $totjmlsublokverifikasi += $data['jmlsublokverifikasi'];
-                            $totjmrekord += $data['jmrekord'];
-                            $totjmrekordverifikasi += $data['jmrekordverifikasi'];
-                            $jmlpersenso += $data['persen_so'];
-                            $totjmrekordverifikasi2 += $data['jmrekordverifikasi2'];
+                            $totalkgsso += $data['jmkgsrekord'];
                         ?>
                             <tr>
                                 <td class="text-center"><?= $no++; ?></td>
-                                <td><?= $data['departemen']; ?></td>
+                                <td style="line-height: 12px;"><?= $data['departemen']; ?><br><span style="font-size:11px; color: gray">-</span></td>
                                 <td class="text-right"><?= rupiah($data['jmlsublok'],0); ?></td>
                                 <td  class="text-right"><?= rupiah($data['jmlsublokverifikasi'],0); ?></td>
                                 <td class="text-center" style="line-height:10px;">
@@ -90,7 +106,7 @@
                                     </div>
                                     <span style="font-size: 10px;"><?= $persensublok ?>%</span>
                                 </td>
-                                <td  class="text-right"><?= rupiah($data['jmrekord'],0); ?></td>
+                                <td style="line-height: 12px;" class="text-right"><?= rupiah($data['jmrekord'],0); ?><br><span style="font-size:11px; color: gray"><?= rupiah($data['jmkgsrekord'],2); ?> Kgs</span></td>
                                 <td  class="text-right"><?= rupiah($data['jmrekordverifikasi'],0); ?></td>
                                 <td  class="text-right"><?= rupiah($data['jmrekordverifikasi2'],0); ?></td>
                                 <td class="text-center" style="line-height:10px;">
@@ -128,7 +144,7 @@
                                 </div>
                                 <span style="font-size: 10px;"><?= rupiah(($totjmlsublokverifikasi/$xtotjmlsublok)*100,2); ?>%</span>
                             </td>
-                            <td class="text-right"><?= rupiah($totjmrekord,0); ?></td>
+                            <td class="text-right"><?= rupiah($totjmrekord,0); ?><br><span style="font-size:11px; color: gray"><?= rupiah($totalkgsso,2); ?> Kgs</td>
                             <td class="text-right"><?= rupiah($totjmrekordverifikasi,0); ?></td>
                             <td class="text-right"><?= rupiah($totjmrekordverifikasi2,0); ?></td>
                             <?php 

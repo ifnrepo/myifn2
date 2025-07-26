@@ -20,6 +20,7 @@ class Opname extends CI_Controller
     function index()
     {
         $data['dataopname'] = $this->mopname->dataopname();
+        $data['dataonmachine'] = $this->mopname->dataonmachine();
         $data['jumlahrec'] = $this->mopname->dataopname()->num_rows();
         $data['jumlahonprogress'] = $this->mopname->dataprogress()->num_rows();
         $data['jumlahselesai'] = $this->mopname->dataselesai()->num_rows();

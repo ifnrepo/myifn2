@@ -12,6 +12,7 @@ class Onmachine extends CI_Controller
         }
         $this->load->model('mprofile');
         $this->load->model('msublok');
+        $this->load->model('muser');
         $this->load->model('monmachine');
     }
     function index()
@@ -32,6 +33,7 @@ class Onmachine extends CI_Controller
         }
         $data['datamesin'] = $this->monmachine->getdata();
         $data['selesai'] = $this->monmachine->getdata()->row_array();
+        $data['sumonmachine'] = $this->monmachine->getdatasum()->row_array();
         $this->session->set_userdata('depopn', $this->session->userdata('filterstok'));
         $footer['footer'] = 'onmachine';
         $this->load->view('header', $header);
@@ -211,36 +213,81 @@ class Onmachine extends CI_Controller
     }
     function simpanverif(){
         $id = $_POST['xid'];
-        $query = $this->monmachine->cekverif($id);
-        $html = '';
-        if($query){
-            $html .= '<a id="tombol"'.$id.' class="text-success" href="'.base_url() . 'onmachine/editcekverif/' . $id.'/kolomverif'.$id.'" data-news="Batalkan Data Sesuai ?" data-target="#modalBox-sm" data-remote="false" data-toggle="modal" data-title="Konfirmasi"><i class="fa fa-check"></i></a>';
-            // $html .= '<i class="fa fa-check"></i>';
-        } 
+        $mode = $_POST['xmode'];
+        if($mode==0){
+            $query = $this->monmachine->cekverif($id);
+            $html = '';
+            if($query){
+                $html .= '<a id="tombol"'.$id.' class="text-success" href="'.base_url() . 'onmachine/editcekverif/' . $id.'/kolomverif'.$id.'" data-news="Batalkan Data Sesuai ?" data-target="#modalBox-sm" data-remote="false" data-toggle="modal" data-title="Konfirmasi"><i class="fa fa-check"></i></a>';
+                // $html .= '<i class="fa fa-check"></i>';
+            } 
+        }else{
+           $query = $this->monmachine->cekverif2($id);
+            $html = '';
+            if($query){
+                $html .= '<a id="tombol"'.$id.' class="text-success" href="'.base_url() . 'onmachine/editcekverif2/' . $id.'/xkolomverif'.$id.'" data-news="Batalkan Data Sesuai ?" data-target="#modalBox-sm" data-remote="false" data-toggle="modal" data-title="Konfirmasi"><i class="fa fa-check"></i></a>';
+                // $html .= '<i class="fa fa-check"></i>';
+            }  
+        }
         echo json_encode($html);
     }
     function batalverif(){
         $id = $_POST['xid'];
-        $query = $this->monmachine->editcekverif($id);
-        $html = '';
-        if($query){
-            $html .= '<a id="tombol"'.$id.' class="text-danger" style="font-size: 14px;" href="'.base_url() . 'onmachine/cekverif/' . $id.'/kolomverif'. $id.'" data-news="Data Sesuai ?" data-target="#modalBox-sm" data-remote="false" data-toggle="modal" data-title="Konfirmasi"><i class="fa fa-times"></i></a>';
-            // $html .= '<i class="fa fa-check"></i>';
-        } 
+        $mode = $_POST['xmode'];
+        if($mode==0){
+            $query = $this->monmachine->editcekverif($id);
+            $html = '';
+            if($query){
+                $html .= '<a id="tombol"'.$id.' class="text-danger" style="font-size: 14px;" href="'.base_url() . 'onmachine/cekverif/' . $id.'/kolomverif'. $id.'" data-news="Data Sesuai ?" data-target="#modalBox-sm" data-remote="false" data-toggle="modal" data-title="Konfirmasi"><i class="fa fa-times"></i></a>';
+                // $html .= '<i class="fa fa-check"></i>';
+            } 
+        }else{
+            $query = $this->monmachine->editcekverif2($id);
+            $html = '';
+            if($query){
+                $html .= '<a id="tombol"'.$id.' class="text-danger" style="font-size: 14px;" href="'.base_url() . 'onmachine/cekverif2/' . $id.'/xkolomverif'. $id.'" data-news="Data Sesuai ?" data-target="#modalBox-sm" data-remote="false" data-toggle="modal" data-title="Konfirmasi"><i class="fa fa-times"></i></a>';
+                // $html .= '<i class="fa fa-check"></i>';
+            }
+        }
         echo json_encode($html);
     }
     function cekverif($id,$ide){
         $data = [
             'id' => $id,
-            'kolom' => $ide
+            'kolom' => $ide,
+            'mode' => 0
+        ];
+        $this->load->view('page/okeverifmc',$data);
+    }
+    function cekverif2($id,$ide){
+        $data = [
+            'id' => $id,
+            'kolom' => $ide,
+            'mode' => 1
         ];
         $this->load->view('page/okeverifmc',$data);
     }
     function editcekverif($id,$ide){
         $data = [
             'id' => $id,
-            'kolom' => $ide
+            'kolom' => $ide,
+            'mode' => 0
         ];
         $this->load->view('page/editverifmc',$data);
+    }
+    function editcekverif2($id,$ide){
+        $data = [
+            'id' => $id,
+            'kolom' => $ide,
+            'mode' => 1
+        ];
+        $this->load->view('page/editverifmc',$data);
+    }
+    function selesaionmesin($id){
+        $hasil = $this->monmachine->selesaionmesin($id);
+        if($hasil){
+            $url = base_url().'onmachine';
+            redirect($url);
+        }
     }
 }

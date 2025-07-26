@@ -17,6 +17,17 @@ class Monmachine extends CI_Model
         where tahbul = '".$thn.$bln."' order by machno ");
         return $query;
     }
+    public function getdatasum()
+    {
+        $bln = $this->session->userdata('blnmachine');
+        $thn = $this->session->userdata('thnmachine');
+        $lok = $this->session->userdata('lokmachine');
+        $this->db->select("(Select count(*) from tb_onmachine where selesai=1 AND tahbul = '".$thn.$bln."') as jmlrek");
+        $this->db->select("(Select count(*) from tb_onmachine where sesuai=1 AND tahbul = '".$thn.$bln."') as jmlsesuai");
+        $this->db->select("(Select count(*) from tb_onmachine where verifikasi=1 AND tahbul = '".$thn.$bln."') as jmlverif");
+        $this->db->from('tb_onmachine');
+        return $this->db->get();
+    }
     public function getdatabobbin(){
         $query = $this->db->get('referensi_jenis_bobbin');
         return $query;
@@ -158,5 +169,17 @@ class Monmachine extends CI_Model
     function editcekverif($id){
         $query = $this->db->query("update tb_onmachine set sesuai='0' where id = '" . $id . "' ");
         return $query;
+    }
+    function cekverif2($id){
+        $query = $this->db->query("update tb_onmachine set verifikasi='1',verif2person='".$this->session->userdata('iduser')."',verif2date=now() where id = '" . $id . "' ");
+        return $query;
+    }
+    function editcekverif2($id){
+        $query = $this->db->query("update tb_onmachine set verifikasi='0',verif2person=null,verif2date=null where id = '" . $id . "' ");
+        return $query;
+    }
+    public function selesaionmesin($id){
+        $this->db->where('id',$id);
+        return $this->db->update('tb_onmachine',['selesai' => 1]);
     }
 }

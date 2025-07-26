@@ -44,23 +44,8 @@
                 </div>
             </div>
             <div class="col-md-6 col-sm-6 col-12 text-right">
-                <?php 
-                    if(isset($selesai)){
-                    $tombolselesai = $this->session->userdata('leveluser') >= 2 && $selesai['selesai'] == '0' && $selesai['verifikasi'] == '0' ? '' : 'hilang'; 
-                    $tombolverif = $this->session->userdata('leveluser') >= 3 && ($selesai['selesai'] == '1' || $selesai['verifikasi'] == '1') ? '' : 'hilang'; 
-                    $tomboledit = ($this->session->userdata('leveluser') == 2 || $this->session->userdata('leveluser') > 3)  && $selesai['selesai'] == '1' && $selesai['verifikasi'] == '0' ? '' : 'hilang'; 
-                    $tomboleditverif = $this->session->userdata('leveluser') > 3 && $selesai['selesai'] == '1' && $selesai['verifikasi'] == '1' ? '' : 'hilang'; 
-                    }else{
-                    $tombolselesai = 'hilang'; 
-                    $tombolverif = 'hilang'; 
-                    $tomboledit = 'hilang'; 
-                    $tomboleditverif = 'hilang';  
-                    }
-                 ?>
-                <a href="<?= base_url() . 'onmachine/selesai'; ?>" class="d-sm-inline-block btn btn-sm btn-success shadow-sm font-kecil text-gray-900 <?= $tombolselesai; ?>"><i class="fas fa-check fa-sm"></i> Selesai</a>
-                <a href="<?= base_url() . 'onmachine/verifikasi'; ?>" class="d-sm-inline-block btn btn-sm btn-info shadow-sm font-kecil text-gray-900 <?= $tombolverif; ?>"><i class="fas fa-check fa-sm"></i> Verifikasi</a>
-                <a href="<?= base_url() . 'onmachine/bukaselesai'; ?>" class="d-sm-inline-block btn btn-sm btn-success shadow-sm font-kecil text-gray-900 <?= $tomboledit; ?>"><i class="fas fa-edit fa-sm"></i> Edit</a>
-                <a href="<?= base_url() . 'onmachine/bukaverifikasi'; ?>" class="d-sm-inline-block btn btn-sm btn-warning shadow-sm font-kecil text-gray-900 <?= $tomboleditverif; ?>"><i class="fas fa-edit fa-sm"></i> Edit Verifikasi</a>
+              Verifikasi 1 : <?= $sumonmachine['jmlsesuai']; ?>/<?= $sumonmachine['jmlrek']; ?><br>
+              Verifikasi 2 : <?= $sumonmachine['jmlverif']; ?>/<?= $sumonmachine['jmlrek']; ?>
             </div>
             <div class="col-md-12">
                 <hr class="small">
@@ -72,23 +57,23 @@
                                 <th>SKU</th>
                                 <th>Ins No</th>
                                 <th>Brt Bunsen Ksg</th>
-                                <th>Jml Bunsen di Box</th>
+                                <th>Jml Bunsen<br>di Box</th>
                                 <th>Brt Box Bunsen</th>
-                                <th>Jml Bunsen di Mesin</th>
-                                <th>Brt Bunsen di Mesin</th>
-                                <th>Jenis Bobin</th>
-                                <th>Brt Bobin Kosong</th>
+                                <th>Jml Bunsen<br>di Mesin</th>
+                                <th>Brt Bunsen<br>di Mesin</th>
+                                <th>Jenis<br>Bobin</th>
+                                <th>Brt Bobin<br>Kosong</th>
                                 <th>Brt Bobin Isi</th>
-                                <th>Jml Bobin di Mesin</th>
+                                <th>Jml Bobin<br>di Mesin</th>
                                 <th>Lot di Rol (Dari)</th>
                                 <th>Lot di Rol (Sampai)</th>
                                 <th>Jml Rpm di Mesin</th>
-                                <?php if(isset($selesai['selesai'])): ?>
-                                <?php if($selesai['selesai']==0 || $selesai['selesai']==''){ ?>
-                                <th>Aksi</th>
-                                <?php }else{ ?>
-                                <th data-priority="2">Verifikasi</th>
-                                <?php } endif; ?>
+                                <?php if($this->session->userdata('leveluser') == 5 || $this->session->userdata('leveluser') == 3){ ?>
+                                <th data-priority="2">Aksi</th>
+                                <?php } ?>
+                                <?php if($this->session->userdata('leveluser') >= 4){ ?>
+                                    <th data-priority="3">Verifikasi 2</th>
+                                <?php } ?>
                             </tr>
                         </thead>
                         <tbody>
@@ -109,21 +94,40 @@
                                     <td class="kanan"><?= $sublok['lot_dari']; ?></td>
                                     <td class="kanan"><?= $sublok['lot_sampai']; ?></td>
                                     <td class="kanan"><?= $sublok['rpm']; ?></td>
-                                    <td class="text-center" id="kolomverif<?= $sublok['id']; ?>">
-                                    <?php if($sublok['selesai']==0 || $sublok['selesai']==''){ ?>
-                                            <a href="#" class="btn-circle btn-sm btn-info tombol-di-grid-bulat text-gray-900 shadow-sm" title="Edit" id="editdataonmachine" rel="<?= $sublok['id'] ?>"><i class="fa fa-edit"></i></a>
-                                            <a href="#" class="btn-circle btn-sm btn-danger tombol-di-grid-bulat text-gray-900 shadow-sm" data-href="<?= base_url() . 'onmachine/hapusdataonmachine/' . $sublok['id']  ?>" data-news="Yakin anda akan menghapus data ini ?" data-target="#confirm-task" data-remote="false" data-toggle="modal" data-title="Hapus"><i class="fa fa-times"></i></a>
-                                    <?php }else{ if($sublok['sesuai']!=1){ ?>
-                                            <a id="tombol<?= $sublok['id'] ?>" class="text-danger" style="font-size: 14px;" href="<?= base_url().'onmachine/cekverif/'.$sublok['id'].'/kolomverif'.$sublok['id'] ?>" data-news="Data Sesuai ?" data-target="#modalBox-sm" data-remote="false" data-toggle="modal" data-title="Konfirmasi"><i class="fa fa-times"></i></a>
-                                    <?php }else{ ?>
-                                        <div style="line-height: 11px;">
-                                        <a id="tombol<?= $sublok['id']; ?>" class="text-success" href="<?= base_url().'onmachine/editcekverif/' . $sublok['id'].'/kolomverif'.$sublok['id'] ?>" data-news="Batalkan Data Sesuai ?" data-target="#modalBox-sm" data-remote="false" data-toggle="modal" data-title="Konfirmasi"><i class="fa fa-check"></i></a><br>
-                                            <span style="font-size: 8px;">Oleh : <?= $sublok['nama_user']; ?>,</span><br>
-                                            <span style="font-size: 8px;"> Tgl : <?= $sublok['verifdate']; ?></span>
-                                        </div>
+                                    <?php if($this->session->userdata('leveluser') == 5 || $this->session->userdata('leveluser') == 3){ ?>
+                                        <td class="text-center" id="kolomverif<?= $sublok['id']; ?>">
+                                        <?php if($sublok['selesai']==0 || $sublok['selesai']==''){ ?>
+                                                <a href="#" class="btn-circle btn-sm btn-info tombol-di-grid-bulat text-gray-900 shadow-sm" title="Edit" id="editdataonmachine" rel="<?= $sublok['id'] ?>"><i class="fa fa-edit"></i></a>
+                                                <a href="#" class="btn-circle btn-sm btn-danger tombol-di-grid-bulat text-gray-900 shadow-sm" data-href="<?= base_url() . 'onmachine/hapusdataonmachine/' . $sublok['id']  ?>" data-news="Yakin anda akan menghapus data ini ?" data-target="#confirm-task" data-remote="false" data-toggle="modal" data-title="Hapus"><i class="fa fa-times"></i></a>
+                                                <a href="#" class="btn-circle btn-sm btn-success tombol-di-grid-bulat text-gray-900 shadow-sm" style="font-size: 14px;" data-href="<?= base_url().'onmachine/selesaionmesin/'.$sublok['id'] ?>" data-news="Data Selesai ?" data-target="#confirm-task" data-remote="false" data-toggle="modal" data-title="Konfirmasi"><i class="fa fa-check"></i></a>
+                                        <?php }else{ if($sublok['sesuai']!=1 && $sublok['verifikasi']==0 && $sublok['verifikasi2']==0){ ?>
+                                                <a id="tombol<?= $sublok['id'] ?>" class="text-danger" style="font-size: 14px;" href="<?= base_url().'onmachine/cekverif/'.$sublok['id'].'/kolomverif'.$sublok['id'] ?>" data-news="Data Sesuai ?" data-target="#modalBox-sm" data-remote="false" data-toggle="modal" data-title="Konfirmasi"><i class="fa fa-times"></i></a>
+                                        <?php }else{ ?>
+                                            <div style="line-height: 11px;">
+                                                <?php if($sublok['verifikasi']==0){ ?>
+                                                    <a id="tombol<?= $sublok['id']; ?>" class="text-success" href="<?= base_url().'onmachine/editcekverif/' . $sublok['id'].'/kolomverif'.$sublok['id'] ?>" data-news="Batalkan Data Sesuai ?" data-target="#modalBox-sm" data-remote="false" data-toggle="modal" data-title="Konfirmasi"><i class="fa fa-check"></i></a><br>
+                                                <?php } ?>
+                                                <span style="font-size: 8px;">Oleh : <?= $sublok['nama_user']; ?>,</span><br>
+                                                <span style="font-size: 8px;"> Tgl : <?= $sublok['verifdate']; ?></span>
+                                            </div>
+                                        <?php } ?>
+                                        <?php } ?>
+                                        </td>
                                     <?php } ?>
+                                    <?php if($this->session->userdata('leveluser') >= 4){ ?>
+                                        <td class="text-center" id="xkolomverif<?= $sublok['id']; ?>">
+                                            <?php if($sublok['sesuai']==1 && $sublok['verifikasi']==0){ ?>
+                                                    <a id="tombol<?= $sublok['id'] ?>" class="text-danger" style="font-size: 14px;" href="<?= base_url().'onmachine/cekverif2/'.$sublok['id'].'/xkolomverif'.$sublok['id'] ?>" data-news="Data Sesuai ?" data-target="#modalBox-sm" data-remote="false" data-toggle="modal" data-title="Konfirmasi"><i class="fa fa-times"></i></a>
+                                            <?php }else{ if($sublok['sesuai']==1 && $sublok['verifikasi']==1){ ?>
+                                                    <div style="line-height: 11px;">
+                                                        <a id="tombol<?= $sublok['id']; ?>" class="text-success" href="<?= base_url().'onmachine/editcekverif2/' . $sublok['id'].'/xkolomverif'.$sublok['id'] ?>" data-news="Batalkan Data Sesuai ?" data-target="#modalBox-sm" data-remote="false" data-toggle="modal" data-title="Konfirmasi"><i class="fa fa-check"></i></a><br>
+                                                        <span style="font-size: 8px;">Oleh : <?= getnamapersonil($sublok['verif2person']); ?>,</span><br>
+                                                        <span style="font-size: 8px;"> Tgl : <?= $sublok['verif2date']; ?></span>
+                                                    </div>
+                                            <?php } ?>
+                                            <?php } ?>
+                                        </td>
                                     <?php } ?>
-                                    </td>
                                 </tr>
                             <?php endforeach; ?>
                         </tbody>

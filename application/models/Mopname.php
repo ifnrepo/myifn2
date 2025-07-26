@@ -75,8 +75,20 @@ class Mopname extends CI_Model
             }
         }
         // $levelsuper = $this->session->userdata('leveluser')==3 ? ' and a.selesai = 1 ' : '';
-        $query = $this->db->query("select a.*,b.sublok,c.nama_user from tb_stokopname a left join tb_sublok b on b.kode = a.ket left join user_manajemen c on a.verifperson = c.person_id where a.dept_id in (" . substr($hak2, 0, strlen($hak2) - 1) . ")".$levelsuper.$xsublok.$xverif." order by a.dept_id,b.sublok");
+        $query = $this->db->query("select a.*,b.sublok,c.nama_user ,
+        (Select count(*) from tb_detail_stokopname where id_stokopname = a.id and tb_detail_stokopname.sesuai = '1') as jmlverifikasi,
+        (Select count(*) from tb_detail_stokopname where id_stokopname = a.id and tb_detail_stokopname.sesuai2 = '1') as jmlverifikasi2
+        from tb_stokopname a 
+        left join tb_sublok b on b.kode = a.ket 
+        left join user_manajemen c on a.verifperson = c.person_id 
+        where a.dept_id in (" . substr($hak2, 0, strlen($hak2) - 1) . ")".$levelsuper.$xsublok.$xverif." 
+        order by a.dept_id,b.sublok");
         return $query;
+    }
+    public function dataonmachine(){
+        $periode  = $this->session->userdata('periodeso');
+        $this->db->where('tahbul',$periode);
+        return $this->db->get('tb_onmachine');
     }
     public function dataprogress()
     {
@@ -381,12 +393,17 @@ class Mopname extends CI_Model
     }
     public function getceklisso(){
         $periode = $this->session->userdata('periodeso');
-        $query = $this->db->query("SELECT tb_sublok.dept_id,referensi_departemen.departemen,COUNT(tb_sublok.dept_id)+if(tb_sublok.dept_id='NT',1,0) AS jmlsublok,
-        (SELECT COUNT(a.verifikasi) FROM tb_stokopname a WHERE a.dept_id = tb_sublok.dept_id AND a.verifikasi = 1)+if(tb_sublok.dept_id = 'NT',IFNULL((SELECT COUNT(*) FROM tb_onmachine WHERE tahbul = '".$periode."' AND verifikasi = 1 AND tb_sublok.dept_id = 'NT' GROUP BY tahbul),0),0) AS jmlsublokverifikasi,
+        $query = $this->db->query("SELECT tb_sublok.dept_id,referensi_departemen.departemen,COUNT(tb_sublok.dept_id) AS jmlsublok,
+        (SELECT COUNT(*) FROM tb_stokopname where dept_id = tb_sublok.dept_id GROUP BY dept_id) AS jmlsublokdipakai,
+        (SELECT COUNT(*) FROM tb_onmachine WHERE tahbul = '".$periode."' AND selesai=1 GROUP BY tahbul) AS jmlmesinselesai,
+        (SELECT COUNT(*) FROM tb_onmachine WHERE tahbul = '".$periode."' AND selesai=1 AND sesuai=1 GROUP BY tahbul) AS jmlmesinsesuai,
+        (SELECT COUNT(*) FROM tb_onmachine WHERE tahbul = '".$periode."' AND selesai=1 AND sesuai=1 AND verifikasi=1 GROUP BY tahbul) AS jmlmesinverifikasi,
+        (SELECT COUNT(a.verifikasi) FROM tb_stokopname a WHERE a.dept_id = tb_sublok.dept_id AND a.verifikasi = 1) AS jmlsublokverifikasi,
         (SELECT COUNT(*) FROM tb_detail_stokopname LEFT JOIN tb_stokopname b ON b.id = tb_detail_stokopname.id_stokopname WHERE b.dept_id = tb_sublok.dept_id) AS jmrekord,
+        (SELECT SUM(kgs) FROM tb_detail_stokopname LEFT JOIN tb_stokopname b ON b.id = tb_detail_stokopname.id_stokopname WHERE b.dept_id = tb_sublok.dept_id) AS jmkgsrekord,
         (SELECT COUNT(*) FROM tb_detail_stokopname LEFT JOIN tb_stokopname b ON b.id = tb_detail_stokopname.id_stokopname WHERE b.dept_id = tb_sublok.dept_id AND tb_detail_stokopname.sesuai = 1) AS jmrekordverifikasi,
         (SELECT COUNT(*) FROM tb_detail_stokopname LEFT JOIN tb_stokopname b ON b.id = tb_detail_stokopname.id_stokopname WHERE b.dept_id = tb_sublok.dept_id AND tb_detail_stokopname.sesuai2 = 1) AS jmrekordverifikasi2,
-        referensi_departemen.persen_so,
+        referensi_departemen.persen_so,referensi_departemen.persen_verif,
         (SELECT COUNT(*) FROM tb_detail_stokopname LEFT JOIN tb_stokopname b ON b.id = tb_detail_stokopname.id_stokopname WHERE b.dept_id = tb_sublok.dept_id AND tb_detail_stokopname.sesuai = 1)/(SELECT COUNT(*) FROM tb_detail_stokopname LEFT JOIN tb_stokopname b ON b.id = tb_detail_stokopname.id_stokopname WHERE b.dept_id = tb_sublok.dept_id) as persenx 
         FROM tb_sublok
         LEFT JOIN referensi_departemen ON referensi_departemen.dept_id = tb_sublok.dept_id

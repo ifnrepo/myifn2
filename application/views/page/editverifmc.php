@@ -2,6 +2,7 @@
 <div class="container-fluid px-2 py-2">
     <input type="text" class="hilang" id="kode" value="<?= $id; ?>">
     <input type="text" class="hilang" id="kolom" value="<?= $kolom; ?>">
+    <input type="text" class="hilang" id="mode" value="<?= $mode; ?>">
     <div class="font-kecil text-black">  
         Batalkan Verifikasi Data ? 
     </div>
@@ -20,6 +21,7 @@
             url: base_url + 'onmachine/batalverif',
             data: {
                 xid: $("#kode").val(),
+                xmode: $("#mode").val(),
             },
             success: function (data) {
                 // alert(data);
